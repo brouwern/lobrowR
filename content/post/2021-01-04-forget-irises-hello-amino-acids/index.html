@@ -1,0 +1,130 @@
+---
+title: Forget Irises, Hello Amino Acids!
+author: Nathan Brouwer
+date: '2021-01-04'
+slug: forget-irises-hello-amino-acids
+categories:
+  - data
+tags:
+  - data
+  - R
+  - data science
+  - biostatistics
+  - biology
+math: no
+meta: yes
+toc: yes
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<div id="must.-have.-data." class="section level1">
+<h1>Must. Have. Data.</h1>
+<p>One of the biggest challenges when learning and teaching R is finding good datasets to work with. There are a number of classic datasets in statistics and datascience that have useful features, and they tend to get used again and again. And again and again and again…</p>
+</div>
+<div id="what-is-an-sepal-anyway" class="section level1">
+<h1>What is an “sepal”, anyway?</h1>
+<p>One of the most famous datasets in all of data-dom is the <strong>iris</strong> <a href="https://en.wikipedia.org/wiki/Iris_flower_data_set">Wikipedia</a> dataset. It comes prepackage in base R, is a popular example dataset for many blogs, and according to the <a href="https://archive.ics.uci.edu/ml/datasets/iris">UCI Machine Learning Repository</a> has been used in papers &gt;80 times.</p>
+<p>Variables in the data are</p>
+<pre><code>## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot;  &quot;Species&quot;</code></pre>
+<p>While explaining the difference between sepals (usually green and close to the stem below the flower, but not always) and petals (usually the pretty part of the flower, but not always) is a great chance for science outreach, I’d like to start seeing more datasets out there.</p>
+</div>
+<div id="introducing-the-aminoacids-dataset" class="section level1">
+<h1>Introducing the aminoacids dataset</h1>
+<p>One of my favorite datasets for my biology and data-oriented classes are the chem.cat characteristics of the 20 amino acids that make up most proteins in, well, everything biological on the planet. All proteins, whether cow, insect, or soy are long strings of amino acids. There are 20 <a href="https://en.wikipedia.org/wiki/Proteinogenic_amino_acid">“cannonical” amino acids</a> that make up probably &gt;99% of all amino acids in all proteins (but there are two some fun exceptions, <a href="https://en.wikipedia.org/wiki/Selenocysteine">selenocysteine</a> and <a href="https://en.wikipedia.org/wiki/Pyrrolysine">pyrrolysine</a> that get used by bending the normal rules of the <a href="https://en.wikipedia.org/wiki/Expanded_genetic_code">genetic code</a>).</p>
+<p>This dataset originates from <a href="https://www.amazon.com/Bioinformatics-Molecular-Evolution-Higgs-Paul/dp/B008CMBFNO/ref=sr_1_1?dchild=1&amp;keywords=higgs+attwood&amp;qid=1607714235&amp;sr=8-1">Higgs and Attwood (2005)</a>, and was expanded in (Higgs (2009))[<a href="https://link.springer.com/article/10.1186/1745-6150-4-16" class="uri">https://link.springer.com/article/10.1186/1745-6150-4-16</a>]. I’ve added some additional categorical variables based on typical classifcations used in textbooks.</p>
+<div id="uses" class="section level2">
+<h2>Uses</h2>
+<p>Higgs and Attwood (2005) use these data to demonstrate several techinques:</p>
+<ol style="list-style-type: decimal">
+<li>Principal components analysis (PCA)</li>
+<li>Distance metrics and distance matrices</li>
+<li>Clustering with UPGMA and k-means.</li>
+<li>Heatmaps</li>
+</ol>
+<p>The dataset and a related one are used by Higgs in several publications exploring the evolution of the structure of genetic code, e.g. <a href="https://link.springer.com/article/10.1186/1745-6150-4-16">Higgs (2009)</a>, <a href="https://www.liebertpub.com/doi/abs/10.1089/ast.2008.0280?casa_token=PeIS2HEnGxgAAAAA:GZEf7xzXjNNqMqsIwV2sgXGMdFlfesEIa9jtzs9RrSbW9F9ReOP5DBxNzRkqYyHD_Q_7s0duZOxs">Higgs and Pudritz (2009)</a>.</p>
+<p>I use the dataset for these purposes, as well as scatterplots, scatterplot matrices, correlations, correlation matrices, and3D plots.</p>
+</div>
+<div id="getting-to-know-the-data" class="section level2">
+<h2>Getting to know the data</h2>
+<p>This exert shows the basic structure of the data:</p>
+<pre><code>##   aa  MW vol rbulk   pol  IEP phob1 phob2 saaw faal polreq freq
+## 1  A  89  67 11.50  0.00 6.00   1.8   1.6  113 0.74    7.0 7.80
+## 2  C 121  86 13.46  1.48 5.07   2.5   2.0  140 0.91    4.8 1.10
+## 3  D 133  91 11.68 49.70 2.77  -3.5  -9.2  151 0.62   13.0 5.19
+## 4  E 146 109 13.57 49.90 3.22  -3.5  -8.2  183 0.62   12.5 6.72
+## 5  F 165 135 19.80  0.35 5.48   2.8   3.7  218 0.88    5.0 4.39</code></pre>
+<p>There is one row for each of the 20 amino acids, and each column is either a numeric or categorical variable describing its chemistry. The categorical variables are all based on the numeric ones.</p>
+<p>Each of the 20 amino acid has a 1-letter code</p>
+<pre class="r"><code>aminoacids[,1]</code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; &quot;F&quot; &quot;G&quot; &quot;H&quot; &quot;I&quot; &quot;K&quot; &quot;L&quot; &quot;M&quot; &quot;N&quot; &quot;P&quot; &quot;Q&quot; &quot;R&quot; &quot;S&quot; &quot;T&quot; &quot;V&quot; &quot;W&quot;
+## [20] &quot;Y&quot;</code></pre>
+<p>Several famous amino acids are <a href="https://en.wikipedia.org/wiki/Tryptophan">tryptophan</a>, and leucine, isoleucine, and valine, the <a href="https://en.wikipedia.org/wiki/Branched-chain_amino_acid">“branched-chain amino acids”</a> used in nutritional supplements.</p>
+<p>Several of the variables describes the size of the molecule and are highly correlated</p>
+<ol style="list-style-type: decimal">
+<li>MW = <a href="https://en.wikipedia.org/wiki/Molecular_mass">molecular weight</a></li>
+<li>vol = volume (amount of space filled)</li>
+<li>rbulk = The bulkiness of the [<strong>side chain</strong> (“R”)[(<a href="https://en.wikipedia.org/wiki/Amino_acid#Side_chains" class="uri">https://en.wikipedia.org/wiki/Amino_acid#Side_chains</a>)], the part of each amino acid that makes it unique.</li>
+<li>saaw = Surface area accessible to water</li>
+</ol>
+<pre class="r"><code>cols &lt;- c(&quot;MW&quot;,&quot;vol&quot;,&quot;rbulk&quot;,&quot;saaw&quot;)
+labs &lt;- c(&quot;Molecular weight&quot;,&quot;Volume&quot;,&quot;Side-chain bulk&quot;,&quot;saaw&quot;)
+
+pairs(aminoacids[,cols],
+      labels = labs,upper.panel = NULL)
+mtext(text = &quot;Size-related amino acid characteristics&quot;, side = 3, line = 2.5, cex = 1.1)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>A major chemical characteristics of molecules is how they behave in water - their hydrophobicity. Hydrophobicity is measured two ways in these data, and is correlated somewhat with a third variable polar requirement</p>
+<ol style="list-style-type: decimal">
+<li>phob1</li>
+<li>phob2</li>
+<li>polreq</li>
+<li>faal</li>
+</ol>
+<p>An amino acids polar equirement is “a characteristic property … defined by the paper chromatographic experiments of Woese and coworkers (Woese 1973; Woese et al. 1966a, b) in aqueous solutions of nucleobases.” <a href="https://link.springer.com/article/10.1007%2Fs00239-008-9073-9">(Mathew and Luthey-Schulten 2008)</a>.</p>
+<pre class="r"><code>cols &lt;- c(&quot;phob1&quot;,&quot;phob2&quot;,&quot;polreq&quot;,&quot;faal&quot;)
+labs &lt;- c(&quot;Hydrophobicity - measure 1 &quot;,
+          &quot;Hydrophobicity - measure 2&quot;,
+          &quot;Polar requirement&quot;,&quot;faal&quot;)
+
+pairs(aminoacids[,cols],
+      labels = labs,upper.panel = NULL)
+mtext(text = &quot;Hydrophobicity, Polar Requirement, and FAAL&quot;, side = 3, line = 2.5, cex = 1.1)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>The remaining two variables, polarity (pol) and isoelectric point (IEP) are poorly correlaed with the others. At a molecule’s [isoelectric point](<a href="https://en.wikipedia.org/wiki/Isoelectric_point#" class="uri">https://en.wikipedia.org/wiki/Isoelectric_point#</a>:~:text=The%20isoelectric%20point%20(pI%2C%20pH,However%2C%20pI%20is%20also%20used.), the pH is such that the molecules carries no net electrical charge.</p>
+<p>In the plot below two other varibles are included for comparison.</p>
+<pre class="r"><code>cols &lt;- c(&quot;pol&quot;,&quot;IEP&quot;,&quot;MW&quot;,&quot;phob1&quot;)
+labs &lt;- c(&quot;Polarity&quot;,&quot;Isoelectric point&quot;,&quot;(MW)&quot;,&quot;(Hydrophobicity)&quot;)
+
+pairs(aminoacids[,cols],
+      labels = labs,upper.panel = NULL)
+mtext(text = &quot;Polarity and isoelectric point&quot;, side = 3, line = 2.5, cex = 1.1)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>#Build the dataframes.
+### Build dataframe
+aminoacids &lt;- data.frame(aa, 
+                     MW,vol,
+                     rbulk, pol, 
+                     IEP,phob1, phob2,
+                     saaw, faal, polreq,
+                     freq, charge.cat, phob.cat,
+                     vol.cat, pol.cat, chem.cat)</code></pre>
+<pre class="r"><code>#par(mfrow = c(1,1))
+plot(polreq  ~ freq, data = aminoacids,
+     xlab = &quot;label here&quot;,
+     ylab = &quot;label here&quot;,
+     main = &quot;title here&quot;,
+     col = 0)
+
+
+text(polreq ~ freq, 
+     labels = aa, 
+     data = aminoacids, 
+     col = 1:20)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+</div>
