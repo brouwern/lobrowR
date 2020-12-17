@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/blogdown/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/blogdown/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/12/17/building-a-basic-blogdown-site-workflow/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/hugo/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/tuftesque/</loc>
+    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/12/04/key-files-for-the-tufteque-hugo-theme/</loc>
+    <lastmod>2020-12-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+    <lastmod>2016-05-05T21:48:51-07:00</lastmod>
+  </url>
+  
+</urlset>

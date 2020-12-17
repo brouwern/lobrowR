@@ -1,0 +1,40 @@
+---
+title: Key Files for the Tuftesque Hugo Theme
+author: Nathan Brouwer
+date: '2020-12-04'
+slug: key-files-for-the-tufteque-hugo-theme
+categories:
+  - blogdown
+tags:
+  - Hugo
+  - tuftesque
+  - blogdown
+math: no
+meta: yes
+toc: yes
+exert: "Key files for users to change with the Tuftesque theme"
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<p>Tufteque based on lithium - same key files?</p>
+<div id="logo" class="section level2">
+<h2>logo</h2>
+<p>Tufteque defaults to Tin-tin.
+The logo.png files shows up in several places
+It is 111 kb and 320×320</p>
+<p>Blogdown doesn’t seem to re-size image on the fly and so I have only been able to change the image when a new images is approximatley the same size.</p>
+<pre class="r"><code>/themes/tuftesque/static
+/public</code></pre>
+<p>/public shows up when you build the site for the first time using blogdown::build_site(). This is where files are either copied to or built for actually posting the site.</p>
+<p>To change the logo, add a new logo to /themes/tuftesque/static then change what logo file is called up in the config.toml file under “[params.logo]”</p>
+<pre class="r"><code>    [params.logo]
+    #url = &quot;logo.png&quot;
+    url = &quot;logo2.png&quot;</code></pre>
+<p>Run blogdown:::preview_site(startup = TRUE) to see if it worked.</p>
+<pre class="r"><code>blogdown:::preview_site(startup = TRUE)</code></pre>
+</div>

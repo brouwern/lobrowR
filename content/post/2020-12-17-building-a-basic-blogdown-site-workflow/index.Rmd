@@ -72,13 +72,24 @@ blogdown:::preview_site(startup = TRUE)
 
 
 
-## Hugo page bundles
+## Set up Hugo page bundles
 
 Followed advice here
  https://alison.rbind.io/post/2019-02-21-hugo-page-bundles/
  
 Edited R profile
 usethis::edit_r_profile(scope = "project")
+
+
+## Associate with git
+
+https://happygitwithr.com/existing-github-last.html
+
+usethis::use_git()
+
+## Link with GitHub
+
+git remote add origin https://github.com/brouwern/lobrowr.git
 
 
 ## Other potentially useful commands
