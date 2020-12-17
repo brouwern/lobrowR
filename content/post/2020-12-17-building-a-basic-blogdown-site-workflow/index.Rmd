@@ -1,0 +1,91 @@
+---
+title: Building a basic blogdown site with the tuftesque theme
+author: Nathan Brouwer
+date: '2020-12-17'
+slug: building-a-basic-blogdown-site-workflow
+categories:
+  - blogdown
+tags:
+  - Hugo
+  - blogdown
+  - tuftesque
+math: no
+meta: no
+toc: no
+exert: "Workflow for setting up blogdown with tuftesque"
+---
+
+
+<!--more-->
+
+Had some problems, hopefully this workflow will work.
+
+## Uninstall Hugo
+
+I was having some issues so I re-installed RStudio and Hugo.  
+
+
+https://github.com/rstudio/blogdown/issues/324
+Command line:
+brew remove hugo
+
+Where hugo hides:
+~/Library/Application\ Support/Hugo/
+/usr/local/Cellar/hugo
+/usr/local/bin/hugo 
+
+
+## Create site
+
+blogdown::new_site(
+  dir = "~/Box Sync/R/lobrowr", # need to set directory to be made
+  install_hugo = TRUE,
+  format = "toml",
+  sample = TRUE,
+  theme = "yihui/hugo-lithium", # use original theme
+  hostname = "github.com",
+  theme_example = TRUE,
+  empty_dirs = FALSE,
+  to_yaml = TRUE,
+  serve = interactive()
+)
+
+## Set directory with site as package
+
+usethis::create_project(
+  path = "~/Box Sync/R/lobrowr",
+  rstudio = rstudioapi::isAvailable(),
+  open = rlang::is_interactive()
+)
+
+## stop sever to prevent hiccups ...
+
+blogdown::stop_server()
+
+## install the them
+
+blogdown::install_theme('nstrayer/tuftesque',force = TRUE)
+
+## preview again - new theme now implemented 
+
+blogdown:::preview_site(startup = TRUE)
+
+
+
+## Hugo page bundles
+
+Followed advice here
+ https://alison.rbind.io/post/2019-02-21-hugo-page-bundles/
+ 
+Edited R profile
+usethis::edit_r_profile(scope = "project")
+
+
+## Other potentially useful commands
+
+blogdown::hugo_version()
+blogdown::update_hugo()
+
+blogdown::install_hugo(version="latest", force=TRUE)
+
+

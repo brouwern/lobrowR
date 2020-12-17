@@ -1,0 +1,83 @@
+---
+title: Building a basic blogdown site with the tuftesque theme
+author: Nathan Brouwer
+date: '2020-12-17'
+slug: building-a-basic-blogdown-site-workflow
+categories:
+  - blogdown
+tags:
+  - Hugo
+  - blogdown
+  - tuftesque
+math: no
+meta: no
+toc: no
+exert: "Workflow for setting up blogdown with tuftesque"
+---
+
+
+<div id="TOC">
+no
+</div>
+
+<!--more-->
+<p>Had some problems, hopefully this workflow will work.</p>
+<div id="uninstall-hugo" class="section level2">
+<h2>Uninstall Hugo</h2>
+<p>I was having some issues so I re-installed RStudio and Hugo.</p>
+<p><a href="https://github.com/rstudio/blogdown/issues/324" class="uri">https://github.com/rstudio/blogdown/issues/324</a>
+Command line:
+brew remove hugo</p>
+<p>Where hugo hides:
+~/Library/Application Support/Hugo/
+/usr/local/Cellar/hugo
+/usr/local/bin/hugo</p>
+</div>
+<div id="create-site" class="section level2">
+<h2>Create site</h2>
+<p>blogdown::new_site(
+dir = “~/Box Sync/R/lobrowr”, # need to set directory to be made
+install_hugo = TRUE,
+format = “toml”,
+sample = TRUE,
+theme = “yihui/hugo-lithium”, # use original theme
+hostname = “github.com”,
+theme_example = TRUE,
+empty_dirs = FALSE,
+to_yaml = TRUE,
+serve = interactive()
+)</p>
+</div>
+<div id="set-directory-with-site-as-package" class="section level2">
+<h2>Set directory with site as package</h2>
+<p>usethis::create_project(
+path = “~/Box Sync/R/lobrowr”,
+rstudio = rstudioapi::isAvailable(),
+open = rlang::is_interactive()
+)</p>
+</div>
+<div id="stop-sever-to-prevent-hiccups" class="section level2">
+<h2>stop sever to prevent hiccups …</h2>
+<p>blogdown::stop_server()</p>
+</div>
+<div id="install-the-them" class="section level2">
+<h2>install the them</h2>
+<p>blogdown::install_theme(‘nstrayer/tuftesque’,force = TRUE)</p>
+</div>
+<div id="preview-again---new-theme-now-implemented" class="section level2">
+<h2>preview again - new theme now implemented</h2>
+<p>blogdown:::preview_site(startup = TRUE)</p>
+</div>
+<div id="hugo-page-bundles" class="section level2">
+<h2>Hugo page bundles</h2>
+<p>Followed advice here
+<a href="https://alison.rbind.io/post/2019-02-21-hugo-page-bundles/" class="uri">https://alison.rbind.io/post/2019-02-21-hugo-page-bundles/</a></p>
+<p>Edited R profile
+usethis::edit_r_profile(scope = “project”)</p>
+</div>
+<div id="other-potentially-useful-commands" class="section level2">
+<h2>Other potentially useful commands</h2>
+<p>blogdown::hugo_version()
+blogdown::update_hugo()</p>
+<p>blogdown::install_hugo(version=“latest”, force=TRUE)</p>
+</div>
