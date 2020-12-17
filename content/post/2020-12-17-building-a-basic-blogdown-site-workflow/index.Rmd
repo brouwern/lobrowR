@@ -91,6 +91,30 @@ usethis::use_git()
 
 git remote add origin https://github.com/brouwern/lobrowr.git
 
+git push --set-upstream origin master
+
+
+## Change the logo 
+
+See the post "Key files for the tufteque hugo theme" for info on this
+
+## Change the background color
+
+From the GitHub landing page for the theme
+https://github.com/nstrayer/tuftesque
+
+in config.toml add 
+backgroundcolor = "yourcolorchoice"
+to the [params]
+
+```{r, eval = F}
+[params]
+    ...
+    backgroundcolor = "white"
+    ...
+```
+
+
 
 ## Other potentially useful commands
 
