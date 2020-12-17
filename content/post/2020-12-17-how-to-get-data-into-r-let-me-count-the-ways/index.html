@@ -1,0 +1,89 @@
+---
+title: How to Get Data into R? Let Me Count the Ways...
+author: Nathan Brouwer
+date: '2020-12-17'
+slug: how-to-get-data-into-r-let-me-count-the-ways
+categories:
+  - data science
+tags:
+  - R
+  - data science
+  - read.csv
+  - R data structures
+  - learnR
+  - basic R
+math: no
+meta: yes
+toc: yes
+draft: yes
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<p>When you start learning R – or any data analysis software – one of the biggest challenges is getting data loaded for your analysis.</p>
+<p>Many things contribute to the steepness of the getting-data-into0your-#@@#$%-software learning cuve. These include</p>
+<ol style="list-style-type: decimal">
+<li>You need to understand your computer’s <strong>file system</strong>, which is something we rarely teach students, so you can save the file in the proper place</li>
+<li>You need to understand how your program interfaces with the file system so you can get it to find where you saved the data.</li>
+<li>You need to know the precise <strong>file format</strong> your program can take in data. This is usually <strong>.csv</strong> (<strong>Commas Separated Values</strong>) but there’s often some flexiblity in this. In the case of R data for numeric and character data, .csv is the standard and recommended, but you can also do .xls, .xlsx, interface with Google Sheets, or many other formats.</li>
+<li>You need to use the proper route/commands to load the data; base R can load .csv on its own, but need an additinal packages to load .xlsx, a different package to interface with Google Sheets, and other packages for each specialized type of data that is out there.</li>
+<li>The raw data needs to not have any <strong>wonkiness</strong> (yes, a technical term in data science) that will prevent the data from loading properly. Unfortunately, to parapharase Tolstoy:</li>
+</ol>
+<blockquote>
+<p>“All data that loads properly is the same; all data that doesn’t is wonky in its own way”</p>
+</blockquote>
+<p>One of the reasons I’m developing the <a href="https://github.com/brouwern/biodata">biodata</a> is to provide easy access to many datasets useful for bilogists and other life scientists learning data science, statistics and bioinformatics. One feature of this package and its associated website is that many of the data sets are going to be made available in multiple, redundant formats.</p>
+<p>Data in packages is typically stored as a <strong>.RData</strong> file which is either loaded automatically when the package is loaded, or via the data() command. This makes it super easy and is one of the reasons why I package my teaching and research materials in packages. This works great - until the package breaks or someone is unable download external software. The latter is a fairly common problem caused by firewalls or other security settings. Often these issues can be dealt with on a person’s individual computer, but other times require that system admins allow access to the places you want to get things from the internet. Nothing throws a wrench in a lessons plan like a group of students who can’t access the data you neeed. Because of this, some datasets in <a href="https://github.com/brouwern/biodata">biodata</a> are built up from scratch by making individuals data points or vectors and putting them together with R’s matrix and dataframe-building commands (rbind, cbind, matrix, data.frame).</p>
+<div id="submitting-small-data-sets-to-the-biodata-package" class="section level2">
+<h2>Submitting small data sets to the biodata package</h2>
+<p>The easiest way to submit small dataset to biodata is to create a .R script which builds up the data from individual vectors. The file should be named something simple like human_gene_lengths_prep.R, where the first part is ideally the name of the R object that will hold the data, and the last part is _prep.R.</p>
+<p>Each vector should be the name of the final column in the dataframe. The nameing conventions I use are below.</p>
+<p>The most important ones are</p>
+<ol style="list-style-type: decimal">
+<li>Column names should be short (and MUST be unique within the dataframe). Shorter names are easier to type, easier to remember, and take up less space on the screen when you do e.g. summary(dataframe).</li>
+<li>Column names should be descriptive as much as possible</li>
+<li>If there is a trade-off between short and descriptive, I prefer short.<br />
+</li>
+<li>Use only lower case, even for the first letter. This prevents the common typo of not hitting the shift key accurately, and makes things consistent</li>
+<li>Use dots between words if needed, eg. “dry.mass”, though I seem to change my mind every few months and use underscores instead (“dry_mass”). Being consistent is the main thing.</li>
+<li>When shortening names try to use standard abbreviations, eg. “wt” for “weight”, “ht” for “height.”</li>
+</ol>
+<p>Since I’ve spent far too much of my life doing data entry and currating data sets I have a long list of other, secondary considerations:</p>
+<ol style="list-style-type: decimal">
+<li>If there are multiple columns that have the same type of measurement (e.g. weight) for different things, start off with the measurement and put other information next, such as “wt_wet”, “wt_dry”. This makes similarities easier to see and is useful when you get to big dataframes and need to use commands such as regular expressions to locate columns.</li>
+<li>Include <strong>metadata</strong> about what all the columns mean.</li>
+<li>Don’t include units in the column names unless necessary. For example, if you have weight in grams, and its the only weight varibable in the dataframe, then just call it “wt” and put the fact that its grams in the metadata. If you happen to have weight in grams and weight in pounds, then use “wt.g” and “wt.lbs”; consider, though, if you only need one of these.</li>
+</ol>
+<div id="exaple-dataset" class="section level3">
+<h3>Exaple dataset</h3>
+<p>The 8th edition of biochemistry text book by Berg et al (2002) has a table where the 20 cannonical amino acids are listed along with the relative frequeny in three protein secondary structures: alpha helices, beta-pleated sheets, and reverse turns.</p>
+<p>The original columns headings and what I abbreviate them to are below.</p>
+<ol style="list-style-type: decimal">
+<li>Amino acid = “aa”</li>
+<li>Alpha helix = “a.helix”; “alpha.helix” would be ok too becaue the data set it small, but I know want to merge this with a larger dataset.</li>
+<li>Beta sheet = “b.sheet”; again, “beta.sheet” would be ok because its not too long.</li>
+<li>Reverse turn = “r.turn”; “reverse.turn” is ok, but is getting long.</li>
+</ol>
+<p>The information is key meta data and needs to go EVERYWHERE the data go.</p>
+<p>I’ll make these vectors like this, including some additional meta data. When I have time, I like to make the code look pretty by parsing the lines into nice block. This allows helps me do quality control by allowing me to check if there is the proper number of values.</p>
+<pre class="r"><code># Amino acid name
+## 3-letter aa code
+aa &lt;- c(&quot;Glu&quot;,&quot;Ala&quot;,&quot;Leu&quot;,&quot;Met&quot;,&quot;Gln&quot;,&quot;Lys&quot;,&quot;Arg&quot;,&quot;His&quot;,&quot;Val&quot;,&quot;Ile&quot;,
+        &quot;Tyr&quot;,&quot;Cys&quot;,&quot;Trp&quot;,&quot;Phe&quot;,&quot;Thr&quot;,&quot;Gly&quot;, &quot;Asn&quot;,&quot;Pro&quot;,&quot;Ser&quot;,&quot;Asp&quot;)
+
+# Alpha helix
+a.helix &lt;- c(1.59,1.41,1.34,1.30,1.27,1.23,1.21,1.05,0.90,1.09,
+             0.74,0.66,1.02,1.16,0.76,0.43,0.76,0.34,0.57,0.99)
+
+# Beta sheet
+# b.sheet
+
+# Reverse turne
+# r.turn</code></pre>
+<p>Double entry</p>
+</div>
+</div>
