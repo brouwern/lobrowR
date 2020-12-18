@@ -88,6 +88,24 @@ Create authors.toml in themes/tuftesque/data/.  Below is my original file.
 
 Note that the icon for GitHub that appears in the rendered author bio info doesn't seem to work currently.
 
+
+
+## Change the background color
+
+The default background is a creamy white.  I changed it to white.  Instructions are on the GitHub (landing page)[https://github.com/nstrayer/tuftesque] for the theme.  
+
+In config.toml just 
+backgroundcolor = "yourcolorchoice"
+to the [params] field, eg.
+
+```{r, eval = F}
+[params]
+    ...
+    backgroundcolor = "white"
+    ...
+```
+
+
 ## Code to generate a random walk banner
 
 Here's how I generate my banner.
