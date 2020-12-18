@@ -7,6 +7,7 @@ categories:
   - blogdown
 tags:
   - YAML
+  - blogdown
 math: no
 meta: yes
 toc: yes
@@ -24,8 +25,7 @@ https://bookdown.org/yihui/blogdown/content.html
 * draft: don't actually post it! (yes/no?)
 * publishdate: publish date - post it in the future
 * slug: "A character string as the tail of the URL. It is particularly useful when you define custom rules for permanent URLs (see Section 2.2.2)."
-
-* exert: quoted exert for homepage
+* excerpt: quoted exert for homepage (not "exert"!)
 
 ## Tags versus categories
 
