@@ -4,52 +4,52 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/blogdown/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+    <loc>/categories/biodata/</loc>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/blogdown/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/12/17/building-a-basic-blogdown-site-workflow/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+    <loc>/tags/biostatistics/</loc>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/categories/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/tags/hugo/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+    <loc>/tags/data/</loc>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/data-science/</loc>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2020/12/01/hello-biodata/</loc>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/statistics/</loc>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/tuftesque/</loc>
-    <lastmod>2020-12-17T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020/12/04/key-files-for-the-tufteque-hugo-theme/</loc>
-    <lastmod>2020-12-04T00:00:00+00:00</lastmod>
+    <lastmod>2020-12-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>

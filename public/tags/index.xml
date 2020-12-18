@@ -6,31 +6,40 @@
     <description>Recent content in Tags on Another data science blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 01 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>blogdown</title>
-      <link>/tags/blogdown/</link>
-      <pubDate>Thu, 17 Dec 2020 00:00:00 +0000</pubDate>
+      <title>biostatistics</title>
+      <link>/tags/biostatistics/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/blogdown/</guid>
+      <guid>/tags/biostatistics/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Hugo</title>
-      <link>/tags/hugo/</link>
-      <pubDate>Thu, 17 Dec 2020 00:00:00 +0000</pubDate>
+      <title>data</title>
+      <link>/tags/data/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/hugo/</guid>
+      <guid>/tags/data/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>tuftesque</title>
-      <link>/tags/tuftesque/</link>
-      <pubDate>Thu, 17 Dec 2020 00:00:00 +0000</pubDate>
+      <title>data science</title>
+      <link>/tags/data-science/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/tuftesque/</guid>
+      <guid>/tags/data-science/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>statistics</title>
+      <link>/tags/statistics/</link>
+      <pubDate>Tue, 01 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/statistics/</guid>
       <description></description>
     </item>
     
