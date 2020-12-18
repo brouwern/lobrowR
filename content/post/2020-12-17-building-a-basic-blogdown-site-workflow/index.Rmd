@@ -12,7 +12,7 @@ tags:
 math: no
 meta: no
 toc: no
-draft: yes
+draft: no
 excerpt: "Workflow for setting up blogdown with tuftesque"
 ---
 
@@ -20,7 +20,7 @@ excerpt: "Workflow for setting up blogdown with tuftesque"
 <!--more-->
 
 
-I initially set this blog up via the GUI interface and instructions on Nick Strayer's blog post the (tuftesque Hugo theme)[https://livefreeordichotomize.com/2017/07/13/introducing-the-tuftesque-blogdown-theme/] and Dan Quintana's on the [Academic Hugo theme ](https://www.dsquintana.blog/free-website-in-r-easy/).  I broke my intial set up and had to troubleshoot some things. The workflow below ended up working
+I initially set this blog up via the GUI interface and instructions on Nick Strayer's blog post the (tuftesque Hugo theme)[https://livefreeordichotomize.com/2017/07/13/introducing-the-tuftesque-blogdown-theme/] and Dan Quintana's on the [Academic Hugo theme ](https://www.dsquintana.blog/free-website-in-r-easy/).  I broke my initial set up and had to troubleshoot some things. The workflow below ended up working
 
 
 ## Uninstall Hugo
@@ -94,7 +94,7 @@ blogdown::stop_server()
 
 ## Install the tuftesque theme
 
-A new theme can be install using install_theme().  One of the issues I had with using the RStudio GUI to generate the new blog was that I was getting an error reated to having installed the tuftesque theme before.  force = TRUE re-installs it overtop of an existing installation. (Not sure why there was a problem with this i the first place).
+A new theme can be install using install_theme().  One of the issues I had with using the RStudio GUI to generate the new blog was that I was getting an error related to having installed the tuftesque theme before.  force = TRUE re-installs it over top of an existing installation. (Not sure why there was a problem with this i the first place).
 
 ```{r, eval = F}
 blogdown::install_theme('nstrayer/tuftesque',
