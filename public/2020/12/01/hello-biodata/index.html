@@ -119,8 +119,9 @@ body {
 </section>
 
 
-<section><p>A constant challenge both as a teacher and learner of data science is finding data sets to use. As a teacher, I needed datasets my students find interesting to demonstrate methods on, to use for test questions, and to recommend to students for use in research projects or further study. As a learner, working with different types of data allows you to explore new methods and sharpen you intuitions.</p>
-<p>Sadly, most scientific data outside of genomic sequence data is not available publicly. Luckily, the last decade or so has seen the birth of a widespread <a href="https://en.wikipedia.org/wiki/Open_science">open science</a> movement. Interpretation and adherence to the spirit “open science” varies, and even a the concept of <a href="https://en.wikipedia.org/wiki/Open_data">open data</a> is inconsistently interpreted and applied. Ideally, and open data be the complete set of raw data used for an entire paper. In practice, researchers often say they’ll make their data available but don’t (sometimes even posting bogus references to datasets), don’t post all of the data, post the summary data used to make figures but not the raw <strong>analysis data</strong>, use annoying formats such as PDFs, or don’t post all of the data to a paper.</p>
+<section><p>A constant challenge both as a teacher and learner of data science is finding data sets to use. As a teacher, I needed datasets my students find interesting for demonstrating methods, to use for assignments and test questions, and to recommend to students for use in research projects or further study. As a learner, working with different types of data allows you to explore new methods and sharpen your intuitions.</p>
+<p>Sadly, most scientific data outside of genomic sequence data is not available publicly. Luckily, the last decade or so has seen the birth of a widespread <a href="https://en.wikipedia.org/wiki/Open_science">open science</a> movement. Interpretation and adherence to the spirit “open science” varies though, and even the concept of <a href="https://en.wikipedia.org/wiki/Open_data">open data</a> is inconsistently interpreted, applied and enforced.</p>
+<p>Ideally, an open dataset would be the complete set of raw data used for an entire paper, often called <strong>analysis data</strong>. In practice, researchers often say they’ll make their data available but don’t (sometimes even posting bogus references to datasets), don’t post all of the data, post the summary data used to make figures but not the raw <strong>analysis data</strong>, use annoying formats such as PDFs, or don’t post all of the data to a paper.</p>
 <div id="introducing-biodata" class="section level2">
 <h2>Introducing biodata</h2>
 <p>In order to meet my needs for open data sets – and most importantly keep track of things when I’ve found them – I’ve created the <a href="https://github.com/brouwern/biodata">biodata package</a> in R. biodata has 4 main goals:</p>
@@ -128,7 +129,8 @@ body {
 <li>Be a general repository for example data sets for biology and the life sciences in general (neuroscience, medical sciences, etc).</li>
 <li>Be a repository for data sets used in computational replication projects I do with my students.</li>
 <li>Provide example visualizations and analyses related to the datasets.</li>
-<li>Provide practice problems and worked examples for classes involving data analysis.</li>
+<li>Compile practice problems and worked examples for classes involving data analysis.</li>
+<li>Provide functions useful for generating practice datasets for students. For example, generating biologically realistics random data, or selecting random subsets of large datasets.</li>
 </ol>
 </div>
 <div id="installing-biodata" class="section level2">
