@@ -1,8 +1,8 @@
 ---
-title: Key Files for the Tuftesque Hugo Theme
+title: Key files for the tuftesque hugo theme
 author: Nathan Brouwer
 date: '2020-12-04'
-slug: key-files-for-the-tufteque-hugo-theme
+slug: key-files-for-the-tuftesque-hugo-theme
 categories:
   - blogdown
 tags:
@@ -12,17 +12,20 @@ tags:
 math: no
 meta: yes
 toc: yes
-exert: "Key files for users to change with the Tuftesque theme"
+draft: yes
+excerpt: "Key files for users to change to personal as tuftesque-themed blogdown site"
+editor_options: 
+  chunk_output_type: console
 ---
 
 
 <!--more-->
 
-Tufteque based on lithium - same key files?
+tuftesque based on lithium - same key files
 
 ## logo
 
-Tufteque defaults to Tin-tin.
+tuftesque defaults to a picture of Tin-tin.
 The logo.png files shows up in several places
 It is 111 kb and 320×320
 
@@ -51,7 +54,52 @@ Run blogdown:::preview_site(startup = TRUE) to see if it worked.
 blogdown:::preview_site(startup = TRUE)
 ```
 
+##  Banner
 
+/themes/tuftesque/static/images
+
+Original tufteque banner:
+382 kb
+1280×427
+
+Cod to generate a random walk
+
+```{r}
+x <- 1:100
+y <- rep(NA,100)
+y[1] <- 100
+lambda1 <- rnorm(n =length(y), mean = 1, sd = 0.2)
+for(i in 2:length(y)){
+  y[i] <- y[i-1]*lambda1[i]
+}
+
+par(mar = c(0,0,0,0))
+plot(y ~ x, ylim = c(20,220),
+     xlim = c(0,15),
+     type = "l",yaxt="n", xlab="", ylab="",xaxt="n", 
+     bty= "n", lwd = 5, lty = 1)
+
+its <- 20
+for(j in 1:its){
+ y[1] <- 100
+
+for(i in 2:length(y)){
+  lambda <- 1
+  lambda <- rnorm(n =1, mean = 1, sd = 0.1+i/1000+1/lambda/1000)
+  y[i] <- y[i-1]*lambda
+}
+
+points(y ~ x, ylim = c(0,200), lwd = 2, type = "l", col = j) 
+}
+
+mtext(text = "  lobrowR",side = 3,line = -6, cex = 8,adj = 0)
+
+```
+
+
+## authors.toml
+
+Add this to add a mini author biography at the end of each post.
 
 
 

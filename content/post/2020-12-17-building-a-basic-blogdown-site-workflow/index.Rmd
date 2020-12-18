@@ -12,7 +12,8 @@ tags:
 math: no
 meta: no
 toc: no
-exert: "Workflow for setting up blogdown with tuftesque"
+draft: yes
+excerpt: "Workflow for setting up blogdown with tuftesque"
 ---
 
 
@@ -96,7 +97,7 @@ git push --set-upstream origin master
 
 ## Change the logo 
 
-See the post "Key files for the tufteque hugo theme" for info on this
+See the post "Key files for the tuftesque hugo theme" for info on this
 
 ## Change the background color
 
@@ -119,7 +120,7 @@ to the [params]
 
 As per
 
-Add file authors.toml to themes/tufteque/data/
+Add file authors.toml to themes/tuftesque/data/
 
 ```{r, eval = F}
 ["Nathan Brouwer"]

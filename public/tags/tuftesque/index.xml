@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>tuftesque on A Hugo website</title>
+    <title>tuftesque on Another data science blog</title>
     <link>/tags/tuftesque/</link>
-    <description>Recent content in tuftesque on A Hugo website</description>
+    <description>Recent content in tuftesque on Another data science blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 17 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/tuftesque/index.xml" rel="self" type="application/rss+xml" />
@@ -23,7 +23,7 @@ no
     </item>
     
     <item>
-      <title>Key Files for the Tufteque Hugo Theme</title>
+      <title>Key Files for the Tuftesque Hugo Theme</title>
       <link>/2020/12/04/key-files-for-the-tufteque-hugo-theme/</link>
       <pubDate>Fri, 04 Dec 2020 00:00:00 +0000</pubDate>
       

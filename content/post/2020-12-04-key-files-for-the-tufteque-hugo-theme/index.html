@@ -1,8 +1,8 @@
 ---
-title: Key Files for the Tuftesque Hugo Theme
+title: Key files for the tuftesque hugo theme
 author: Nathan Brouwer
 date: '2020-12-04'
-slug: key-files-for-the-tufteque-hugo-theme
+slug: key-files-for-the-tuftesque-hugo-theme
 categories:
   - blogdown
 tags:
@@ -12,7 +12,10 @@ tags:
 math: no
 meta: yes
 toc: yes
-exert: "Key files for users to change with the Tuftesque theme"
+draft: yes
+excerpt: "Key files for users to change to personal as tuftesque-themed blogdown site"
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -21,10 +24,10 @@ yes
 </div>
 
 <!--more-->
-<p>Tufteque based on lithium - same key files?</p>
+<p>tuftesque based on lithium - same key files</p>
 <div id="logo" class="section level2">
 <h2>logo</h2>
-<p>Tufteque defaults to Tin-tin.
+<p>tuftesque defaults to a picture of Tin-tin.
 The logo.png files shows up in several places
 It is 111 kb and 320×320</p>
 <p>Blogdown doesn’t seem to re-size image on the fly and so I have only been able to change the image when a new images is approximatley the same size.</p>
@@ -37,4 +40,45 @@ It is 111 kb and 320×320</p>
     url = &quot;logo2.png&quot;</code></pre>
 <p>Run blogdown:::preview_site(startup = TRUE) to see if it worked.</p>
 <pre class="r"><code>blogdown:::preview_site(startup = TRUE)</code></pre>
+</div>
+<div id="banner" class="section level2">
+<h2>Banner</h2>
+<p>/themes/tuftesque/static/images</p>
+<p>Original tufteque banner:
+382 kb
+1280×427</p>
+<p>Cod to generate a random walk</p>
+<pre class="r"><code>x &lt;- 1:100
+y &lt;- rep(NA,100)
+y[1] &lt;- 100
+lambda1 &lt;- rnorm(n =length(y), mean = 1, sd = 0.2)
+for(i in 2:length(y)){
+  y[i] &lt;- y[i-1]*lambda1[i]
+}
+
+par(mar = c(0,0,0,0))
+plot(y ~ x, ylim = c(20,220),
+     xlim = c(0,15),
+     type = &quot;l&quot;,yaxt=&quot;n&quot;, xlab=&quot;&quot;, ylab=&quot;&quot;,xaxt=&quot;n&quot;, 
+     bty= &quot;n&quot;, lwd = 5, lty = 1)
+
+its &lt;- 20
+for(j in 1:its){
+ y[1] &lt;- 100
+
+for(i in 2:length(y)){
+  lambda &lt;- 1
+  lambda &lt;- rnorm(n =1, mean = 1, sd = 0.1+i/1000+1/lambda/1000)
+  y[i] &lt;- y[i-1]*lambda
+}
+
+points(y ~ x, ylim = c(0,200), lwd = 2, type = &quot;l&quot;, col = j) 
+}
+
+mtext(text = &quot;  lobrowR&quot;,side = 3,line = -6, cex = 8,adj = 0)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="authors.toml" class="section level2">
+<h2>authors.toml</h2>
+<p>Add this to add a mini author biography at the end of each post.</p>
 </div>

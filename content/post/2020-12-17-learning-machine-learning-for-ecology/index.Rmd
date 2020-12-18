@@ -13,6 +13,7 @@ math: no
 meta: yes
 toc: yes
 draft: yes
+excerpt: "An annotated bibliography of ML for ecologists."
 ---
 
 

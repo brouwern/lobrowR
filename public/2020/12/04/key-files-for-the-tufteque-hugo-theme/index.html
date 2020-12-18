@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 
 <head>
-<title>A Hugo website - Key Files for the Tufteque Hugo Theme</title>
+<title>Another data science blog - Key Files for the Tuftesque Hugo Theme</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="keywords" content="">
-<meta name="author" content="A Hugo website">
+<meta name="author" content="Another data science blog">
 <meta name="generator" content="Hugo 0.79.0" />
 
   
@@ -42,7 +42,7 @@
 <style>
 body {
   
-    background-color: #fffff8;
+    background-color:  white;
   
 }
 </style>
@@ -63,7 +63,7 @@ body {
   <h1>
     <a href="/">
       <span id = "blog_logo">
-         <img src="/logo.png" alt="Blog Logo" style="height: 40px; width:40px">
+         <img src="/logo2.png" alt="Blog Logo" style="height: 40px; width:40px">
       </span>
       
     </a>
@@ -73,7 +73,7 @@ body {
 <section>
   <h1 class="content-title">
   
-  <a href="/2020/12/04/key-files-for-the-tufteque-hugo-theme/">Key Files for the Tufteque Hugo Theme</a>
+  <a href="/2020/12/04/key-files-for-the-tufteque-hugo-theme/">Key Files for the Tuftesque Hugo Theme</a>
   
   </h1>
   
@@ -119,20 +119,77 @@ body {
 </section>
 
 
-<section>
-
-<div id="TOC">
-yes
+<section><p>Tufteque based on lithium - same key files?</p>
+<div id="logo" class="section level2">
+<h2>logo</h2>
+<p>Tufteque defaults to Tin-tin.
+The logo.png files shows up in several places
+It is 111 kb and 320×320</p>
+<p>Blogdown doesn’t seem to re-size image on the fly and so I have only been able to change the image when a new images is approximatley the same size.</p>
+<pre class="r"><code>/themes/tuftesque/static
+/public</code></pre>
+<p>/public shows up when you build the site for the first time using blogdown::build_site(). This is where files are either copied to or built for actually posting the site.</p>
+<p>To change the logo, add a new logo to /themes/tuftesque/static then change what logo file is called up in the config.toml file under “[params.logo]”</p>
+<pre class="r"><code>    [params.logo]
+    #url = &quot;logo.png&quot;
+    url = &quot;logo2.png&quot;</code></pre>
+<p>Run blogdown:::preview_site(startup = TRUE) to see if it worked.</p>
+<pre class="r"><code>blogdown:::preview_site(startup = TRUE)</code></pre>
 </div>
-
-
-
-HUGOMORE42
-
 </section>
 <section>
   
 
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <hr/>
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <img style = "border-radius: 25px;" src="https://avatars2.githubusercontent.com/u/7841427?s=400&amp;v=4" alt="Nathan Brouwer image" width="90" height="90">
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Nathan Brouwer 
+              </span>
+              
+              <span class = "social_links">
+                 
+                  <a class = "social_buttons" href = https://www.biology.pitt.edu/person/nathan-brouwer >
+                      <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+                  </a>
+                
+                
+                  <a class="social_buttons" href = https://twitter.com/lobrowr>
+                    <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/brouwern >
+                    <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+                  </a>
+                
+              </span>  
+              
+          </div>
+          <div class = "bio">
+            <p class = "bio_text">Nathan like data.</p>
+          </div>
+        </div>
+      </div>
+    
+  
   
 
 
