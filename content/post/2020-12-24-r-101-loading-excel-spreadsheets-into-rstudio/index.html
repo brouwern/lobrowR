@@ -1,0 +1,69 @@
+---
+title: 'R 101: Loading Excel Spreadsheets into RStudio'
+author: Nathan Brouwer
+date: '2020-12-24'
+slug: r-101-loading-excel-spreadsheets-into-rstudio
+categories: []
+tags:
+  - basic R
+  - learnr
+math: no
+meta: yes
+toc: yes
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<p><strong>THIS CHAPTER HAS NOT BEEN WRITTEN</strong></p>
+<p>re-save as .csv and load</p>
+<p>load directly</p>
+<p>In this walk through we first re-save this data in an R-compatible format, a “csv” file, called “Lab1_data_PA_eagles.csv”.</p>
+<div id="prepping-data-in-excel" class="section level3">
+<h3>Prepping data in Excel</h3>
+<div id="save-data-to-your-r-working-directory-wd" class="section level4">
+<h4>Save data to your R working directory (WD)</h4>
+<p>Find the file
+<a href="https://github.com/brouwern/wildlifeR/tree/master/inst/extdata" class="uri">https://github.com/brouwern/wildlifeR/tree/master/inst/extdata</a></p>
+<p>Save the file “Lab1_data_PA_eagles.xlsx” to your computers desktop. Today we will be using this as the “working directory”</p>
+</div>
+<div id="re-save-the-excel-file-as-a-csv-file" class="section level4">
+<h4>Re-Save The Excel file as a “csv” file</h4>
+<p>In Excel, follow these steps</p>
+<ul>
+<li>“File”</li>
+<li>“Save As”</li>
+<li>“Browse”</li>
+<li>Select the working directory (your desktop)</li>
+<li>Select “Save as type”</li>
+<li>Select “CSV (Comma delimited)”</li>
+<li>Click “Save”</li>
+</ul>
+<p>The data is now in a format that can be loaded into R.</p>
+</div>
+</div>
+<div id="preparing-a-file-for-loading-into-r" class="section level2">
+<h2>Preparing a file for loading into R</h2>
+<p>Things work best when your Excel file is “clean” &amp; only has exactly what you want in it. Any extra, accidental typing can cause problems or make things confusing. A good practice is to always highlight cells to the right of and below your data, right click &amp; select “Delete”. This will remove any accidental typing that occurred.
+Do this to the cells below your data also.</p>
+</div>
+<div id="reload-data" class="section level2">
+<h2>Reload data</h2>
+<p>Reload data; be sure to include the “csv” at the end. Use this code “eaglesPA &lt;- read.csv(file =”eaglesPA.xlsx“)”. NOTE: I changed the name of the file to include "_w_2_states" so that I wouldn’t overwrite the original file. Don’t use this code unless you changed the file name to the exact same thing</p>
+<pre class="r"><code>#Use this code, w/o the &quot;#&quot; in front of it
+# eaglesPA &lt;- read.csv(file = &quot;eaglesPA.xlsx&quot;)
+
+#NOTE: I changed the name of the file to include &quot;_w_2_states&quot; so that I wouldn&#39;t overwrite the origina file.  Don&#39;t use this code unless you changed the file name to the exact smame thing
+#eaglesPA &lt;- read.csv(file = &quot;./data/Lab1_data_PA_eaglesPA_w_2_states.csv&quot;)</code></pre>
+<p>Type ls() to see what is now in your workspace</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## character(0)</code></pre>
+<p>Look at the re-loaded eaglesPA data object</p>
+<pre class="r"><code>summary(eaglesPA)
+dim(eaglesPA)
+head(eaglesPA)
+tail(eaglesPA)</code></pre>
+</div>

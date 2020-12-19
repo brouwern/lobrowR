@@ -1,0 +1,91 @@
+---
+title: Setting Up Blog Comments with Utterances
+author: Nathan Brouwer
+date: '2020-12-19'
+slug: setting-up-blog-comments-with-utterances
+categories:
+  - blogdown
+tags:
+  - Hugo
+math: no
+meta: no
+toc: no
+draft: yes
+---
+
+
+<!--more-->
+Hugo comments
+https://gohugo.io/content-management/comments/
+
+Utterance
+https://utteranc.es/
+https://utteranc.es/#configuration
+
+Another example
+http://rmflight.github.io/post/comments-enabled-via-utterances/
+
+Maelle Salmon
+https://masalmon.eu/2019/10/02/disqus/
+
+Bookdown book Custom layouts sections
+https://bookdown.org/yihui/blogdown/custom-layouts.html
+
+Here blog
+https://github.com/maelle/simplymaelle/tree/main/layouts/post
+
+File: simplymaelle/layouts/post/single.html
+
+```{r, eval = F}
+{{ partial "blog_header.html" . }}
+
+<div class="header">
+  <h1>{{ .Title }}</h1>
+  <h2>{{ .Description }}</h2>
+</div>
+<div class="content">
+
+  {{ partial "post_meta.html" . }}
+
+  {{ .Content }}
+
+  {{ partial "prev_next_post.html" . }}
+
+</div>
+
+
+<script src="https://utteranc.es/client.js"
+        repo="maelle/simplymaelle"
+        issue-term="title"
+        label="comments :speech_balloon:"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+
+{{ partial "footer.html" . }}
+```
+
+
+
+```{r, eval = F}
+<!-- This is the view for each individual post -->
+{{ partial "header.html" . }}
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+{{ partial "brand.html" . }}
+{{ partial "content.header.html" . }}
+{{ partial "toc.html" . }}
+<section>{{ .Content }}</section>
+<section>
+{{ partial "author.html" . }}
+{{ partial "disqus.html" . }}
+{{ partial "footer.html" . }}
+</section>
+</article>
+</div>
+</body>
+</html>
+```
+
