@@ -1,0 +1,370 @@
+---
+title: 'R 102: Getting software & data into R Part 2: Loading data from packages'
+author: Nathan Brouwer
+date: '2020-12-21'
+slug: getting-software-data-into-r-part-2-loading-data-from-packages
+categories:
+  - R
+tags:
+  - CRAN
+  - basic R
+  - learnr
+math: no
+meta: no
+toc: no
+---
+
+
+<div id="TOC">
+no
+</div>
+
+<!--more-->
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Working in R is all about working with data. There are many ways to get data into R, and RStudio has some helpful tools for this process. In this exercise we’ll go over the common ways that data get’s brought into R and how to download external packages to get datasets and functions. These include data</p>
+<ul>
+<li>pre-loaded in R</li>
+<li>loaded in R “packages”</li>
+<li>typed into a script</li>
+<li>loaded from a spreadsheet using RStudio’s data import tools</li>
+<li>loaded from a spreadsheet using just R code</li>
+</ul>
+<p>While discussing these various routes for data to get into R we’ll also talk a bit about how R works with data and learn data related vocab.</p>
+<div id="functions" class="section level3">
+<h3>Functions</h3>
+<ul>
+<li>head(), tail()</li>
+<li>summary()</li>
+</ul>
+</div>
+<div id="datsets" class="section level3">
+<h3>Datsets</h3>
+<ul>
+<li>datasets::iris</li>
+</ul>
+</div>
+<div id="packages" class="section level3">
+<h3>Packages</h3>
+</div>
+<div id="key-terms" class="section level3">
+<h3>Key terms</h3>
+<ul>
+<li>package</li>
+<li>dataframe</li>
+</ul>
+</div>
+</div>
+<div id="data-pre-loaded-in-r" class="section level2">
+<h2>Data pre-loaded in R</h2>
+<p>R comes with a number of datasets ready to use. A famous dataset frequently used in statistics is a set of measurements made on three species of irises and used to demonstrate some statistical principles by geneticist and statistician R.A. Fisher.</p>
+<p>We can put the iris dataset into R’s working memory using the data() command</p>
+<pre class="r"><code>data(iris)</code></pre>
+<p>We can see these data simply by type the word “iris” in the console and pressing enter. The dataset is too big for the screen probably and you’ll just see a bunch of numbers flash by. You can get just a glimpse of the data by using the head() command, which will show you the first six or so rows of data.</p>
+<pre class="r"><code>head(iris)</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<p>(You can all use the tail() command to see the last 6 rows if you want.)</p>
+<p>We can see that there are five rows of data. Three contain information about the length and width of the parts of the flower (Sepals and Petals) and the last holds the names of the species.</p>
+<p>We can get a sense for these numbers by using the summary() command on the data, which will give us the mean and other summary statistics</p>
+<pre class="r"><code>summary(iris)</code></pre>
+<pre><code>##   Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
+##  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
+##  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
+##  Median :5.800   Median :3.000   Median :4.350   Median :1.300  
+##  Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  
+##  3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  
+##  Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  
+##        Species  
+##  setosa    :50  
+##  versicolor:50  
+##  virginica :50  
+##                 
+##                 
+## </code></pre>
+<p>Note that the last column doesn’t contain numbers but rather names, so R counts up how many of each species name there is.</p>
+<p>If we want to be reminded of the names of each column we can use the names() function</p>
+<pre class="r"><code>names(iris)</code></pre>
+<pre><code>## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot;  &quot;Species&quot;</code></pre>
+<p>Looking at R data in the console isn’t always very easy, so one thing you can do is use the View() command. This will bring up the data in a spreadsheet like viewer as a new tab in the script editor, similar to this.</p>
+<pre class="r"><code>pander::pander(iris[1:10,])</code></pre>
+<table style="width:94%;">
+<colgroup>
+<col width="20%" />
+<col width="19%" />
+<col width="20%" />
+<col width="19%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Sepal.Length</th>
+<th align="center">Sepal.Width</th>
+<th align="center">Petal.Length</th>
+<th align="center">Petal.Width</th>
+<th align="center">Species</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">5.1</td>
+<td align="center">3.5</td>
+<td align="center">1.4</td>
+<td align="center">0.2</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="even">
+<td align="center">4.9</td>
+<td align="center">3</td>
+<td align="center">1.4</td>
+<td align="center">0.2</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="odd">
+<td align="center">4.7</td>
+<td align="center">3.2</td>
+<td align="center">1.3</td>
+<td align="center">0.2</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="even">
+<td align="center">4.6</td>
+<td align="center">3.1</td>
+<td align="center">1.5</td>
+<td align="center">0.2</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="odd">
+<td align="center">5</td>
+<td align="center">3.6</td>
+<td align="center">1.4</td>
+<td align="center">0.2</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="even">
+<td align="center">5.4</td>
+<td align="center">3.9</td>
+<td align="center">1.7</td>
+<td align="center">0.4</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="odd">
+<td align="center">4.6</td>
+<td align="center">3.4</td>
+<td align="center">1.4</td>
+<td align="center">0.3</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="even">
+<td align="center">5</td>
+<td align="center">3.4</td>
+<td align="center">1.5</td>
+<td align="center">0.2</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="odd">
+<td align="center">4.4</td>
+<td align="center">2.9</td>
+<td align="center">1.4</td>
+<td align="center">0.2</td>
+<td align="center">setosa</td>
+</tr>
+<tr class="even">
+<td align="center">4.9</td>
+<td align="center">3.1</td>
+<td align="center">1.5</td>
+<td align="center">0.1</td>
+<td align="center">setosa</td>
+</tr>
+</tbody>
+</table>
+<p>Note, however, that unlike a spreadsheet you cannot edit the data.</p>
+<p>If you want to know more about a package, you can look at its help file, e.g. “?iris.” These will often give you a fair bit of detail about what each column means, where the data are from, and may even have examples R functions applied to the data (though these can be rather obtuse, as is the case for the iris data).</p>
+<div id="preview-plotting-boxplots" class="section level3">
+<h3>Preview: Plotting boxplots</h3>
+<p>Plotting will be covered in depth in a subsequent exercise, but here’s a glimpse of how we plot things in R:</p>
+<pre class="r"><code>plot(Petal.Length ~ Species, data = iris)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>This code creates a series of <strong>boxplots</strong> of the petal lengths of each species of flower.</p>
+</div>
+</div>
+<div id="loading-data-from-r-packages" class="section level2">
+<h2>Loading data from R packages</h2>
+<p>Base R however is surrounded by a universe of extensions built by statistician, programmers, academics and businesses that use R for analyses. Some of these are fairly standard and are downloaded along with base R and just need to be explicitly installed. Other have to be downloaded from the internet and installed. Most packages contain data in order to demonstrate what they do.</p>
+<div id="loading-a-package-contained-in-base-r" class="section level3">
+<h3>Loading a package contained in base R</h3>
+<p>One package that is automatically downloaded but not automatically <em>installed</em> with base R is the “MASS” package, which stands for “Modern Applied Statistics in R”; S is the software that preceded R. We can install this package and make it functionally using the library() command</p>
+<pre class="r"><code>library(MASS)</code></pre>
+<p>The MASS package has a biological dataset called “crabs” that you can put into working memory using data(crabs). We can then look at it using head(),View(), tail(), summary(), etc. We can find out more about the dataset using the help file, accessed via ?crabs</p>
+<p><strong>Question</strong>
+1.What does the “FL” column mean in the crabs dataset?
+1.What is the mean of the FL column?</p>
+</div>
+<div id="preview-plotting-scatter-plot" class="section level3">
+<h3>Preview: Plotting scatter plot</h3>
+<p>We can plot the relationship between the FL and RW variables using a scatter plot.</p>
+<pre class="r"><code>plot(FL ~ RW, data = crabs)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+</div>
+<div id="learning-about-data-in-r" class="section level2">
+<h2>Learning about data in R</h2>
+<p>When data is being worked with in R, it lives in a place called the <strong>workspace.</strong> The workspace is not immediately transparent to you while working in R. It lives behind the scenes in what is essentially R’s working memory. We can see what’s on R’s mind using the ls() command</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;iris&quot;</code></pre>
+<p>We can see our two datasets that we loaded using the data() command.</p>
+<p>We can add new things to the work space using an R command like this</p>
+<pre class="r"><code>my.mean &lt;- mean(c(1,2,2))</code></pre>
+<p>Where “&lt;-” is called the <strong>assignment operator</strong>. This function <strong>assigns</strong> the output of an R command or R function to an <strong>R object</strong> in R’s working memory, the workspace.</p>
+<p>We can check again what’s on R’s mind using a command ls(), which stands for “list”</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;iris&quot;    &quot;my.mean&quot;</code></pre>
+<p>We can see that we added my.mean. We can see what my.mean is by typing its name in to the console</p>
+<pre class="r"><code>my.mean</code></pre>
+<pre><code>## [1] 1.666667</code></pre>
+<p>We can also learn more about is using the is() command</p>
+<pre class="r"><code>is(my.mean)</code></pre>
+<pre><code>## [1] &quot;numeric&quot; &quot;vector&quot;</code></pre>
+<p>Here we get a big of R lingo: R tells use “numeric”, which means it contain numeric data (numbers), and “vector”, which is one of several types of R object</p>
+<p>R objects can be just about anything. We can assign letter to an R object like this</p>
+<pre class="r"><code>my.abc &lt;- c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;)</code></pre>
+<p>Note that we have the letter each surrounded by quotes, and all 3 of them within c(…)</p>
+<p>If you call up “my.abc” from the console, you will get back the three letter. Now see what is(my.abc) says</p>
+<pre class="r"><code>is(my.abc)</code></pre>
+<pre><code>## [1] &quot;character&quot;           &quot;vector&quot;              &quot;data.frameRowLabels&quot;
+## [4] &quot;SuperClassMethod&quot;</code></pre>
+<p>There’s a lot that comes out, but the first one says “character”, indicating that yo have <strong>character data</strong> - data made up of text.</p>
+<p>If you type ls() again what happens?</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;iris&quot;    &quot;my.abc&quot;  &quot;my.mean&quot;</code></pre>
+<p>We now see both of our R objects and the two datasets.</p>
+<p>If we call is() on one of the dataset what do we is?</p>
+<pre class="r"><code>is(crabs)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot; &quot;list&quot;       &quot;oldClass&quot;   &quot;vector&quot;</code></pre>
+<p>Several things get spit out, but the first one is important: “data.frame” Dataframes are fundamental units of analysis in R. Most of the data you will load into R and work within R will be in a dataframe.</p>
+<p>Another function that tells about something in the the workspace is str(), which stands for structure. It provides info about what types of variables are in each column, and provides some sample output similar to head(), but oriented differently.</p>
+<pre class="r"><code>str(crabs)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    200 obs. of  8 variables:
+##  $ sp   : Factor w/ 2 levels &quot;B&quot;,&quot;O&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ sex  : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ index: int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ FL   : num  8.1 8.8 9.2 9.6 9.8 10.8 11.1 11.6 11.8 11.8 ...
+##  $ RW   : num  6.7 7.7 7.8 7.9 8 9 9.9 9.1 9.6 10.5 ...
+##  $ CL   : num  16.1 18.1 19 20.1 20.3 23 23.8 24.5 24.2 25.2 ...
+##  $ CW   : num  19 20.8 22.4 23.1 23 26.5 27.1 28.4 27.8 29.3 ...
+##  $ BD   : num  7 7.4 7.7 8.2 8.2 9.8 9.8 10.4 9.7 10.3 ...</code></pre>
+<p>Note that the variables “sp”, which stands for “Species”, and “sex” are followed by the word “Factor.” A <strong>factor variable</strong> is something that is or is summarized as discrete categories. For the species factor, there are two levels: the “B” species and the “O” species.</p>
+</div>
+<div id="load-data-from-an-external-r-package" class="section level2">
+<h2>Load data from an external R package</h2>
+<p>Many packages have to be explicitly downloaded and installed in order to use their functions and datasets. Note that this is a <strong>two step process</strong>:
+1. Download package from internet
+1. Explicitly tell R to load it</p>
+<div id="step-1-downloading-packages" class="section level3">
+<h3>Step 1: Downloading packages</h3>
+<p>There are a number of ways to install packages. One of the easiest is to use install.packages(). Note that it might be better to call this “download.packages” since after you install it, you also have to load it!</p>
+<p>Well download a package used for plotting called ggplot2, which stands for “Grammar of graphics”</p>
+<pre class="r"><code>install.packages(&quot;ggplot2&quot;)</code></pre>
+<p>Often when you download a package you’ll see a fair bit of red text. Usually there’s nothing of interest hear, but sometimes you need to read over it for hints about why something didn’t work.</p>
+</div>
+<div id="step-2-explicitly-loading-a-package" class="section level3">
+<h3>Step 2: Explicitly loading a package</h3>
+<p>The install.packages() functions just saves the package software to R; now you need to tell R “I want to work with the package”. This is done using the library() function. (Its called library because another name for packages is libraries)</p>
+<pre class="r"><code>library(ggplot2)</code></pre>
+<p>ggplot2 has a dataset called “msleep” which has information on the relationship between the typical size of a species and its brain weight, among other things</p>
+<p>We load the data actively into R’s memory using data(), and can look at the column names using names()</p>
+<pre class="r"><code>data(msleep)
+names(msleep)</code></pre>
+<pre><code>##  [1] &quot;name&quot;         &quot;genus&quot;        &quot;vore&quot;         &quot;order&quot;        &quot;conservation&quot;
+##  [6] &quot;sleep_total&quot;  &quot;sleep_rem&quot;    &quot;sleep_cycle&quot;  &quot;awake&quot;        &quot;brainwt&quot;     
+## [11] &quot;bodywt&quot;</code></pre>
+<p>We can now explore this data set as before using summary(), str(), etc.</p>
+<p>Another useful command when you are working with a new dataset is dim(). This tells you the dimension of the dataframe</p>
+<pre class="r"><code>dim(msleep)</code></pre>
+<pre><code>## [1] 83 11</code></pre>
+</div>
+<div id="preview-plotting-with-ggplot2" class="section level3">
+<h3>Preview: plotting with ggplot2</h3>
+<p>ggplot2 is a powerful plotting tool that has become standard among scientists, data scientists, and even journalists. Here’s a quick way to make a plot in ggplot2 using its qplot() function (qplot = quick plot, not to be confused with qqplot). Note that the qplot() function only works if you have ggplot2 downloaded and installed.</p>
+<p>A powerful aspect of ggplot is the fact that it can easily be used to modify plots. Here, we use the <strong>argument</strong> “color =” to color code the data points based on their IUCN red list status.</p>
+<pre class="r"><code>qplot(y = brainwt, x = bodywt, data = msleep, color = conservation)</code></pre>
+<pre><code>## Warning: Removed 27 rows containing missing values (geom_point).</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>The animals in this data vary in size from mice to elephants and so a lot of the data points are scrunched together. A trick to make this easier to see is to take the log of the brainwt and bodywt variable. In R, we can do this on the fly like this using the log() command</p>
+<pre class="r"><code>qplot(y = log(brainwt), x = log(bodywt), data = msleep, color = conservation)</code></pre>
+<pre><code>## Warning: Removed 27 rows containing missing values (geom_point).</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+</div>
+</div>
+<div id="loading-data-from-an-r-script" class="section level2">
+<h2>Loading data from an R script</h2>
+<p>So far we have only looked at dataset that are already formatted into <strong>dataframe</strong> by somebody for us. Now we want to look at how to set up datasets ourselves. When datasets are small its possible to enter them more or less directly into R by typing out all of the numbers in a script. This only works well for when datasets are small; even when datasets are small its best to keep them separate from your R code in a spreadsheet file. However, its useful to know how to load data this way; even when an exercise in this book loads data from a package or spreadsheet I will also often include the code to load it directly just in case there is an issue with download the package or file.</p>
+<div id="the-eagles-have-landed---in-your-r-workspace" class="section level3">
+<h3>The eagles have landed - in your R workspace</h3>
+<p>In a subsequent exercise we will practice using data on the number of eagles in Pennsylvania and other states in the USA. We can load this data into R by making R objects, and then turning these objects into a dataframe.</p>
+<div id="step-one-build-r-objects" class="section level4">
+<h4>Step one: Build R objects</h4>
+<p>First, we’ll use the assignment operator (“&lt;-”) to create an R object called “year” that lists the years from 1980 through 2015 for which the number breeding pairs of eagles in Pennsylvania, USA, is known.</p>
+<pre class="r"><code>year &lt;- c(1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,
+          1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,
+          2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,
+          2010,2011,2012,2013,2014,2015,2016)</code></pre>
+<p>A quick trick to do this much fast is</p>
+<pre class="r"><code>year &lt;- c(1980:2016)</code></pre>
+<p>Second, we’ll create an object called “eagles” with the number of breeding pairs (male and females paired up for making baby eagles) recorded each year. Note that most years in the 1980s are skipped because there is not data available. When data are missing we use NA. (Note that this is just NA, with not quotes around it).</p>
+<pre class="r"><code>eagles &lt;-  c(3, NA, NA, NA, NA, NA, NA,NA,NA,NA,
+             7,  9, 15, 17, 19, 20, 20,23,29,43,
+             51,55, 64, 69, NA, 96,100,NA,NA,NA,
+             NA,NA, NA, NA,252,277, NA)</code></pre>
+</div>
+<div id="step-two-build-dataframe" class="section level4">
+<h4>Step two: Build dataframe</h4>
+<p>We can then turn these two separate R objects into a dataframe</p>
+<pre class="r"><code>eagle.df &lt;-data.frame(year, eagles)</code></pre>
+</div>
+</div>
+<div id="looking-at-the-eagle-data" class="section level3">
+<h3>Looking at the eagle data</h3>
+<p>We can check that we have this R object by using the <strong>ls()</strong> command.</p>
+<pre class="r"><code>ls()</code></pre>
+<pre><code>## [1] &quot;eagle.df&quot; &quot;eagles&quot;   &quot;iris&quot;     &quot;msleep&quot;   &quot;my.abc&quot;   &quot;my.mean&quot;  &quot;year&quot;</code></pre>
+<p>And we can confirm that its a dataframe using <strong>is()</strong></p>
+<pre class="r"><code>is(eagle.df)</code></pre>
+<pre><code>## [1] &quot;data.frame&quot; &quot;list&quot;       &quot;oldClass&quot;   &quot;vector&quot;</code></pre>
+<p><strong>summary()</strong> will give us basic info on PA’s eagles</p>
+<pre class="r"><code>summary(eagle.df)</code></pre>
+<pre><code>##       year          eagles      
+##  Min.   :1980   Min.   :  3.00  
+##  1st Qu.:1989   1st Qu.: 18.00  
+##  Median :1998   Median : 29.00  
+##  Mean   :1998   Mean   : 61.53  
+##  3rd Qu.:2007   3rd Qu.: 66.50  
+##  Max.   :2016   Max.   :277.00  
+##                 NA&#39;s   :18</code></pre>
+<p>Note that in the “eagles” columns it tells you the number of NAs (missing values). The summary() readout quickly tells us that the eagle population has changed dramatically.</p>
+<div id="preview-plotting-the-eagle-d" class="section level4">
+<h4>Preview: Plotting the Eagle D</h4>
+<p>We can plot the data in ggplot2 using qplot(). However, there is an excellent package that adds additional functionality to ggplot called ggpubr. This is fairly common in R: you have packages that add functions to R, and packages that add functions to other packages.</p>
+<p>We can install ggpubr using install.packages(). Note that the name of the package, ggpubr, is in quotes.</p>
+<pre class="r"><code>install.packages(&quot;ggpubr&quot;)</code></pre>
+<p>ggpubr requires <em>another package</em>, magrittr, which R tells you about in red text. When a package requires another package, its called a <strong>dependency</strong> because one package relies on another. ggpubr has magrittr as a dependency; ggpubr modifies ggplot2, so ggpubr has ggplot2 as a dependency.</p>
+<p>Occasionally you might try to load a package and it won’t automatically install or download the dependency, usually because its not yet downloaded. If this happens with magrittr we would just have to download it using “install.packages(”magrittr“)”.</p>
+<p>Once we have ggpubr loaded we can plot the eagle data using the handy function <strong>ggscatter()</strong></p>
+<pre class="r"><code>ggscatter(dat = eagle.df, y = &quot;eagles&quot;, x= &quot;year&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="challenge" class="section level2">
+<h2>Challenge</h2>
+<p>We can add a <strong>smoother</strong> to the plot by addin add = “loess”.</p>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 18 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 18 rows containing missing values (geom_point).</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</div>

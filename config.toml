@@ -4,6 +4,7 @@ title = "Another data science blog"
 theme = "tuftesque"
 googleAnalytics = ""
 disqusShortname = ""
+enableEmoji = true
 
 # added "\\.knit\\.md$", "\\.utf8\\.md$" based on message from blogdown
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]

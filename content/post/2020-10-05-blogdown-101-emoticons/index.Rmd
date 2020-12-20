@@ -1,0 +1,129 @@
+---
+title: 'Blogdown 101: Enabling emoticons'
+author: Nathan Brouwer
+date: '2020-12-19'
+slug: blogdown-101-emoticons
+categories:
+  - blogdown
+tags:
+  - blogdown
+  - R
+math: no
+meta: yes
+toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<!--more-->
+
+```{r, echo = F}
+library(blogdown)
+library(tufte)
+```
+
+
+
+To enable emoticons add this to the header of config.toml
+
+```{r, eval = F}
+enableEmoji = true
+```
+
+For an example,  Maelle Salmon's config.toml on [GitHub](https://github.com/maelle/simplymaelle/blob/main/config.toml)
+ 
+I've never used emoticons in RMarkdown and wasn't able initially to get them to show up usuing syntax like this:
+:exclamation:
+
+Using the [emo](https://github.com/hadley/emo) package worked.   As of Dec. 2020 emo isn't on CRAN but is available from GitHub
+```{r, eval = F}
+devtools::install_github("hadley/emo")
+emo::ji("poop")
+```
+
+
+For some more info on blogdown and emoticons see [here](https://bookdown.org/yihui/blogdown/configuration.html).
+
+A useful cheatsheet is [here](https://www.webfx.com/tools/emoji-cheat-sheet/).
+
+To call an emoji in-line use this:
+
+```{r, eval = F}
+`r emo::ji("sos")` 
+```
+
+And you'll get this:
+`r emo::ji("sos")` 
+
+
+I'd like to figure out how to render them in margin notes but haven't figure it out yet.
+
+```{r fig.margin=TRUE}
+plot(cars)
+```
+
+
+```{r, echo = F, eval = F}
+#I'm thinking about using emjoi in Tufte side-notes to signal certain themes:
+
+# Protip
+emo::ji("mortar_board")
+
+# plotting info
+emo::ji("chart_with_upwards_trend")
+emo::ji("bar_chart")
+
+# alternate code
+emo::ji("floppy_disk")
+
+# math note
+emo::ji("heavy_division_sign")
+emo::ji("heavy_plus_sign")
+emo::ji("heavy_multiplication_x")
+
+# practice
+emo::ji("repeat")
+
+# seeding an idea I'll be coming back to
+emo::ji("seedling")
+
+
+# package
+emo::ji("package")
+
+# warning
+emo::ji("warning")
+
+# help!
+emo::ji("sos")
+
+# details
+emo::ji("mag")
+
+# connection to other ideas
+emo::ji("link")
+```
+
+
+Other emojis
+
+```{r}
+emo::ji("exclamation")
+emo::ji("ballot_box_with_check")
+emo::ji("no_entry_sign")
+emo::ji("memo")
+emo::ji("open_file_folder")
+emo::ji("mega")
+emo::ji("computer")
+emo::ji("muscle")
+emo::ji("question")
+emo::ji("twisted_rightwards_arrows")
+emo::ji("hourglass")
+```
+
+
+
+
+
+

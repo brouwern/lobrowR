@@ -1,0 +1,434 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+<head>
+<title>Another data science blog - R 101: Installing Packages from GitHub</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Another data science blog">
+<meta name="generator" content="Hugo 0.79.0" />
+
+  
+
+
+
+
+
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="/css/tuftesque.css">
+<script src="/js/lightbox.js"></script>
+<style>
+body {
+  
+    background-color:  white;
+  
+}
+</style>
+
+
+
+<script>
+
+</script>
+
+
+</head>
+
+<body>
+<div id="layout" class="pure-g">
+<article class="pure-u-1">
+<header class="brand">
+  <h1>
+    <a href="/">
+      <span id = "blog_logo">
+         <img src="/logo2.png" alt="Blog Logo" style="height: 40px; width:40px">
+      </span>
+      
+    </a>
+  </h1>
+</header>
+
+<section>
+  <h1 class="content-title">
+  
+  <a href="/2020/12/19/r-101-installing-packages-from-github/">R 101: Installing Packages from GitHub</a>
+  
+  </h1>
+  
+  
+  
+  <span class="content-meta">
+    
+  
+  
+  
+  <i class="fa fa-user">&nbsp;</i><span class="author">
+    &nbsp;Nathan Brouwer</span> <br>
+    
+  
+  
+  
+  <i class="fa fa-calendar"></i>
+    &nbsp;Dec 19, 2020
+  
+  
+  
+  &nbsp;<i class="fa fa-clock-o"></i>
+    &nbsp;6 min read
+  
+  
+  
+    </span>
+    
+    
+    </section>
+
+<section>
+  <details closed class="toc">
+    <summary>Contents</summary>
+    
+  </details>
+</section>
+
+
+<section><div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p><strong>GitHub</strong> is an online platform for hosting and sharing code. More formally it is called a <strong>software repository</strong>. It is very popular with software developers, especially those creating open-source applications, and has also been adopted whole-hearted by many data scientists and data analysts.</p>
+<p>GitHub has many features and uses. One of the most basic ones is to use GitHub like Dropbox to R backup copies of code on GitHub. GitHub also can act like a kind of web server to host websites, online books like this one, and provide access to open source software. Many people working on R packages use GitHub to host their package while its being developed or expanded. When a package is finished, it often is then submitted to CRAN, and the version on GitHub is used as the <strong>developement version</strong> where new features are being developed and tested.</p>
+<p>You can access packages on GitHub to get the newest version before something has been submitted to CRAN, or packages that haven’t or maybe will never end up on CRAN. This book relies on a package I’ve written called <strong>wildlifeR</strong> for datasets and some functions. In this short exercise we’ll download a package from CRAN we need to interact with GitHub, and then download wildlifeR. We’ll also go to the wildlifeR website to learn more about the package.</p>
+<div id="learning-objectives" class="section level3">
+<h3>Learning objectives</h3>
+</div>
+<div id="learning-goals" class="section level3">
+<h3>Learning goals</h3>
+</div>
+<div id="functions-arguements" class="section level3">
+<h3>Functions &amp; Arguements</h3>
+<ul>
+<li>library</li>
+<li>devtools::install_github</li>
+<li>scatter.smooth</li>
+<li>$</li>
+</ul>
+</div>
+<div id="packages" class="section level3">
+<h3>Packages</h3>
+<ul>
+<li>devtools</li>
+<li>wildlifeR</li>
+</ul>
+</div>
+<div id="potential-hangups" class="section level3">
+<h3>Potential hangups</h3>
+<ul>
+<li>We’ll use the “$” operator to tell scatter.smooth() what to plot, which is different than how ggpubr and ggplot2 work; sigh…</li>
+</ul>
+</div>
+</div>
+<div id="accessing-github-using-devtools" class="section level2">
+<h2>[ ] Accessing GitHub using devtools</h2>
+<p>The devtools package is used by many people who write R packages and includes a function for downloading from GitHub</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;, dependencies = TRUE) # [ ]</code></pre>
+<p>devtools has a lot of dependencies so this might take a while.</p>
+<p>Once everything is downloaded, load the package explicitly with library()</p>
+<pre class="r"><code>library(devtools)</code></pre>
+<pre><code>## Loading required package: usethis</code></pre>
+</div>
+<div id="downloading-the-wildlifer-package-with-install_github" class="section level2">
+<h2>[ ] Downloading the wildlifeR package with install_github()</h2>
+<p>My github site is at <a href="https://github.com/brouwern" class="uri">https://github.com/brouwern</a> and the code for wildlifeR is <a href="https://github.com/brouwern/wildlifeR" class="uri">https://github.com/brouwern/wildlifeR</a>. You can access the files directly if you want, but that isn’t necessary. We can download the package just like it was on CRAN using install_github(). You’ll probably see some red text and a LOT of black text as install_github() talks with GitHub.</p>
+<pre class="r"><code>install_github(&quot;brouwern/wildlifeR&quot;)</code></pre>
+<pre><code>## Downloading GitHub repo brouwern/wildlifeR@HEAD</code></pre>
+<pre><code>## RcppEigen (0.3.3.7.0 -&gt; 0.3.3.9.1) [CRAN]
+## testthat  (2.3.2     -&gt; 3.0.1    ) [CRAN]
+## pbkrtest  (0.4-8.6   -&gt; 0.5-0.1  ) [CRAN]</code></pre>
+<pre><code>## Installing 3 packages: RcppEigen, testthat, pbkrtest</code></pre>
+<pre><code>## 
+##   There is a binary version available but the source version is later:
+##           binary  source needs_compilation
+## pbkrtest 0.4-8.6 0.5-0.1             FALSE
+## 
+## 
+## The downloaded binary packages are in
+##  /var/folders/q8/gwjfr69n05vf4h15l6hdl4d8x1zk5v/T//RtmpFtX1EH/downloaded_packages</code></pre>
+<pre><code>## installing the source package &#39;pbkrtest&#39;</code></pre>
+<pre><code>##   
+   checking for file ‘/private/var/folders/q8/gwjfr69n05vf4h15l6hdl4d8x1zk5v/T/RtmpFtX1EH/remotes183747d636fea/brouwern-wildlifeR-29f3ae3/DESCRIPTION’ ...
+  
+✓  checking for file ‘/private/var/folders/q8/gwjfr69n05vf4h15l6hdl4d8x1zk5v/T/RtmpFtX1EH/remotes183747d636fea/brouwern-wildlifeR-29f3ae3/DESCRIPTION’
+## 
+  
+─  preparing ‘wildlifeR’:
+## 
+  
+   checking DESCRIPTION meta-information ...
+  
+✓  checking DESCRIPTION meta-information
+## 
+  
+─  checking for LF line-endings in source and make files and shell scripts
+## 
+  
+─  checking for empty or unneeded directories
+## 
+  
+─  building ‘wildlifeR_0.1.0.tar.gz’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/Buzatto_et_al_2015_frog_arm_dimorph/Buzatto_2015_Evolution_frog_arm_dimorphism_1_no_header.csv’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/Buzatto_et_al_2015_frog_arm_dimorph/Buzatto_2015_Evolution_frog_arm_dimorphism_2.csv’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/Buzatto_et_al_2015_frog_arm_dimorph/Buzatto_et_al_2015_Evolution_frog_arm_dimorphism.pdf’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/Assignment_details_script_sample_plots_exploratory_graphs.docx’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/assignment_details_DRAFT/Assignment_details_script_sample_plots_exploratory_graphs.docx’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/assignment_details_DRAFT/ENS 495 Independent Data Analysis Assignment 2017.docx’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/reproducible_analysis_script_full_wildlifeR_workflow/reproducible_analysis_script_full_wildlifeR_workflow..docx’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/reproducible_analysis_script_full_wildlifeR_workflow/reproducible_analysis_script_full_wildlifeR_workflow..pdf’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/reproducible_analysis_script_full_wildlifeR_workflow/reproducible_analysis_script_full_wildlifeR_workflow.R’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_ANOVA_example/BROUWER_NL_term_paper_ANOVA_example_PIWO_vs_time.Rmd’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_ANOVA_example/BROUWER_NL_term_paper_ANOVA_example_PIWO_vs_time.docx’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_ANOVA_example/BROUWER_NL_term_paper_ANOVA_example_PIWO_vs_time.pdf’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_ANOVA_example/Brouwer_NL_analysis_script_PIWO_00_05_10.R’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_ANOVA_example/PIWO_00_05_10.csv’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_ANOVA_example/example_script_ANOVA.pdf’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/BROUWER_NL_analysis_script_PIWO_vs_forest_cover.Rmd’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/BROUWER_NL_analysis_script_PIWO_vs_forest_cover.docx’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/BROUWER_NL_analysis_script_PIWO_vs_forest_cover.pdf’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/BROUWER_NL_term_paper_regressio_example_PIWO_vs_forest_cover.Rmd’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/BROUWER_NL_term_paper_regressio_example_PIWO_vs_forest_cover.pdf’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/Brouwer_NL_PIWO_vs_forest_cover.csv’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/Brouwer_NL_analysis_script_PIWO_vs_forest_cover.R’
+## 
+  
+   Warning in utils::tar(filepath, pkgname, compression = compression, compression_level = 9L,  :
+##      storing paths of more than 100 bytes is not portable:
+##      ‘wildlifeR/inst/extdata/term_paper_materials/term_paper_example_submissions/term_paper_regression_example/term_paper_regression_example.html’
+## 
+  
+   Warning: invalid uid value replaced by that for user &#39;nobody&#39;
+##    Warning: invalid gid value replaced by that for user &#39;nobody&#39;
+## 
+  
+   
+## </code></pre>
+<p>Now we can put it all explicitly into memory</p>
+<pre class="r"><code>library(wildlifeR) # [ ] </code></pre>
+<hr />
+<p><strong>OPTIONAL:</strong> Accessing data from wildlifeR
+One of the datasets in wildlifeR is called “eggs.” It has data from a paper by Stoddard et al. (2017) in Science called [Avian egg shape: Form, function, and evolution.] (<a href="http://science.sciencemag.org/content/356/6344/1249" class="uri">http://science.sciencemag.org/content/356/6344/1249</a>). We can plot the relationship between egg asymmetry and ellipticity using the base R function scatter.smooth(), which draws a type of regression line through the data for us (Note that the syntax for scatter.smooth() is, sadly, different than plot() and other plotting functions…).</p>
+<pre class="r"><code>scatter.smooth(eggs$asymmetry, eggs$ellipticity)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="the-wildlifer-packge-webiste" class="section level2">
+<h2>[ ] The wildlifeR packge webiste</h2>
+<p>Some packages have websites that summarize the package contents. If you visit <a href="https://brouwern.github.io/wildlifeR/" class="uri">https://brouwern.github.io/wildlifeR/</a> you can find out information on each dataset and function under the “Reference” tab, and see how the datasets and functions are used under the “Articles” tab.</p>
+</div>
+</section>
+<section>
+  
+
+  
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+    <hr/>
+    <div class="author_blurb">
+        <div class="author_photo">
+          <div class="photo">
+            <img style = "border-radius: 25px;" src="https://avatars2.githubusercontent.com/u/7841427?s=400&amp;v=4" alt="Nathan Brouwer image" width="90" height="90">
+          </div>
+        </div>
+        <div class = "author_info">
+          <div class = "contact_info">
+              <span class = "name"> 
+                Nathan Brouwer 
+              </span>
+              
+              <span class = "social_links">
+                 
+                  <a class = "social_buttons" href = https://www.biology.pitt.edu/person/nathan-brouwer >
+                      <img style="width:20px;" src = "http://image.flaticon.com/icons/png/128/12/12195.png"/>
+                  </a>
+                
+                
+                  <a class="social_buttons" href = https://twitter.com/lobrowr>
+                    <img style="width:22px;" src = "https://cdn1.iconfinder.com/data/icons/logotypes/32/twitter-128.png"/>
+                  </a>
+                
+                
+                  <a class = "social_buttons" href = https://github.com/brouwern >
+                    <img style="width:23px;" src = "https://a248.e.akamai.net/assets.github.com/images/icons/emoji/octocat.png"/>
+                  </a>
+                
+              </span>  
+              
+          </div>
+          <div class = "bio">
+            <p class = "bio_text">Nathan Brouwer is a lecturer in the Department of Biological Sciences at the University of Pittsburgh.</p>
+          </div>
+        </div>
+      </div>
+    
+  
+  
+
+
+
+  
+
+
+      
+  <footer class="page-footer">
+		<hr>
+		<ul class="page-footer-menu">
+		
+		</ul>
+
+  
+
+	<div class="copyright">
+	<p>
+    
+      &copy;2020
+    .
+    All rights reserved.
+    
+  </p>
+</div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    });
+    </script>
+    <script type="text/javascript"
+      src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+</footer>
+
+</section>
+</article>
+</div>
+</body>
+</html>

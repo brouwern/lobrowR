@@ -6,7 +6,67 @@
     <description>Recent content in Posts on Another data science blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 17 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 19 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blogdown 101: Emoticons</title>
+      <link>/2020/12/19/blogdown-101-emoticons/</link>
+      <pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/12/19/blogdown-101-emoticons/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+yes
+&lt;/div&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>R 101: Installing Packages from GitHub</title>
+      <link>/2020/12/19/r-101-installing-packages-from-github/</link>
+      <pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/12/19/r-101-installing-packages-from-github/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+yes
+&lt;/div&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>R 101: RMarkdown</title>
+      <link>/2020/12/19/r-101-rmarkdown/</link>
+      <pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/12/19/r-101-rmarkdown/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+yes
+&lt;/div&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>R 101: The Different Faces of R Code - The Console, Scripts &amp; RMarkdown</title>
+      <link>/2020/12/19/r-101-the-different-faces-of-r-code-the-console-scripts-rmarkdown/</link>
+      <pubDate>Sat, 19 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/12/19/r-101-the-different-faces-of-r-code-the-console-scripts-rmarkdown/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+yes
+&lt;/div&gt;
+
+</description>
+    </item>
+    
     <item>
       <title>Building a basic blogdown site with the tuftesque theme</title>
       <link>/2020/12/17/building-a-basic-blogdown-site-workflow/</link>
