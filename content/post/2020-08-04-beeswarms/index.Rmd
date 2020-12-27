@@ -1,0 +1,107 @@
+---
+title: 'Example plot: beeswarms'
+author: Nathan Brouwer
+date: '2020-08-04'
+slug: ''
+categories: []
+tags: []
+math: no
+meta: no
+toc: no
+---
+
+
+<!--more-->
+
+## Example plot: beeswarm plot
+
+```{r echo = F}
+# Prep stuff
+## libraries
+library(readxl)
+library(ggpubr)
+library(cowplot)
+library(dplyr)
+library(here)
+library(plotrix)
+
+library(sparrowtelomeres)
+data(telosfull)
+
+telosfull_plotting <- telosfull
+
+telosfull_plotting$cort[is.na(telosfull_plotting$cort)] <-NA
+# clean up data
+telosfull_plotting$cort <- as.numeric(telosfull_plotting$cort)
+telosfull_plotting$Group <- with(telosfull_plotting,
+                       paste(treatment,sex))
+
+telosfull_plotting$Group <- gsub("control","Control",telosfull_plotting$Group)
+telosfull_plotting$Group <- gsub("disturbed","Noise exposure",telosfull_plotting$Group)
+
+telosfull_plotting$Group <- gsub(" F","\nFemales",telosfull_plotting$Group)
+telosfull_plotting$Group <- gsub(" M","\nMales",telosfull_plotting$Group)
+telosfull_plotting$cort.log <- log(telosfull_plotting$cort)
+telosfull_plotting$telomere.length.log <- log(telosfull_plotting$telomere.length)
+
+
+names(telosfull_plotting) <- gsub("treatment",
+                        "Treatment",
+                        names(telosfull_plotting))
+
+names(telosfull_plotting) <- gsub("sex",
+                        "Sex",
+                        names(telosfull_plotting))
+
+dat.focal.cols <- telosfull_plotting[,c("Treatment","Sex","telomere.length","cort")]
+dat.foc.cols.rnd <- dat.focal.cols
+dat.foc.cols.rnd$telomere.length <- dat.foc.cols.rnd$telomere.length %>% round(1)
+dat.foc.cols.rnd <- dat.foc.cols.rnd  %>% arrange(Treatment,telomere.length)
+
+```
+
+
+
+```{r echo = F}
+# Beeswarm plot
+fx.up <- function(x) {mean(x)+1.96*std.error(x)}
+fx.dwn <- function(x) {mean(x)-1.96*std.error(x)}
+beeswarm. <- ggplot(telosfull_plotting,
+        aes(y = telomere.length,
+                   x = Treatment,
+            fill = Treatment))+
+   labs(title = "Beeswarm plot: raw data w/ means & error bars       ") +
+    xlab("Predictor: Experimental group\n")+
+          ylab("Response: Telomere length\n")+
+  geom_dotplot(binaxis = "y",
+               stackdir = "center",
+               dotsize = 1.46) +
+  stat_summary(fun= mean, 
+               fun.min = mean, 
+               fun.max = mean,
+               geom = "crossbar", 
+               width = 0.2,
+               size = 0.45) + 
+  stat_summary(fun = fx.up, 
+               fun.min = fx.up, 
+               fun.max = fx.up,
+               geom = "crossbar", 
+               width = 0.1,
+               size = 0.35)+ 
+  stat_summary(fun = fx.dwn, 
+               fun.min = fx.dwn, 
+               fun.max = fx.dwn,
+               geom = "crossbar", 
+               width = 0.1,
+               size = 0.35) +
+stat_summary(fun = mean, 
+               fun.min = fx.dwn, 
+               fun.max = fx.up,
+               geom = "linerange", 
+               #width = 0.1,
+               size = 0.35) +
+  theme_bw()
+
+beeswarm.
+```
+

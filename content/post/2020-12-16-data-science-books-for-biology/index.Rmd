@@ -1,0 +1,16 @@
+---
+title: Data Science Books for Biology
+author: Nathan Brouwer
+date: '2020-12-16'
+slug: data-science-books-for-biology
+categories:
+  - data science
+tags:
+  - R
+math: no
+meta: yes
+toc: yes
+---
+
+
+<!--more-->

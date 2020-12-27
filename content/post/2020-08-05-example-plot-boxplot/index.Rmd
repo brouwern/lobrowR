@@ -1,0 +1,84 @@
+---
+title: 'Example Plot: Boxplot'
+author: Nathan Brouwer
+date: '2020-10-05'
+slug: example-plot-boxplot
+categories: []
+tags: []
+math: no
+meta: no
+toc: no
+---
+
+
+<!--more-->
+
+
+
+```{r include=FALSE, echo = F}
+knitr::opts_chunk$set(echo = FALSE)
+#library(tufte)
+#library(formatR)
+
+#library(readxl)
+
+library(ggpubr)
+library(cowplot)
+library(dplyr)
+#library(lme4)
+
+library(sparrowtelomeres)
+data("telosfull")
+
+#load data
+dat.full <- telosfull
+
+# clean up data
+dat.full$cort <- as.numeric(dat.full$cort)
+dat.full$Group <- with(dat.full,
+                       paste(treatment,sex))
+
+dat.full$Group <- gsub("control","Control",dat.full$Group)
+dat.full$Group <- gsub("disturbed","Noise exposure",dat.full$Group)
+
+dat.full$Group <- gsub(" F","\nFemales",dat.full$Group)
+dat.full$Group <- gsub(" M","\nMales",dat.full$Group)
+dat.full$cort.log <- log(dat.full$cort)
+dat.full$telomere.length.log <- log(dat.full$telomere.length)
+
+
+names(dat.full) <- gsub("treatment",
+                        "Treatment",
+                        names(dat.full))
+
+names(dat.full) <- gsub("sex",
+                        "Sex",
+                        names(dat.full))
+```
+
+
+
+
+```{r}
+
+
+medians <- dat.full %>%
+ group_by(Treatment) %>%
+  summarize(median = median(telomere.length),
+            max = max(telomere.length),
+            min = min(telomere.length),
+            upper = fivenum(dat.full$telomere.length)[4],
+            lower = fivenum(dat.full$telomere.length)[2])
+  
+ggplot(data = dat.full,
+       aes(y = telomere.length,
+           x = Treatment,
+           fill = Treatment)) +
+  geom_boxplot() +
+  scale_x_discrete(limits = c("","control","disturbed","")) +
+  theme(legend.position="none") +
+   ggtitle("Box & Whisker plot: median & data distribution\n") +
+   xlab("Predictor: Experimental group\n") +
+   ylab("Response: Telomere length (kb)\n") + theme_bw()
+```
+

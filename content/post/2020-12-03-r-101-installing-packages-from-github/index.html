@@ -3,11 +3,15 @@ title: 'R 102: Installing Packages from the code repository GitHub'
 author: Nathan Brouwer
 date: '2020-12-19'
 slug: r-101-installing-packages-from-github
-categories: []
-tags: []
+categories: 
+  - R
+tags: 
+  - R101
 math: no
 meta: yes
 toc: yes
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -18,26 +22,29 @@ yes
 <!--more-->
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
-<p><strong>GitHub</strong> is an online platform for hosting and sharing code. More formally it is called a <strong>software repository</strong>. It is very popular with software developers, especially those creating open-source applications, and has also been adopted whole-hearted by many data scientists and data analysts.</p>
-<p>GitHub has many features and uses. One of the most basic ones is to use GitHub like Dropbox to R backup copies of code on GitHub. GitHub also can act like a kind of web server to host websites, online books like this one, and provide access to open source software. Many people working on R packages use GitHub to host their package while its being developed or expanded. When a package is finished, it often is then submitted to CRAN, and the version on GitHub is used as the <strong>developement version</strong> where new features are being developed and tested.</p>
-<p>You can access packages on GitHub to get the newest version before something has been submitted to CRAN, or packages that haven’t or maybe will never end up on CRAN. This book relies on a package I’ve written called <strong>wildlifeR</strong> for datasets and some functions. In this short exercise we’ll download a package from CRAN we need to interact with GitHub, and then download wildlifeR. We’ll also go to the wildlifeR website to learn more about the package.</p>
-<div id="learning-objectives" class="section level3">
-<h3>Learning objectives</h3>
-</div>
-<div id="learning-goals" class="section level3">
-<h3>Learning goals</h3>
-</div>
+<p><a href="https://github.com/"><strong>GitHub</strong></a> is an online platform for hosting and sharing code. More formally it is called a <strong>software repository</strong>. It is very popular with software developers, especially those creating <strong>open-source</strong> applications, and has also been adopted whole-heartedly by many data scientists and data analysts.</p>
+<p>GitHub has many features and uses. One of the most basic ones is to use GitHub like Dropbox to backup copies of code. GitHub also can act like a kind of web server to host websites, online books, and provide access to open source software.</p>
+<p>Many people working on R packages use GitHub to host their package while its being developed or expanded. When a package is finished, it often is then submitted to CRAN, and the version on GitHub is used as the <strong>development version</strong> where new features are developed and tested.</p>
+<p>You can access packages on GitHub to get the newest version before something has been submitted to CRAN, or packages that haven’t or maybe will never end up on CRAN. A package I use for teaching is called called <strong>wildlifeR</strong> and holds datasets and some functions. In this short exercise we’ll</p>
+<ol style="list-style-type: decimal">
+<li>Download a package from CRAN we need to interact with GitHub, and</li>
+<li>Download my package wildlifeR from GitHub.</li>
+</ol>
+<p>We’ll also go to the wildlifeR website to learn more about the package.</p>
 <div id="functions-arguements" class="section level3">
 <h3>Functions &amp; Arguements</h3>
+<p>The following functions and arguments will be used in this post:</p>
+<p>tufte::margin_note(“speakR: In the line devtools::install_github, devtools is the package and install_github is the function contained in it.”)</p>
 <ul>
-<li>library</li>
-<li>devtools::install_github</li>
-<li>scatter.smooth</li>
+<li>library()</li>
+<li>devtools::install_github()</li>
+<li>scatter.smooth()</li>
 <li>$</li>
 </ul>
 </div>
 <div id="packages" class="section level3">
 <h3>Packages</h3>
+<p>The following packages will be used in this post:</p>
 <ul>
 <li>devtools</li>
 <li>wildlifeR</li>
@@ -45,36 +52,41 @@ yes
 </div>
 <div id="potential-hangups" class="section level3">
 <h3>Potential hangups</h3>
-<ul>
-<li>We’ll use the “$” operator to tell scatter.smooth() what to plot, which is different than how ggpubr and ggplot2 work; sigh…</li>
-</ul>
+<p>In this post we’ll use the “<strong>$</strong>” operator to tell the function scatter.smooth() what to plot, which is different than how ggpubr and ggplot2 work; sigh…</p>
 </div>
 </div>
 <div id="accessing-github-using-devtools" class="section level2">
-<h2>[ ] Accessing GitHub using devtools</h2>
-<p>The devtools package is used by many people who write R packages and includes a function for downloading from GitHub</p>
-<pre class="r"><code>install.packages(&quot;devtools&quot;, dependencies = TRUE) # [ ]</code></pre>
-<p>devtools has a lot of dependencies so this might take a while.</p>
-<p>Once everything is downloaded, load the package explicitly with library()</p>
+<h2>Accessing GitHub using devtools</h2>
+<p>The devtools package is used by many people who write R packages and includes a function for downloading <em>other</em> packages from GitHub.</p>
+<p>tufte::margin_note(“devtools has a lot of dependencies so this might take a while”)</p>
+<pre class="r"><code>install.packages(&quot;devtools&quot;, dependencies = TRUE)</code></pre>
+<p>Once everything is downloaded, load devtools explicitly with library()</p>
 <pre class="r"><code>library(devtools)</code></pre>
 <pre><code>## Loading required package: usethis</code></pre>
 </div>
 <div id="downloading-the-wildlifer-package-with-install_github" class="section level2">
-<h2>[ ] Downloading the wildlifeR package with install_github()</h2>
-<p>My github site is at <a href="https://github.com/brouwern" class="uri">https://github.com/brouwern</a> and the code for wildlifeR is <a href="https://github.com/brouwern/wildlifeR" class="uri">https://github.com/brouwern/wildlifeR</a>. You can access the files directly if you want, but that isn’t necessary. We can download the package just like it was on CRAN using install_github(). You’ll probably see some red text and a LOT of black text as install_github() talks with GitHub.</p>
+<h2>Downloading the wildlifeR package with install_github()</h2>
+<p><a href="https://github.com/brouwern">My GitHub site</a> is at <a href="https://github.com/brouwern" class="uri">https://github.com/brouwern</a> and the code for <a href="https://github.com/brouwern/wildlifeR">wildlifeR</a> is at <a href="https://github.com/brouwern/wildlifeR" class="uri">https://github.com/brouwern/wildlifeR</a>. You can examine access the files from a web browser if you really want, but that would be kind of clumsy. Rather, we can download the package similar to as if it was on CRAN using install_github().</p>
+<p>NOTE: You’ll probably see some red text and a LOT of black text as install_github() talks with GitHub. Totally normal.</p>
 <pre class="r"><code>install_github(&quot;brouwern/wildlifeR&quot;)</code></pre>
 <pre><code>## Skipping install of &#39;wildlifeR&#39; from a github remote, the SHA1 (29f3ae31) has not changed since last install.
 ##   Use `force = TRUE` to force installation</code></pre>
 <p>Now we can put it all explicitly into memory</p>
-<pre class="r"><code>library(wildlifeR) # [ ] </code></pre>
-<hr />
-<p><strong>OPTIONAL:</strong> Accessing data from wildlifeR
-One of the datasets in wildlifeR is called “eggs.” It has data from a paper by Stoddard et al. (2017) in Science called [Avian egg shape: Form, function, and evolution.] (<a href="http://science.sciencemag.org/content/356/6344/1249" class="uri">http://science.sciencemag.org/content/356/6344/1249</a>). We can plot the relationship between egg asymmetry and ellipticity using the base R function scatter.smooth(), which draws a type of regression line through the data for us (Note that the syntax for scatter.smooth() is, sadly, different than plot() and other plotting functions…).</p>
-<pre class="r"><code>scatter.smooth(eggs$asymmetry, eggs$ellipticity)</code></pre>
+<pre class="r"><code>library(wildlifeR)  </code></pre>
+<div id="aside-accessing-data-from-wildlifer" class="section level3">
+<h3>ASIDE: Accessing data from wildlifeR</h3>
+<p>One of the datasets in wildlifeR is called “eggs.” It has data from a paper by Stoddard et al. (2017) in Science called [Avian egg shape: Form, function, and evolution.] (<a href="http://science.sciencemag.org/content/356/6344/1249" class="uri">http://science.sciencemag.org/content/356/6344/1249</a>). We can plot the relationship between egg asymmetry and “ellipticity” (how elliptical or oval-like it is) using the base R function scatter.smooth(), which draws a type of <strong>regression line</strong> through the data for us (Note that the syntax for scatter.smooth() is, sadly, different than plot(),ggpubr, and other plotting functions…).</p>
+<pre class="r"><code># note how data is called
+scatter.smooth(eggs$asymmetry, eggs$ellipticity)</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<hr />
 </div>
-<div id="the-wildlifer-packge-webiste" class="section level2">
-<h2>[ ] The wildlifeR packge webiste</h2>
-<p>Some packages have websites that summarize the package contents. If you visit <a href="https://brouwern.github.io/wildlifeR/" class="uri">https://brouwern.github.io/wildlifeR/</a> you can find out information on each dataset and function under the “Reference” tab, and see how the datasets and functions are used under the “Articles” tab.</p>
+</div>
+<div id="the-wildlifer-packge-website" class="section level2">
+<h2>The wildlifeR packge website</h2>
+<p>Some packages have websites that summarize the package contents. This allows you to preview them without downloading them, and provides a cleaner interface to the help files and andy tutorials (“vignettes”) than what you get within R itself.</p>
+<p>If you visit the website for <a href="https://brouwern.github.io/wildlifeR/">wildlifeR</a> at <a href="https://brouwern.github.io/wildlifeR/" class="uri">https://brouwern.github.io/wildlifeR/</a> you can find out information on each dataset and function under the “Reference” tab, and see how the datasets and functions are used under the “Articles” tab.</p>
+</div>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<p>That’s it. You now have the super power of being able to access any R package from GitHub. This is super useful if you need to try out the developement version of a package or use one that isn’t yet - or won’t be - released on CRAN. Sometimes researchers we’ll bundle up their analyses as an R package on post it to GitHub to allow others to easily explore and replicate their analyses.</p>
 </div>
