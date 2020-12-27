@@ -1,0 +1,54 @@
+---
+title: 'Example Plot: Boxplot'
+author: Nathan Brouwer
+date: '2021-02-01'
+slug: example-plot-boxplot
+categories: []
+tags: []
+math: no
+meta: no
+toc: no
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+no
+</div>
+
+<!--more-->
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggpubr&#39;:
+## 
+##     get_legend</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre class="r"><code>medians &lt;- parus_telos_nest %&gt;%
+ group_by(Treatment) %&gt;%
+  summarize(median = median(telomere.length),
+            max = max(telomere.length),
+            min = min(telomere.length),
+            upper = fivenum(parus_telos_nest$telomere.length)[4],
+            lower = fivenum(parus_telos_nest$telomere.length)[2])</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<pre class="r"><code>ggplot(data = parus_telos_nest,
+       aes(y = telomere.length,
+           x = Treatment,
+           fill = Treatment)) +
+  geom_boxplot() +
+  scale_x_discrete(limits = c(&quot;&quot;,&quot;control&quot;,&quot;disturbed&quot;,&quot;&quot;)) +
+  theme(legend.position=&quot;none&quot;) +
+   ggtitle(&quot;Box &amp; Whisker plot: median &amp; data distribution\n&quot;) +
+   xlab(&quot;Predictor: Experimental group\n&quot;) +
+   ylab(&quot;Response: Telomere length (kb)\n&quot;) + theme_bw()</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>

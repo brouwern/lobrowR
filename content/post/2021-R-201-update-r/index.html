@@ -1,0 +1,40 @@
+---
+title: Update R
+author: Nathan Brouwer
+date: '2021-08-20'
+slug: update-r
+categories:
+  - R
+tags: []
+math: no
+meta: no
+toc: no
+---
+
+
+<div id="TOC">
+no
+</div>
+
+<!--more-->
+<p>This script provides notes on how to save all packages before initiating an update of R</p>
+<p><a href="https://twitter.com/smartin2018/status/1126881907474485248?s=20" class="uri">https://twitter.com/smartin2018/status/1126881907474485248?s=20</a></p>
+<pre class="r"><code>list.dirs()
+
+R.home()
+
+
+list.files(&quot;/Library/Frameworks/R.framework/Versions/Current/Resources/library&quot;)
+
+path. &lt;- &quot;/Library/Frameworks/R.framework/Versions/Current/Resources/library&quot;
+
+installed_packages &lt;- installed.packages(path.)
+
+write.csv(installed_packages[,1], file = &quot;x.csv&quot;)</code></pre>
+<pre class="r"><code>instpack &lt;- installed.packages()
+instpack &lt;- instpack[is.na(instpack[,&quot;Priority&quot;]), ]
+path. &lt;- here::here(&quot;inst/extdata&quot;,&quot;installedpackages.csv&quot;)
+write.csv(instpack[,1],file = path., row.names = F)</code></pre>
+<pre class="r"><code>install.packages(&quot;here&quot;)
+instpack &lt;- read.csv(here::here(&quot;inst/extdata&quot;,&quot;installedpackages.csv&quot;))
+install.packages(instpack[,1])</code></pre>

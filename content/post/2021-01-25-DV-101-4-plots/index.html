@@ -1,0 +1,43 @@
+---
+title: 'Data Vis 101: Plots'
+author: Nathan Brouwer
+date: '2021-01-21'
+slug: ''
+categories: 
+  - R
+tags: []
+math: no
+meta: yes
+toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<div id="types-of-plots" class="section level2">
+<h2>Types of plots</h2>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggpubr&#39;:
+## 
+##     get_legend</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre class="r"><code># plot all 4 plots in grid
+plot_grid(hist.,    box.,
+          scatter.,error.)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>

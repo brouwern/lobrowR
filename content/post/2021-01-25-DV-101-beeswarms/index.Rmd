@@ -1,0 +1,169 @@
+---
+title: 'Example plot: beeswarms'
+author: Nathan Brouwer
+date: '2021-02-001'
+slug: ''
+categories: []
+tags: []
+math: no
+meta: no
+toc: no
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<!--more-->
+
+## Example plot: beeswarm plot
+
+```{r echo = F}
+# Prep stuff
+## libraries
+# library(readxl)
+# library(ggpubr)
+# library(cowplot)
+# library(dplyr)
+# library(here)
+# library(plotrix)
+# 
+# library(sparrowtelomeres)
+# data(telosfull)
+# 
+# parus_telos_nest <- telosfull
+# 
+# parus_telos_nest$cort[is.na(parus_telos_nest$cort)] <-NA
+# # clean up data
+# parus_telos_nest$cort <- as.numeric(parus_telos_nest$cort)
+# parus_telos_nest$Group <- with(parus_telos_nest,
+#                        paste(treatment,sex))
+# 
+# parus_telos_nest$Group <- gsub("control","Control",parus_telos_nest$Group)
+# parus_telos_nest$Group <- gsub("disturbed","Noise exposure",parus_telos_nest$Group)
+# 
+# parus_telos_nest$Group <- gsub(" F","\nFemales",parus_telos_nest$Group)
+# parus_telos_nest$Group <- gsub(" M","\nMales",parus_telos_nest$Group)
+# parus_telos_nest$cort.log <- log(parus_telos_nest$cort)
+# parus_telos_nest$telomere.length.log <- log(parus_telos_nest$telomere.length)
+# 
+# 
+# names(parus_telos_nest) <- gsub("treatment",
+#                         "Treatment",
+#                         names(parus_telos_nest))
+# 
+# names(parus_telos_nest) <- gsub("sex",
+#                         "Sex",
+#                         names(parus_telos_nest))
+# 
+# dat.focal.cols <- parus_telos_nest[,c("Treatment","Sex","telomere.length","cort")]
+# dat.foc.cols.rnd <- dat.focal.cols
+# dat.foc.cols.rnd$telomere.length <- dat.foc.cols.rnd$telomere.length %>% round(1)
+# dat.foc.cols.rnd <- dat.foc.cols.rnd  %>% arrange(Treatment,telomere.length)
+
+```
+
+
+
+```{r echo = FALSE, warnings = FALSE, message = FALSE}
+# This script makes example of different kinds of plots using the telomere data 
+# of Meillere et al 2015.
+
+# Prep stuff
+## libraries
+library(ggpubr)
+library(cowplot)
+library(dplyr)
+library(docxtractr)
+
+library(plotrix) # for std.err
+
+
+file.url <-  "https://royalsocietypublishing.org/action/downloadSupplement?doi=10.1098%2Frsbl.2015.0559&file=rsbl20150559supp1.docx"
+
+### Works with the URL too
+file.docx <- docxtractr::read_docx(file.url)
+docx.table.list <- docxtractr::docx_extract_all_tbls(docx = file.docx)
+
+
+## Call each table from list
+### nestlings
+parus_telos_nest <- docx.table.list[[1]]
+
+
+
+# clean up data
+parus_telos_nest$cort <- as.numeric(parus_telos_nest$cort)
+parus_telos_nest$telomere.length <- as.numeric(parus_telos_nest$telomere.length)
+
+parus_telos_nest$Group <- with(parus_telos_nest,
+                       paste(treatment,sex))
+
+parus_telos_nest$Group <- gsub("control","Control",parus_telos_nest$Group)
+parus_telos_nest$Group <- gsub("disturbed","Noise exposure",parus_telos_nest$Group)
+
+parus_telos_nest$Group <- gsub(" F","\nFemales",parus_telos_nest$Group)
+parus_telos_nest$Group <- gsub(" M","\nMales",parus_telos_nest$Group)
+parus_telos_nest$cort.log <- log(parus_telos_nest$cort)
+parus_telos_nest$telomere.length.log <- log(parus_telos_nest$telomere.length)
+
+
+names(parus_telos_nest) <- gsub("treatment",
+                        "Treatment",
+                        names(parus_telos_nest))
+
+names(parus_telos_nest) <- gsub("sex",
+                        "Sex",
+                        names(parus_telos_nest))
+
+## Re-code data
+dat.focal.cols <- parus_telos_nest[,c("Treatment","Sex","telomere.length","cort")]
+dat.foc.cols.rnd <- dat.focal.cols
+dat.foc.cols.rnd$telomere.length <- dat.foc.cols.rnd$telomere.length %>% round(1)
+dat.foc.cols.rnd <- dat.foc.cols.rnd  %>% dplyr::arrange(Treatment,telomere.length)
+
+```
+
+
+```{r echo = F}
+# Beeswarm plot
+fx.up <- function(x) {mean(x)+1.96*std.error(x)}
+fx.dwn <- function(x) {mean(x)-1.96*std.error(x)}
+beeswarm. <- ggplot(parus_telos_nest,
+        aes(y = telomere.length,
+                   x = Treatment,
+            fill = Treatment))+
+   labs(title = "Beeswarm plot: raw data w/ means & error bars       ") +
+    xlab("Predictor: Experimental group\n")+
+          ylab("Response: Telomere length\n")+
+  geom_dotplot(binaxis = "y",
+               stackdir = "center",
+               dotsize = 1.46) +
+  stat_summary(fun= mean, 
+               fun.min = mean, 
+               fun.max = mean,
+               geom = "crossbar", 
+               width = 0.2,
+               size = 0.45) + 
+  stat_summary(fun = fx.up, 
+               fun.min = fx.up, 
+               fun.max = fx.up,
+               geom = "crossbar", 
+               width = 0.1,
+               size = 0.35) + 
+  stat_summary(fun = fx.dwn, 
+               fun.min = fx.dwn, 
+               fun.max = fx.dwn,
+               geom = "crossbar", 
+               width = 0.1,
+               size = 0.35) +
+stat_summary(fun = mean, 
+               fun.min = fx.dwn, 
+               fun.max = fx.up,
+               geom = "linerange", 
+               #width = 0.1,
+               size = 0.35) +
+  theme_bw()
+
+beeswarm.
+```
+

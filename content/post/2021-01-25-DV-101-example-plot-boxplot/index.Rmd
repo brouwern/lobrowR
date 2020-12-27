@@ -1,0 +1,143 @@
+---
+title: 'Example Plot: Boxplot'
+author: Nathan Brouwer
+date: '2021-02-01'
+slug: example-plot-boxplot
+categories: []
+tags: []
+math: no
+meta: no
+toc: no
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<!--more-->
+
+
+
+```{r include=FALSE, echo = F}
+# knitr::opts_chunk$set(echo = FALSE)
+# #library(tufte)
+# #library(formatR)
+# 
+# #library(readxl)
+# 
+# library(ggpubr)
+# library(cowplot)
+# library(dplyr)
+# #library(lme4)
+# 
+# library(sparrowtelomeres)
+# data("telosfull")
+# 
+# #load data
+# parus_telos_nest <- telosfull
+# 
+# # clean up data
+# parus_telos_nest$cort <- as.numeric(parus_telos_nest$cort)
+# parus_telos_nest$Group <- with(parus_telos_nest,
+#                        paste(treatment,sex))
+# 
+# parus_telos_nest$Group <- gsub("control","Control",parus_telos_nest$Group)
+# parus_telos_nest$Group <- gsub("disturbed","Noise exposure",parus_telos_nest$Group)
+# 
+# parus_telos_nest$Group <- gsub(" F","\nFemales",parus_telos_nest$Group)
+# parus_telos_nest$Group <- gsub(" M","\nMales",parus_telos_nest$Group)
+# parus_telos_nest$cort.log <- log(parus_telos_nest$cort)
+# parus_telos_nest$telomere.length.log <- log(parus_telos_nest$telomere.length)
+# 
+# 
+# names(parus_telos_nest) <- gsub("treatment",
+#                         "Treatment",
+#                         names(parus_telos_nest))
+# 
+# names(parus_telos_nest) <- gsub("sex",
+#                         "Sex",
+#                         names(parus_telos_nest))
+```
+
+
+```{r echo = F}
+# This script makes example of different kinds of plots using the telomere data 
+# of Meillere et al 2015.
+
+# Prep stuff
+## libraries
+library(ggpubr)
+library(cowplot)
+library(dplyr)
+library(docxtractr)
+
+library(plotrix) # for std.err
+
+
+file.url <-  "https://royalsocietypublishing.org/action/downloadSupplement?doi=10.1098%2Frsbl.2015.0559&file=rsbl20150559supp1.docx"
+
+### Works with the URL too
+file.docx <- docxtractr::read_docx(file.url)
+docx.table.list <- docxtractr::docx_extract_all_tbls(docx = file.docx)
+
+
+## Call each table from list
+### nestlings
+parus_telos_nest <- docx.table.list[[1]]
+
+
+
+# clean up data
+parus_telos_nest$cort <- as.numeric(parus_telos_nest$cort)
+parus_telos_nest$telomere.length <- as.numeric(parus_telos_nest$telomere.length)
+
+parus_telos_nest$Group <- with(parus_telos_nest,
+                       paste(treatment,sex))
+
+parus_telos_nest$Group <- gsub("control","Control",parus_telos_nest$Group)
+parus_telos_nest$Group <- gsub("disturbed","Noise exposure",parus_telos_nest$Group)
+
+parus_telos_nest$Group <- gsub(" F","\nFemales",parus_telos_nest$Group)
+parus_telos_nest$Group <- gsub(" M","\nMales",parus_telos_nest$Group)
+parus_telos_nest$cort.log <- log(parus_telos_nest$cort)
+parus_telos_nest$telomere.length.log <- log(parus_telos_nest$telomere.length)
+
+
+names(parus_telos_nest) <- gsub("treatment",
+                        "Treatment",
+                        names(parus_telos_nest))
+
+names(parus_telos_nest) <- gsub("sex",
+                        "Sex",
+                        names(parus_telos_nest))
+
+## Re-code data
+dat.focal.cols <- parus_telos_nest[,c("Treatment","Sex","telomere.length","cort")]
+dat.foc.cols.rnd <- dat.focal.cols
+dat.foc.cols.rnd$telomere.length <- dat.foc.cols.rnd$telomere.length %>% round(1)
+dat.foc.cols.rnd <- dat.foc.cols.rnd  %>% dplyr::arrange(Treatment,telomere.length)
+```
+
+
+```{r}
+
+
+medians <- parus_telos_nest %>%
+ group_by(Treatment) %>%
+  summarize(median = median(telomere.length),
+            max = max(telomere.length),
+            min = min(telomere.length),
+            upper = fivenum(parus_telos_nest$telomere.length)[4],
+            lower = fivenum(parus_telos_nest$telomere.length)[2])
+  
+ggplot(data = parus_telos_nest,
+       aes(y = telomere.length,
+           x = Treatment,
+           fill = Treatment)) +
+  geom_boxplot() +
+  scale_x_discrete(limits = c("","control","disturbed","")) +
+  theme(legend.position="none") +
+   ggtitle("Box & Whisker plot: median & data distribution\n") +
+   xlab("Predictor: Experimental group\n") +
+   ylab("Response: Telomere length (kb)\n") + theme_bw()
+```
+

@@ -1,0 +1,15 @@
+---
+title: 'R-101: What is R and Why Use It?'
+author: Nathan Brouwer
+date: '2021-01-06'
+slug: r-101-what-is-r-and-why-use-it
+categories:
+  - R
+tags: []
+math: no
+meta: yes
+toc: yes
+---
+
+
+<!--more-->

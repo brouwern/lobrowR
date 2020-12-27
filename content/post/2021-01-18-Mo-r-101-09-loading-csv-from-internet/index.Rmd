@@ -1,0 +1,60 @@
+---
+title: 'R 102: Loading .csv files directly from the internet'
+author: Nathan Brouwer
+date: '2021-01-18'
+slug: ''
+categories:
+  - R
+tags:
+  - R101
+math: no
+meta: yes
+toc: yes
+draft: no
+---
+
+
+<!--more-->
+
+https://archive.ics.uci.edu/ml/datasets.php
+
+
+Main page
+https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29
+
+Data files
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/
+
+One of first papers
+W.H. Wolberg, W.N. Street, and O.L. Mangasarian. Machine learning techniques to diagnose breast cancer from fine-needle aspirates. Cancer Letters 77 (1994) 163-171.
+https://www.sciencedirect.com/science/article/abs/pii/030438359490099X
+Cite 265 times
+
+Dataset cites by ~40 papers
+
+```{r, eval = F}
+breast-cancer-wisconsin.data
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.data
+
+breast-cancer-wisconsin.names
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/breast-cancer-wisconsin.names
+
+unformatted-data
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/unformatted-data
+
+wdbc.data
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.data
+
+wdbc.names
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wdbc.names
+
+wpbc.data
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wpbc.data
+
+wpbc.names
+https://archive.ics.uci.edu/ml/machine-learning-databases/breast-cancer-wisconsin/wpbc.names
+
+cancer <- read.csv("")
+
+```
+

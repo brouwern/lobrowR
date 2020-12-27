@@ -1,0 +1,148 @@
+---
+title: Key files for the tuftesque Hugo theme
+author: Nathan Brouwer
+date: '2021-07-02'
+slug: key-files-for-the-tuftesque-hugo-theme
+categories:
+  - blogdown
+tags:
+  - Hugo
+  - tuftesque
+  - blogdown
+math: no
+meta: yes
+toc: yes
+draft: no
+excerpt: "Key files for users to change to personal as tuftesque-themed blogdown site"
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<!--more-->
+
+lobrowR uses the (tuftesque)[https://github.com/nstrayer/tuftesque] Hugo theme.  This post outline key files I changed to set up the blog.  For more information see the [blog post](https://livefreeordichotomize.com/2017/07/13/introducing-the-tuftesque-blogdown-theme/) by Nick Stayer introducing the theme.
+
+## The tuftesque theme
+
+(lithium)[https://themes.gohugo.io/hugo-lithium-theme/] is the default Hugo theme for blogdown.  Its a nice, minimal theme useful for code-centered blogs.  The [hugo-tufte](https://github.com/shawnohare/hugo-tufte) theme implements [Edward Tufte's](https://en.wikipedia.org/wiki/Edward_Tufte) style and formatting as a Hugo theme, and has been further adapted as (tuftesque)[https://github.com/nstrayer/tuftesque] by Nick Stayer for use on the blog [Live Free or Dichotomize](https://livefreeordichotomize.com/), which he contributes to along with [Lucy D'Agostino McGowan](https://github.com/LucyMcGowan).  ([Dr. Lucy D'Agostino McGowan](https://www.lucymcgowan.com/) - also of the podcast [Casual Inference](https://casualinfer.libsyn.com/) fame - appears to be the primary contributor currently.)
+
+
+
+
+
+## Changing the logo file
+
+tuftesque defaults to a picture of Tin-tin.  The logo.png files shows up in several places, which is confusing to a new user.  
+
+```{r,eval = F}
+/themes/tuftesque/static
+/public
+```
+
+Key to know is that /public shows up when you build the site for the first time using blogdown::build_site() and is where your rendered site lives. Changes to the underlying website structure therefore occur within theme/tuftesque and are implemented in flies in /public.
+
+The default logo is 111 kb and 320×320.  Blogdown doesn't seem to re-size image on the fly and so I have only been able to change the image when a new images is approximately the same size.
+
+To change the logo, add a new .png logo file to /themes/tuftesque/static,  then change what logo file is called up in the config.toml (which is in blogs root directory) under "[params.logo]"
+
+```{r, eval = F}
+    [params.logo]
+    #url = "logo.png"
+    url = "logo2.png"
+```
+
+I recommend commenting out the original call to the logo.png and leaving the original file so you can troubleshoot any errors or issues.
+
+Run blogdown:::preview_site(startup = TRUE) to see if it worked.
+```{r eval = F}
+blogdown:::preview_site(startup = TRUE)
+```
+
+## Landing page banner
+
+The banner at the top of the landing page lives in
+
+/themes/tuftesque/static/images
+
+Original tuftesque banner is 382 kb 1280×427.  I didn't experiment with anything else but set saved my file as exactly 1280×427.  (The code I used for my random-walk banner is at the end of the post).
+
+
+## The authors.toml file
+
+authors.toml adds a mini author biography at the end of each post.
+Create authors.toml in themes/tuftesque/data/.  Below is my original file.
+
+```{r, eval = F}
+["Nathan Brouwer"]
+  name =  "Nathan Brouwer"
+  bio = "Nathan like data."
+  location =  "Pittsburgh, PA"
+  website =  "https://www.biology.pitt.edu/person/nathan-brouwer"
+  thumbnail = "https://avatars2.githubusercontent.com/u/7841427?s=400&v=4"
+  twitter = "https://twitter.com/lobrowr"
+  github = "https://github.com/brouwern"
+```
+
+"thumbnail" is a picture of author.  The default is 29kb and 400×400;  I was able to use the link from my GitHub profile picture and didn't check the resolution of my file, and have any issues.
+
+Note that the icon for GitHub that appears in the rendered author bio info doesn't seem to work currently.
+
+
+
+## Change the background color
+
+The default background is a creamy white.  I changed it to white.  Instructions are on the GitHub (landing page)[https://github.com/nstrayer/tuftesque] for the theme.  
+
+In config.toml just 
+backgroundcolor = "yourcolorchoice"
+to the [params] field, eg.
+
+```{r, eval = F}
+[params]
+    ...
+    backgroundcolor = "white"
+    ...
+```
+
+
+## Code to generate a random walk banner
+
+Here's how I generate my banner.
+
+```{r}
+x <- 1:100
+y <- rep(NA,100)
+y[1] <- 100
+lambda1 <- rnorm(n =length(y), mean = 1, sd = 0.2)
+for(i in 2:length(y)){
+  y[i] <- y[i-1]*lambda1[i]
+}
+
+par(mar = c(0,0,0,0))
+plot(y ~ x, ylim = c(20,220),
+     xlim = c(0,15),
+     type = "l",yaxt="n", xlab="", ylab="",xaxt="n", 
+     bty= "n", lwd = 5, lty = 1)
+
+its <- 20
+for(j in 1:its){
+ y[1] <- 100
+
+for(i in 2:length(y)){
+  lambda <- 1
+  lambda <- rnorm(n =1, mean = 1, sd = 0.1+i/1000+1/lambda/1000)
+  y[i] <- y[i-1]*lambda
+}
+
+points(y ~ x, ylim = c(0,200), lwd = 2, type = "l", col = j) 
+}
+
+mtext(text = "  lobrowR",side = 3,line = -6, cex = 8,adj = 0)
+
+```
+
+
+
+
+

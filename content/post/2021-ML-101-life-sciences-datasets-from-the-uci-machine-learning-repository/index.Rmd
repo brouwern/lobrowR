@@ -1,0 +1,292 @@
+---
+title: Life Sciences Datasets from the UCI Machine Learning Repository
+author: Nathan Brouwer
+date: '2021-03-01'
+slug: life-sciences-datasets-from-the-uci-machine-learning-repository
+categories:
+  - ML
+tags:
+  - life sciences
+math: no
+meta: yes
+toc: yes
+---
+
+
+<!--more-->
+
+The [UC Irvine Machine Learning Repository](https://archive.ics.uci.edu/ml/index.php) is a collection of over 500 datasets related to machine learning (ML).  There are a large number of entries related to the life sciences, including cancer medicine, bioinformatics, toxicology, and landcover classification.  I've organized some of them below.  I have not looked too deeply into anyone data set and so my classifications are all very preliminary.
+
+
+## Bioinformatics
+
+There are many applications of ML in genomics and bioinformatics.  While they often use standard ML techniques such as Support Vector Machines (SVL) or Neural Networks, the unique nature of DNA and protein sequence data requires specialized application of the methods.  I've therefore tried to divided the datasets into those that could be examine used general data analysis and ML techniques and software, and those that require more specialized analysis.
+
+### Bioinformatics - General
+
+[**Codon usage Data Set**](https://archive.ics.uci.edu/ml/datasets/Codon+usage)
+
+**URL:** https://archive.ics.uci.edu/ml/datasets/Codon+usage
+
+**Abstract:** "DNA codon usage frequencies of a large sample of diverse biological organisms from different taxa"
+
+Khomtchouk BB, Liang Y, Nonner WF: 'Codon usage bias levels predict taxonomic identity and genetic composition'. bioRxiv, 2020.
+
+Nakamura Y, Gojobori T, Ikemura T: 'Codon usage tabulated from international DNA sequence databases: status for the year 2000'. Nucleic Acids Research, 2000, 28:292.
+
+Column 1: Kingdom
+Column 2: DNAtype
+Column 3: SpeciesID
+Column 4: Ncodons
+Column 5: SpeciesName
+Columns 6-69: codon (header: nucleotide bases; entries: frequency of usage (5 digit floating point number))
+
+"The 'Kingdom' is a 3-letter code corresponding to `xxx' in the CUTG database name: 'arc'(archaea), 'bct'(bacteria), 'phg'(bacteriophage), 'plm' (plasmid), 'pln' (plant), 'inv' (invertebrate), 'vrt' (vertebrate), 'mam' (mammal), 'rod' (rodent), 'pri' (primate), and 'vrl'(virus) sequence entries. Note that the CUTG database does not contain 'arc' and 'plm' (these have been manually curated ourselves).
+
+"The 'DNAtype' is denoted as an integer for the genomic composition in the species: 0-genomic, 1-mitochondrial, 2-chloroplast, 3-cyanelle, 4-plastid, 5-nucleomorph, 6-secondary_endosymbiont, 7-chromoplast, 8-leucoplast, 9-NA, 10-proplastid, 11-apicoplast, and 12-kinetoplast.
+
+"The species identifier ('SpeciesID') is an integer, which uniquely indicates the entries of an organism. It is an accession identifier for each different species in the original CUTG database, followed by the first item listed in each genome.
+
+"The number of codons (`Ncodons') is the algebraic sum of the numbers listed for the different codons in an entry of CUTG. Codon frequencies are normalized to the total codon count, hence the number of occurrences divided by 'Ncodons' is the codon frequencies listed in the data file.
+
+"The species' name ('SpeciesName') is represented in strings purged of `comma' (which are now replaced by `space'). This is a descriptive label of the name of the species for data interpretations.
+
+"Lastly, the codon frequencies ('codon') including 'UUU', 'UUA', 'UUG', 'CUU', etc., are recorded as floats (with decimals in 5 digits)."
+
+
+
+
+[**Yeast Data Set**](https://archive.ics.uci.edu/ml/datasets/Yeast)
+**URL**: https://archive.ics.uci.edu/ml/datasets/Yeast
+**Abstract**: "Predicting the Cellular Localization Sites of Proteins"
+
+"Expert Sytem for Predicting Protein Localization Sites in Gram-Negative Bacteria", Kenta Nakai & Minoru Kanehisa, PROTEINS: Structure, Function, and Genetics 11:95-110, 1991.
+
+"A Knowledge Base for Predicting Protein Localization Sites in Eukaryotic Cells", Kenta Nakai & Minoru Kanehisa, Genomics 14:897-911, 1992.
+
+Horton & Nakai. 1996. "A Probablistic Classification System for Predicting the Cellular Localization Sites of Proteins".Intelligent Systems in Molecular Biology, 109-115. St. Louis, USA 1996.
+
+**Attribute Information:**
+Predicted Attribute: Localization site of protein. ( non-numeric ).
+MIT NUC CYT ME1 ME2 ME3 VAC EXC
+
+1. Sequence Name: Accession number for the SWISS-PROT database
+1. mcg: McGeoch's method for signal sequence recognition.
+1. gvh: von Heijne's method for signal sequence recognition.
+1. alm: Score of the ALOM membrane spanning region prediction program.
+1. mit: Score of discriminant analysis of the amino acid content of the N-terminal region (20 residues long) of mitochondrial and non-mitochondrial proteins.
+1. erl: Presence of "HDEL" substring (thought to act as a signal for retention in the endoplasmic reticulum lumen). Binary attribute.
+1. pox: Peroxisomal targeting signal in the C-terminus.
+1. vac: Score of discriminant analysis of the amino acid content of vacuolar and extracellular proteins.
+1. nuc: Score of discriminant analysis of nuclear localization signals of nuclear and non-nuclear proteins.
+
+
+
+### Bioinformatics - Potentially General
+
+[M. Tuberculosis Genes Data Set](https://archive.ics.uci.edu/ml/datasets/M.+Tuberculosis+Genes)
+
+**Abstract**: "Data giving characteristics of each ORF (potential gene) in the *M. tuberculosis() bacterium. Sequence, homology (similarity to other genes) and structural information, and function (if known) are provided"
+
+"The data is in Datalog format. Missing values are not explicit, but some genes have more relationships than others."
+
+King, R. and Karwath, A. and Clare, A. and Dehaspe, L. (2000). Accurate prediction of protein functional class in the M. tuberculosis and E. coli genomes using data mining, Comparative and Functional Genomics, 17, pp 283--293.
+
+[Protein Data Data Set](https://archive.ics.uci.edu/ml/datasets/Protein+Data)
+https://archive.ics.uci.edu/ml/datasets/Protein+Data
+
+[Molecular Biology (Promoter Gene Sequences) Data Set](https://archive.ics.uci.edu/ml/datasets/Molecular+Biology+%28Promoter+Gene+Sequences%29)
+
+**Abstract**: "E. Coli promoter gene sequences (DNA) with partial domain theory"
+
+Harley, C. and Reynolds, R. 1987. "Analysis of E. Coli Promoter Sequences." Nucleic Acids Research, 15:2343-2361.
+
+Towell, G., Shavlik, J. and Noordewier, M. 1990. "Refinement of Approximate Domain Theories by Knowledge-Based Artificial Neural Networks." In Proceedings of the Eighth National Conference on Artificial Intelligence (AAAI-90).
+
+Mukund Deshpande and George Karypis. Evaluation of Techniques for Classifying Biological Sequences. PAKDD. 2002. [View Context].
+
+Jinyan Li and Limsoon Wong. Using Rules to Analyse Bio-medical Data: A Comparison between C4.5 and PCL. WAIM. 2003. [View Context].
+
+Aik Choon Tan and David Gilbert. An Empirical Comparison of Supervised Machine Learning Techniques in Bioinformatics. APBC. 2003. [View Context].
+
+**Attribute Information:**
+
+1. One of {+/-}, indicating the class ("+" = promoter).
+2. The instance name (non-promoters named by position in the 1500-long nucleotide sequence provided by T. Record).
+3-59. The remaining 57 fields are the sequence, starting at position -50 (p-50) and ending at position +7 (p7). Each of these fields is filled by one of {a, g, t, c}.
+
+
+
+[Molecular Biology (Splice-junction Gene Sequences)](https://archive.ics.uci.edu/ml/datasets/Molecular+Biology+%28Splice-junction+Gene+Sequences%29)
+
+**Abstract**: "Primate splice-junction gene sequences (DNA) with associated imperfect domain theory"
+
+**Problem Description:**  "Splice junctions are points on a DNA sequence at which 'superfluous' DNA is removed during the process of protein creation in higher organisms. The problem posed in this dataset is to recognize, given a sequence of DNA, the boundaries between exons (the parts of the DNA sequence retained after splicing) and introns (the parts of the DNA sequence that are spliced out). This problem consists of two subtasks: recognizing exon/intron boundaries (referred to as EI sites), and recognizing intron/exon boundaries (IE sites). (In the biological community, IE borders are referred to a 'acceptors' while EI borders are referred to as 'donors'.)"
+
+"This dataset has been developed to help evaluate a "hybrid" learning algorithm (KBANN) that uses examples to inductively refine preexisting knowledge."
+
+
+**Attribute Information:**
+
+1. One of {n ei ie}, indicating the class.
+2. The instance name.
+3-62. The remaining 60 fields are the sequence, starting at position -30 and ending at position +30. Each of these fields is almost always filled by one of {a, g, t, c}. Other characters indicate ambiguity among the standard characters...
+
+M. O. Noordewier and G. G. Towell and J. W. Shavlik, 1991; "Training Knowledge-Based Neural Networks to Recognize Genes in DNA Sequences". Advances in Neural Information Processing Systems, volume 3, Morgan Kaufmann.
+[Web Link]
+
+Jinyan Li and Limsoon Wong. Using Rules to Analyse Bio-medical Data: A Comparison between C4.5 and PCL. WAIM. 2003. 
+
+Xiaojin Zhu. Label Propagation for Eukaryotic Splice Junction Identification. 2002. [View Context].
+
+Mukund Deshpande and George Karypis. Evaluation of Techniques for Classifying Biological Sequences. PAKDD. 2002.
+
+
+[**PubChem Bioassay Data Data Set**](https://archive.ics.uci.edu/ml/datasets/PubChem+Bioassay+Data)
+**URL**: https://archive.ics.uci.edu/ml/datasets/PubChem+Bioassay+Data
+
+**Abstract**: "These highly imbalanced bioassay datasets are from the differing types of screening that can be performed using HTS technology. 21 datasets were created from 12 bioassays."
+
+Chen, Wang & Zhang: 2011.  The use of classification trees for bioinformatics.  DOI: 10.1002/widm.14
+
+Chin Yee Liew, Xiao Hua Ma and Chun Wei Yap.  Consensus model for identification of novel PI3K inhibitors in large chemical library.  Journal of Computer-Aided Molecular Design.  Volume 24, Number 2, 131-141, DOI: 10.1007/s10822-010-9321-0
+
+Genetic Algorithm-Neural Network (GANN): a study of neural network activation functions and depth of genetic algorithm search applied to feature selection.
+
+Dong Ling Tong and Robert Mintram  International Journal of Machine Learning and Cybernetics.  Volume 1, Numbers 1-4, 75-87, DOI: 10.1007/s13042-010-0004-x
+
+### Bioinformatics - specialized
+
+[**p53 Mutants Data Set**](https://archive.ics.uci.edu/ml/datasets/p53+Mutants)
+https://archive.ics.uci.edu/ml/datasets/p53+Mutants
+
+Danziger et al.  (2009) Predicting Positive p53 Cancer Rescue Regions Using Most Informative Positive (MIP) Active Learning, PLOS Computational Biology, 5(9), e1000498
+
+Danziger et al.   (2007) Choosing where to look next in a mutation sequence space: Active Learning of informative p53 cancer rescue mutants, Bioinformatics, 23(13), 104-114.
+
+Danziger et al. (2006) Functional census of mutation sequence spaces: the example of p53 cancer rescue mutants, IEEE/ACM transactions on computational biology and bioinformatics / IEEE, ACM, 3, 114-125.
+
+
+
+[**Mice Protein Expression Data Set**](https://archive.ics.uci.edu/ml/datasets/Mice+Protein+Expression)
+**URL**: https://archive.ics.uci.edu/ml/datasets/Mice+Protein+Expression
+
+Higuera C, Gardiner KJ, Cios KJ (2015) Self-Organizing Feature Maps Identify Proteins Critical to Learning in a Mouse Model of Down Syndrome. PLoS ONE 10(6): e0129126. [Web Link] journal.pone.0129126
+
+Ahmed MM, Dhanasekaran AR, Block A, Tong S, Costa ACS, Stasko M, et al. (2015) Protein Dynamics Associated with Failed and Rescued Learning in the Ts65Dn Mouse Model of Down Syndrome. PLoS ONE 10(3): e0119491. [Web Link]
+
+
+[**HIV-1 protease cleavage Data Set**](https://archive.ics.uci.edu/ml/datasets/HIV-1+protease+cleavage())
+**URL**: https://archive.ics.uci.edu/ml/datasets/HIV-1+protease+cleavage
+
+Thorsteinn Rögnvaldsson, Liwen You and Daniel Garwicz, 'State of the art prediction of HIV-1 protease cleavage sites' Bioinformatics (2015) 31 (8): 1204-1210. doi: 10.1093/bioinformatics/btu810, 
+
+
+### Bioinformatics - RNA-Seq
+[**gene expression cancer RNA-Seq Data Set**](https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq)
+https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq
+**URL**: https://archive.ics.uci.edu/ml/datasets/gene+expression+cancer+RNA-Seq
+**Abstract:** This collection of data is part of the RNA-Seq (HiSeq) PANCAN data set, it is a random extraction of gene expressions of patients having different types of tumor: BRCA, KIRC, COAD, LUAD and PRAD.
+
+Weinstein, John N., et al. 'The cancer genome atlas pan-cancer analysis project.' Nature genetics 45.10 (2013): 1113-1120.
+
+### Bioinformatics - RNA-Seq
+
+[**chipseq Data Set**](https://archive.ics.uci.edu/ml/datasets/chipseq)
+
+
+
+## Bioinformatics - Protein Struycture, chemistry & function
+
+[**Physicochemical Properties of Protein Tertiary Structure Data Set**]
+(https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties+of+Protein+Tertiary+Structure)
+
+RMSD-Size of the residue.
+F1 - Total surface area.
+F2 - Non polar exposed area.
+F3 - Fractional area of exposed non polar residue.
+F4 - Fractional area of exposed non polar part of residue.
+F5 - Molecular mass weighted exposed area.
+F6 - Average deviation from standard exposed area of residue.
+F7 - Euclidian distance.
+F8 - Secondary structure penalty.
+F9 - Spacial Distribution constraints (N,K Value).
+
+
+
+[QSAR androgen receptor Data Set](https://archive.ics.uci.edu/ml/datasets/QSAR+androgen+receptor)
+**URL**: https://archive.ics.uci.edu/ml/datasets/QSAR+androgen+receptor
+
+## Medicine
+
+[**Bone marrow transplant: children Data Set**](https://archive.ics.uci.edu/ml/datasets/Bone+marrow+transplant%3A+children)
+
+WrÃ³bel, Å, GudyÅ›, A, Sikora, M (2017) Learning rule sets from survival data,
+BMC Bioinformatics, 18(1):285 
+
+KaÅ‚wak, K, Porwolik, J, Mielcarek, M et al. (2010) Higher CD34+ and CD3+ cell doses in the graft promote long-term survival, and have no impact on the incidence of severe acute or chronic graft-versus-host disease after in vivo t cell-depleted unrelated donor hematopoietic stem cell transplantation in children, Biology of Blood and Marrow Transplantation, 16(10): 1388-1401 
+
+[**Caesarian Section Classification Dataset Data Set**](https://archive.ics.uci.edu/ml/datasets/Caesarian+Section+Classification+Dataset)
+
+
+[**Acute Inflammations Data Set**](https://archive.ics.uci.edu/ml/datasets/Acute+Inflammations)
+https://archive.ics.uci.edu/ml/datasets/Acute+Inflammations
+
+[**Vertebral Column Data Set**](https://archive.ics.uci.edu/ml/datasets/Vertebral+Column)
+https://archive.ics.uci.edu/ml/datasets/Vertebral+Column
+
+
+[**Fertility Data Set**](https://archive.ics.uci.edu/ml/datasets/Fertility)
+
+[**Heart failure clinical records Data Set**](https://archive.ics.uci.edu/ml/datasets/Heart+failure+clinical+records)
+
+[**Parkinson's Disease Classification Data Set**](https://archive.ics.uci.edu/ml/datasets/Parkinson%27s+Disease+Classification)
+
+[**Autistic Spectrum Disorder Screening Data for Children Data Set**](https://archive.ics.uci.edu/ml/datasets/Autistic+Spectrum+Disorder+Screening+Data+for+Children++)
+
+
+## Cancer
+
+[**Gastrointestinal Lesions in Regular Colonoscopy Data Set**](https://archive.ics.uci.edu/ml/datasets/Gastrointestinal+Lesions+in+Regular+Colonoscopy)
+
+[**Cervical cancer (Risk Factors) Data Set**](https://archive.ics.uci.edu/ml/datasets/Cervical+cancer+%28Risk+Factors%29)
+
+[**HCC Survival Data Set**](https://archive.ics.uci.edu/ml/datasets/HCC+Survival)
+
+
+[**Breast Cancer Coimbra Data Set**](https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Coimbra)
+
+## Anthropology
+
+
+[**StoneFlakes Data Set**](https://archive.ics.uci.edu/ml/datasets/StoneFlakes)
+
+
+## Landcover classification
+
+[**Forest type mapping Data Set**](https://archive.ics.uci.edu/ml/datasets/Forest+type+mapping)
+
+[**Amphibians Data Set**](https://archive.ics.uci.edu/ml/datasets/Amphibians)
+
+[**Urban Land Cover Data Set**](https://archive.ics.uci.edu/ml/datasets/Urban+Land+Cover)
+
+## Ecology
+
+[**Abalone Data Set**](https://archive.ics.uci.edu/ml/datasets/Abalone)
+
+[**Forest Fires Data Set**](https://archive.ics.uci.edu/ml/datasets/Forest+Fires)
+**Abstract:** "This is a difficult regression task, where the aim is to predict the burned area of forest fires, in the northeast region of Portugal, by using meteorological and other data."
+
+[**Anuran Calls (MFCCs) Data Set**](https://archive.ics.uci.edu/ml/datasets/Anuran+Calls+%28MFCCs%29)
+
+
+## Toxicology
+
+[**QSAR aquatic toxicity Data Set**](https://archive.ics.uci.edu/ml/datasets/QSAR+aquatic+toxicity)
+
+[**QSAR fish toxicity Data Set**](https://archive.ics.uci.edu/ml/datasets/QSAR+fish+toxicity)
+
+M. Cassotti, D. Ballabio, R. Todeschini, V. Consonni. A similarity-based QSAR model for predicting acute toxicity towards the fathead minnow (Pimephales promelas), SAR and QSAR in Environmental Research (2015), 26, 217-243; doi: 10.1080/1062936X.2015.1018938
+
+
+

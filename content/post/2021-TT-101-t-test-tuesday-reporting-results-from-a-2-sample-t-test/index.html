@@ -1,0 +1,120 @@
+---
+title: 'T-Test Tuesday: Reporting Results from a 2-Sample t-Test'
+author: Nathan Brouwer
+date: '2021-03-02'
+slug: t-test-tuesday-reporting-results-from-a-2-sample-t-test
+categories:
+  - statistics
+tags:
+  - basic R
+  - learnr
+  - R
+  - statistics
+  - t-test tuesday
+  - t.test
+math: no
+meta: yes
+toc: yes
+publishdate: '2021-03-01'
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>This vignette shows an example of reporting the results from a 2-sample t-test using data on the impact of invasive trout on salmon survival. The data are originaly from Levin et al (2002) are used in an example in chapter 12 of Whitlock &amp; Schulter 2nd. See ?brook_trout_ABD for more details.</p>
+<div id="references" class="section level3">
+<h3>References</h3>
+<p>Levin et al. 2002. Non–indigenous brook trout and the demise of Pacific salmon: a forgotten threat? PRSB 269. DOI: 10.1098/rspb.2002.2063</p>
+</div>
+</div>
+<div id="outline-of-tasks" class="section level2">
+<h2>Outline of tasks</h2>
+<ul>
+<li>Load the data into R</li>
+<li>Create a boxplot of the raw data</li>
+<li>State the relevant statistical null (Ho) and alternative (Ha) hypotheses</li>
+<li>Carry out an appropriate t-test</li>
+<li>Report the appropriate results in a full sentence as it would appear in a report or scientific paper</li>
+</ul>
+</div>
+<div id="data-set-up" class="section level2">
+<h2>Data set up</h2>
+<p>The data are availabe in the wildlifeR package and can be loaded using data(wildlifeR). Note that if you use the dataframe in wildlifeR you have to calculate the survival rate by hand. I will remake the data by hand as an example of making a simple dataframe.</p>
+<p>The following code contains the essential parts of the dataframe: a column for the survival rate and for whether brook trout are present or basent.</p>
+<pre class="r"><code>salmon &lt;- data.frame(survival = c(0.83,0.87,0.82,
+                                  0.84,0.81,0.84,
+                                  0.72, 0.84,0.75,
+                                  0.79,0.89,0.87),
+                     brook.trout.PRES.ABS =
+                       c(&quot;present&quot;,&quot;present&quot;,&quot;present&quot;,            
+                         &quot;present&quot;,&quot;present&quot;,&quot;present&quot;,
+                          &quot;absent&quot;,&quot;absent&quot;,&quot;absent&quot;,
+                          &quot;absent&quot;,&quot;absent&quot;,&quot;absent&quot;))</code></pre>
+</div>
+<div id="plot-raw-data" class="section level2">
+<h2>Plot raw data</h2>
+<p>I’ll make a boxplot of the raw data using the ggboxplot() function from the package ggpubr, which contains wrappers that extend ggplot2. Be sure to download and install these packages if needed.</p>
+<pre class="r"><code>library(ggpubr)</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre class="r"><code>ggpubr::ggboxplot(data = salmon,
+          y = &quot;survival&quot;,
+          x = &quot;brook.trout.PRES.ABS&quot;,
+          fill = &quot;brook.trout.PRES.ABS&quot;,
+          xlab = &quot;Brook trout - absent or present?&quot;,
+          ylab = &quot;Chinook salmon survival&quot;)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="the-hypotheses" class="section level2">
+<h2>The hypotheses</h2>
+<p>The null (Ho) and alternative hypotheses (Ha) are as follows:</p>
+<ul>
+<li>Ho: The survival rates of Chinook salmon are the same whether brook trout are present or absent</li>
+<li>Ha: The presence of brook trout changes survival rates of salmon.</li>
+</ul>
+</div>
+<div id="do-t-test" class="section level2">
+<h2>Do t-test</h2>
+<pre class="r"><code>t.test(survival ~ brook.trout.PRES.ABS, 
+       data = salmon)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  survival by brook.trout.PRES.ABS
+## t = -0.86344, df = 5.9267, p-value = 0.4215
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -0.09606084  0.04606084
+## sample estimates:
+##  mean in group absent mean in group present 
+##                 0.810                 0.835</code></pre>
+</div>
+<div id="report-the-results" class="section level2">
+<h2>Report the results</h2>
+<p>For the real data, the results could be reported like this:
+“There was no evidence that the mean survival of salmon when brook trout are present (mean = 0.81) is different than when brook trout are absent (mean = 0.84; 2-sample t-test: p = 0.44, t = 0.82, n = 12 streams, df = 6).”</p>
+<p>Normally I would also report the standard errors (SE) around the means, but for this exericise we will ignore it.</p>
+<div id="alternative-results" class="section level3">
+<h3>Alternative results</h3>
+<p>What if the results really looked like this?</p>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  fake.surv by salmon$brook.trout.PRES.ABS
+## t = 3.5042, df = 5.6723, p-value = 0.01399
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  0.02925548 0.17124452
+## sample estimates:
+##  mean in group absent mean in group present 
+##               0.81000               0.70975</code></pre>
+<p>The results could be reported like this:
+“Surival of chinook salmon in streams where brook were present (mean = 0.71) was significantly lower than when brook trout were absent (mean = 0.81) with a mean difference of 0.10 (95% CI: 0.03-0.17; 2-sample t-test p = 0.012, t = 3.6, n = 12 stream, df = 5.73)”</p>
+</div>
+</div>

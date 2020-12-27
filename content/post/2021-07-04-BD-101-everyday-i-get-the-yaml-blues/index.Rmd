@@ -1,0 +1,36 @@
+---
+title: Everyday I Get the YAML Blues
+author: Nathan Brouwer
+date: '2021-07-01'
+slug: everyday-i-get-the-yaml-blues
+categories:
+  - blogdown
+tags:
+  - YAML
+  - blogdown
+math: no
+meta: yes
+toc: yes
+excerpt: Some basic YAML for blogdown users
+draft: yes
+---
+
+
+<!--more-->
+
+## YAML for dummies
+
+https://bookdown.org/yihui/blogdown/content.html
+
+* draft: don't actually post it! (yes/no?)
+* publishdate: publish date - post it in the future
+* slug: "A character string as the tail of the URL. It is particularly useful when you define custom rules for permanent URLs (see Section 2.2.2)."
+* excerpt: quoted exert for homepage (not "exert"!)
+
+## Tags versus categories
+
+https://discourse.gohugo.io/t/whats-the-concept-of-the-categories-taxonomy/6486
+
+"I would say that categories are the general classification of an article, while tags are a grab-bag of ephemeral keywords that people might search through. Sections, on the other hand, are a there-can-be-only-one organizational tool that affects the URL and determines things like which RSS feed an article appears in"
+
+but " ‘tags’ and ‘categories’ are simply possible names for your taxonomies that have no inherent functional difference in Hugo - i.e. they’re both just lists of stuff that could be called anything. This is potentially confusing especially for people coming from Wordpress where ‘tags’ and ‘categories’ do have a specific meanings and different functionality. Categories being potentially hierarchical and only available on posts where tags are available on both posts and pages and are typically used in a more ad-hoc ‘folksonomy’ manner."

@@ -1,0 +1,63 @@
+---
+title: 'Blogdown 101: Enabling emoticons'
+author: Nathan Brouwer
+date: '2021-07-01'
+slug: blogdown-101-emoticons
+categories:
+  - blogdown
+tags:
+  - blogdown
+  - R
+math: no
+meta: yes
+toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<p>To enable emoticons add this to the header of config.toml</p>
+<pre class="r"><code>enableEmoji = true</code></pre>
+<p>For an example, Maelle Salmon’s config.toml on <a href="https://github.com/maelle/simplymaelle/blob/main/config.toml">GitHub</a></p>
+<p>I’ve never used emoticons in RMarkdown and wasn’t able initially to get them to show up usuing syntax like this:
+:exclamation:</p>
+<p>Using the <a href="https://github.com/hadley/emo">emo</a> package worked. As of Dec. 2020 emo isn’t on CRAN but is available from GitHub</p>
+<pre class="r"><code>devtools::install_github(&quot;hadley/emo&quot;)
+emo::ji(&quot;poop&quot;)</code></pre>
+<p>For some more info on blogdown and emoticons see <a href="https://bookdown.org/yihui/blogdown/configuration.html">here</a>.</p>
+<p>A useful cheatsheet is <a href="https://www.webfx.com/tools/emoji-cheat-sheet/">here</a>.</p>
+<p>To call an emoji in-line use this:</p>
+<pre class="r"><code>`r emo::ji(&quot;sos&quot;)` </code></pre>
+<p>And you’ll get this:
+🆘</p>
+<p>I’d like to figure out how to render them in margin notes but haven’t figure it out yet.</p>
+<pre class="r"><code>plot(cars)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Other emojis</p>
+<pre class="r"><code>emo::ji(&quot;exclamation&quot;)</code></pre>
+<pre><code>## ❗</code></pre>
+<pre class="r"><code>emo::ji(&quot;ballot_box_with_check&quot;)</code></pre>
+<pre><code>## ☑️</code></pre>
+<pre class="r"><code>emo::ji(&quot;no_entry_sign&quot;)</code></pre>
+<pre><code>## 🚫</code></pre>
+<pre class="r"><code>emo::ji(&quot;memo&quot;)</code></pre>
+<pre><code>## 📝</code></pre>
+<pre class="r"><code>emo::ji(&quot;open_file_folder&quot;)</code></pre>
+<pre><code>## 📂</code></pre>
+<pre class="r"><code>emo::ji(&quot;mega&quot;)</code></pre>
+<pre><code>## 📣</code></pre>
+<pre class="r"><code>emo::ji(&quot;computer&quot;)</code></pre>
+<pre><code>## 💻</code></pre>
+<pre class="r"><code>emo::ji(&quot;muscle&quot;)</code></pre>
+<pre><code>## 💪</code></pre>
+<pre class="r"><code>emo::ji(&quot;question&quot;)</code></pre>
+<pre><code>## ❓</code></pre>
+<pre class="r"><code>emo::ji(&quot;twisted_rightwards_arrows&quot;)</code></pre>
+<pre><code>## 🔀</code></pre>
+<pre class="r"><code>emo::ji(&quot;hourglass&quot;)</code></pre>
+<pre><code>## ⌛</code></pre>

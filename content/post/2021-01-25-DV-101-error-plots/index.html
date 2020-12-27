@@ -1,0 +1,94 @@
+---
+title: 'Example plot: means with error bars (error plot)'
+author: Nathan Brouwer
+date: '2021-02-01'
+slug: ''
+categories: []
+tags: []
+math: no
+meta: no
+toc: no
+---
+
+
+<div id="TOC">
+no
+</div>
+
+<!--more-->
+<pre class="r"><code># This script makes example of different kinds of plots using the telomere data 
+# of Meillere et al 2015.
+
+# Prep stuff
+## libraries
+library(ggpubr)</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre class="r"><code>library(cowplot)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;cowplot&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggpubr&#39;:
+## 
+##     get_legend</code></pre>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(docxtractr)
+
+library(plotrix) # for std.err
+
+
+file.url &lt;-  &quot;https://royalsocietypublishing.org/action/downloadSupplement?doi=10.1098%2Frsbl.2015.0559&amp;file=rsbl20150559supp1.docx&quot;
+
+### Works with the URL too
+file.docx &lt;- docxtractr::read_docx(file.url)
+docx.table.list &lt;- docxtractr::docx_extract_all_tbls(docx = file.docx)
+
+
+## Call each table from list
+### nestlings
+parus_telos_nest &lt;- docx.table.list[[1]]
+
+
+
+# clean up data
+parus_telos_nest$cort &lt;- as.numeric(parus_telos_nest$cort)</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre class="r"><code>parus_telos_nest$telomere.length &lt;- as.numeric(parus_telos_nest$telomere.length)
+
+parus_telos_nest$Group &lt;- with(parus_telos_nest,
+                       paste(treatment,sex))
+
+parus_telos_nest$Group &lt;- gsub(&quot;control&quot;,&quot;Control&quot;,parus_telos_nest$Group)
+parus_telos_nest$Group &lt;- gsub(&quot;disturbed&quot;,&quot;Noise exposure&quot;,parus_telos_nest$Group)
+
+parus_telos_nest$Group &lt;- gsub(&quot; F&quot;,&quot;\nFemales&quot;,parus_telos_nest$Group)
+parus_telos_nest$Group &lt;- gsub(&quot; M&quot;,&quot;\nMales&quot;,parus_telos_nest$Group)
+parus_telos_nest$cort.log &lt;- log(parus_telos_nest$cort)
+parus_telos_nest$telomere.length.log &lt;- log(parus_telos_nest$telomere.length)
+
+
+names(parus_telos_nest) &lt;- gsub(&quot;treatment&quot;,
+                        &quot;Treatment&quot;,
+                        names(parus_telos_nest))
+
+names(parus_telos_nest) &lt;- gsub(&quot;sex&quot;,
+                        &quot;Sex&quot;,
+                        names(parus_telos_nest))
+
+## Re-code data
+dat.focal.cols &lt;- parus_telos_nest[,c(&quot;Treatment&quot;,&quot;Sex&quot;,&quot;telomere.length&quot;,&quot;cort&quot;)]
+dat.foc.cols.rnd &lt;- dat.focal.cols
+dat.foc.cols.rnd$telomere.length &lt;- dat.foc.cols.rnd$telomere.length %&gt;% round(1)
+dat.foc.cols.rnd &lt;- dat.foc.cols.rnd  %&gt;% dplyr::arrange(Treatment,telomere.length)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>An <strong>error bar</strong> represents variation around a mean value or uncertainty we have in our estimate of the mean. Variation is represented by the <strong>standard deviation (SD)</strong> and characterizes just variation in the raw data. Uncertainty in the estimate is represented by the <strong>standard error (SE)</strong> or a <strong>95% confidence interval (95% CI)</strong>.</p>
+<p>When we refer to “an error bar” we usually are referring to a single bar extending either above or below the mean. When we refer to a confidence interval we are referring to both bars. A confidence interval is the full span from the top of the upper error bar to the bottom of the lower bar. There is therefore a subtle difference between referring to error bars from standard deviations or standard error and the 95% confidence.</p>
+<p>One thing to remember is that the bars shown in an error plot or barplot are completely different than those in a <strong>boxplot</strong>. Its useful to remember that the full name of a boxplot is a “box and whisker plot”. The bars extending above the boxes in a boxplot are <em>not</em> error bars. The top of the upper “<strong>whisker</strong>” goes up to the maximum value of the data (except when there are outliers); the bottom of the lower whisker goes down to the minimum value (except when there are outliers). These whiskers span upper and lower quartiles and are meant to capture aspects of the <strong>distribution</strong> of the data.</p>
+<p>Data are from
+Meillere et al 2015. Traffic noise exposure affects telomere length in nestling house sparrows. Proceedings of the Royal Society B. 11: 20150559 <a href="https://doi.org/10.1098/rsbl.2015.0559" class="uri">https://doi.org/10.1098/rsbl.2015.0559</a></p>
