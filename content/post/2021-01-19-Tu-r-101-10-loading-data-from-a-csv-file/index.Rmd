@@ -126,7 +126,7 @@ You can set your working directory to be anywhere on the computer.  It is essent
 
 Depending on the location you chose you might just see "~/" or some other shorthand; or, like me might get something longer:
 
-```{r, echo = F}
+```{r, eval = F}
 dirname(rstudioapi::getSourceEditorContext()$path)
 ```
 
@@ -194,7 +194,7 @@ If you've done it correctly you'll see the data table printed out in the console
 read.csv(file = "Medley1998.csv")
 ```
 
-```{r echo = F }
+```{r eval = F }
 med98 <- read.csv("data/Medley1998.csv")
 
 
@@ -245,7 +245,7 @@ med98
 ```
 
 
-```{r echo=F}
+```{r eval=F}
 head(med98)
 ```
 
@@ -255,7 +255,7 @@ You should see the entire dataset spit out in the console (I've just shown the t
 Now execute the list command **ls()**. You should now see "med98" shown in the console.
 
 
-```{r}
+```{r eval = F}
 ls()
 ```
 
@@ -266,44 +266,44 @@ We can learn about the med98 data using command like dim(), names() and  summary
 
 
 Let's check out this diatom data.  First, how big is the dataset overall?.  dim() tells you the rows first, then the columns.
-```{r}
+```{r eval = F}
 dim(med98)
 ```
 
 How about just how many columns are there?
-```{r}
+```{r eval = F}
 ncol(med98)
 ```
 
 And the column names?
-```{r}
+```{r eval = F}
 names(med98)
 ```
 
 What are the **summary statistics** (mean, median, etc) for the numeric data?  Are any of the variables categorical?  
-```{r}
+```{r eval = F}
 summary(med98)
 ```
 
 
 
 
-## AIDE: Plot the Mendley 1998 data
+## ASIDE: Plot the Mendley 1998 data
 
 As we'll discuss in depth in a later section on plotting , one reason why the **ggplot** and **ggpubr** packages are so powerful is because they can easily plot things in good color schemes.  We can make a basic scatter plot like this to show the positive correlation between Diatom species richness (the raw number of species identified in a given sample) on the x axis and species diversity on the y axis.
 
 First, load the ggpubr package using the library() command.  Note that you might get some output in red text telling you about the packages; it looks scary but its not.
-```{r}
+```{r eval = F}
 library(ggpubr)
 ```
 
 Now plot the scatter plot.  Note that the syntax for ggpubr requires that variables be contained within quotes.
-```{r}
+```{r eval = F}
 ggscatter(data = med98, y = "spp.div",x = "spp.rich")
 ```
 
 We can color-code the points by their pH
-```{r}
+```{r eval = F}
 ggscatter(data = med98, y = "spp.div",x = "spp.rich", color = "pH")
 ```
 

@@ -1,7 +1,7 @@
 ---
-title: 'R 101: Loading Data from a .csv File'
+title: 'R 102: Loading Data from a .csv File'
 author: Nathan Brouwer
-date: '2020-12-23'
+date: '2021-01-19'
 slug: r-101-loading-data-from-a-csv-file
 categories:
   - R
@@ -11,6 +11,8 @@ tags:
 math: no
 meta: no
 toc: no
+editor_options: 
+  chunk_output_type: console
 ---
 
 
@@ -19,3 +21,198 @@ no
 </div>
 
 <!--more-->
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>We will be working with data from Table 2 of <a href="https://www.jstor.org/stable/2641255">Medley and Clements (1998)</a>. (This data is featured in the ecological stats book by Quinn and Keough (2002), though I’m not a fan of how they analyze it.) The paper looks at how <a href="https://en.wikipedia.org/wiki/Diatom">diatoms</a> – photosynthesizing microorganisms known for their silica shells – are impacted by water quality in mountain streams.</p>
+<p>By the end of this post you will be able to</p>
+<ul>
+<li>Download raw data files by hand from the internet</li>
+<li>Load .csv files using the R command read.csv()</li>
+<li>Load .csv files using RStudio’s point-and-click interface</li>
+</ul>
+<div id="files" class="section level3">
+<h3>Files</h3>
+<p>We’ll be accessing this file from GitHub:</p>
+<ul>
+<li>Medley1998.csv</li>
+</ul>
+</div>
+<div id="potential-hangups" class="section level3">
+<h3>Potential Hangups</h3>
+<ul>
+<li>Be sure to follow the instructions carefully for accessing the file and click on the “Raw” tab within GitHub as instructed.</li>
+<li>You’ll need to be aware of where exactly file downloads are going, and how to get R to access that precise location.</li>
+</ul>
+</div>
+</div>
+<div id="preliminary-step-download-a-.csv-file" class="section level2">
+<h2>Preliminary step: download a .csv file</h2>
+<p>To load a .csv file into R we first need a .csv file to load. The data we’ll be working with can be downloaded from GitHub. First, go to this following link (it happens to be an obscure subfolder of the wildlifeR package)</p>
+<p><a href="https://github.com/brouwern/wildlifeR/tree/master/inst/extdata" class="uri">https://github.com/brouwern/wildlifeR/tree/master/inst/extdata</a></p>
+<p>Next, locate the file Medley1998.csv</p>
+<p>INSERT IMAGE</p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;./images/Medley1998csv/Medley1998csv-800x1.png&quot;))</code></pre>
+<p>Click on it; a table will show up.</p>
+<p>INSERT IMAGE</p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;images/Medley1998csv/Medley1998csv-800x2.png&quot;))</code></pre>
+<p>This table is formatted to look nice on a webpage (using some HTML that GitHub imposes on the file). We want the raw file itself. To get it we need to click on the <strong>“Raw”</strong> tab.</p>
+<p>tufte::margin_note(“Be sure to click on the RAW tab!”)</p>
+<p>INSERT IMAGE</p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;images/Medley1998csv/Medley1998csv-800x2.png&quot;))</code></pre>
+<p>We will then see what looks like a text document against a white background with no formatting of any kind. We can now download the file by following these steps.</p>
+<p>Either</p>
+<ul>
+<li>Use the shortcut <strong>Control + S</strong> to “Save as” the file</li>
+</ul>
+<p>Or</p>
+<ul>
+<li>Right click (or on Mac Command+Click)</li>
+<li>“Save link as” (or the equivalent)</li>
+</ul>
+<p>Then save the file to a location you know you can find, such as</p>
+<p>tufte::margin_note(“If you have trouble finding the file see below for suggestions”)</p>
+<ul>
+<li>Documents</li>
+<li>Desktop</li>
+<li>Your network profile drive</li>
+</ul>
+<p>NOTE: if you try to “Save as…” anything else but the white-screen <strong>raw text file</strong> you will run into problems. Make sure you clicked on “Raw” and are working with the white screen!</p>
+<p>After you download the file, open up Excel or another spreadsheet program and open up the file to confirm that what you downloaded is just a set of numbers. If you see long lines of text you might have accidentally downloaded the HTML-formatted version of the file. Make sure you are downloading the very plain version of the file from the totally blank white screen.</p>
+<div id="problems-finding-the-file" class="section level3">
+<h3>Problems finding the file?</h3>
+<p>We don’t teach people in schools how to navigate computer file systems so its ok if you need to fumble around to figure this out. If you can’t relocate the file trying searching for it. On a Mac click on the Spotlight Search magnifying class and type in Medley1998.csv. Macs are very good at finding even brand-new files, while Windows PCs are slower, but its worth trying.</p>
+</div>
+</div>
+<div id="set-the-working-directory-wd-in-rstudio" class="section level2">
+<h2>Set the “working directory” (“WD”) in RStudio</h2>
+<p>We will now take the data from GitHub we saved as a .csv file and load it into R. This can be tricky. First we need to tell R <em>exactly</em> where the file is by setting our <strong>working directory</strong>.</p>
+<p>tufte::margin_note(“This is a standard workflow for most R users. There are other approaches using a package called here which I’ll cover later.”)</p>
+<p>Follow these steps:</p>
+<ul>
+<li>Click on “Session” on the main menu at the top the RStudio window.
+<ul>
+<li>Things appear in this order on menu: “File, Edit, Code, View, Plots, <strong>Session</strong>, …”</li>
+</ul></li>
+<li>Click on “Set working directory” (about half-way down)</li>
+<li>Select “Choose Directory” (last choice)</li>
+<li>Locate the folder you chose to save the file.
+<ul>
+<li>If you have trouble finding the folder holding the file, try using the search function within the pop up window.</li>
+</ul></li>
+<li>Select the directory &amp; click “Open”</li>
+<li>The command “setwd()” will be automatically be printed in the RStudio console followed by the location of the directory you selected</li>
+</ul>
+<p>You can set your working directory to be anywhere on the computer. It is essential to make sure that the .csv file you want to load into R is in your working directory.</p>
+<p>Depending on the location you chose you might just see “~/” or some other shorthand; or, like me might get something longer:</p>
+<pre class="r"><code>dirname(rstudioapi::getSourceEditorContext()$path)</code></pre>
+</div>
+<div id="check-the-working-directory-with-getwd" class="section level2">
+<h2>Check the working directory with getwd()</h2>
+<p>You can confirm where you are at using the command <strong>getwd()</strong>; this can be handy if you’re not sure that you did things correctly or if R didn’t output what you expected.</p>
+<pre class="r"><code>getwd()  </code></pre>
+<p>Here, even though when I set the working directory R originally just displayed “setwd(”~/“)”, I can now see the full <strong>file path</strong> and confirm that I’m in the correct folder.</p>
+</div>
+<div id="check-for-the-file-you-downloaded-with-list.files" class="section level2">
+<h2>Check for the file you downloaded with list.files()</h2>
+<p>You can see what’s in your working directory using the command <strong>list.files()</strong>. Depending on how many other files you have this could be a very long list. I have 40-ish files and so won’t display them.</p>
+<pre class="r"><code>list.files()</code></pre>
+<p>If you have a ton of files being printed out you can narrow things down by telling R a text pattern to screen for, such as the the <strong>file extension</strong> .csv</p>
+<pre><code>## [1] &quot;Medley1998.csv&quot;</code></pre>
+<p>If the file wasn’t successful downloaded R will just give you a cryptic message like this.</p>
+<pre><code>## character(0)</code></pre>
+<p>This means the file isn’t’ there and you need to redo the download to make sure either</p>
+<ol style="list-style-type: decimal">
+<li>The file actually downloaded and</li>
+<li>file is saved where you want it to be.</li>
+</ol>
+</div>
+<div id="aside-interacting-with-r-via-the-console-or-the-source-viewer" class="section level2">
+<h2>ASIDE: Interacting with R via the console or the source viewer</h2>
+<p>You can enter R commands directly into the console, or type them into a <strong>script file</strong> in the <strong>source viewer</strong> and then execute.</p>
+<p>If you’ve just been using the console try this:</p>
+<ul>
+<li>Click on the source viewer pane in RStudio</li>
+<li>Type “getwd()” in the source viewer</li>
+<li>Click on the “Run” button in the upper Right part of the pane</li>
+<li>The getwd() command is sent over to the console and executed</li>
+</ul>
+</div>
+<div id="loading-data-into-r-using-read.csv" class="section level2">
+<h2>Loading data into R using read.csv()</h2>
+<p>Copy and paste the .csv file name from the console into the source viewer then execute the command “read.csv(file =”Medley1998.csv“)”. <strong>You can type it but you must be careful to have NO TYPOS.</strong> R is unforgiving when it comes to typos.</p>
+<p>If you’ve done it correctly you’ll see the data table printed out in the console (I show only some of the output).</p>
+<pre class="r"><code>read.csv(file = &quot;Medley1998.csv&quot;)</code></pre>
+<pre class="r"><code>med98 &lt;- read.csv(&quot;data/Medley1998.csv&quot;)
+
+
+#med98 &lt;- read.csv(&quot;https://raw.githubusercontent.com/brouwern/wildlifeR/master/inst/extdata/Medley1998.csv&quot;)
+
+head(med98)</code></pre>
+<p>You must have the file name in quotation marks and include the “.csv”. <em>Any</em> small error will cause things to not work. R is a powerful, but intolerant.</p>
+<p>Here are examples of mistakes that <em>won’t work</em> (no matter how much you cuss at it.)</p>
+<pre class="r"><code>read.csv(file = Medley1998.csv) # missing the quotes &quot; &quot;
+read.csv(file = &quot;Medley1998&quot;)   # missing the .csv
+read.csv(file &quot;Medley1998.csv&quot;) # missing the =</code></pre>
+<p>Note that R returns error messages in red, but they aren’t necessarily very helpful in figuring out what the problem actually is. This is an unfortunate feature of R, and reading error messages is a skill that must be learned.</p>
+<div id="load-data-into-an-r-object" class="section level3">
+<h3>Load data into an R “object”</h3>
+<p>Now type this:
+med98 &lt;- read.csv(file = “Medley1998.csv”)</p>
+<p>The <strong>&lt;-</strong> is the <strong>assignment operator</strong>. What happens when you execute this command?</p>
+<pre class="r"><code>med98 &lt;- read.csv(file = &quot;Medley1998.csv&quot;) </code></pre>
+<p><strong>It might actually look like not much has happened. But that’s good!</strong> R is generous with its complaints when you make a mistake but stoic when you are successful.</p>
+<p>The fact that nothing happened means the data has successful been loaded into R. You have “assigned” the data from your file to the “object” named “med98”</p>
+</div>
+<div id="the-assignment-operator--" class="section level3">
+<h3>The assignment operator “&lt;-”</h3>
+<p>“&lt;-” is called the “assignment operator”. It is a special type of R command.</p>
+<p>“&lt;” usually shares The comma key. Type “shift + ,” To get it.</p>
+<p>Now, if you type just “med98” and execute it as a command, what happens?</p>
+<pre class="r"><code>med98</code></pre>
+<pre class="r"><code>head(med98)</code></pre>
+<p>You should see the entire dataset spit out in the console (I’ve just shown the top part).</p>
+<p>Now execute the list command <strong>ls()</strong>. You should now see “med98” shown in the console.</p>
+<pre class="r"><code>ls()</code></pre>
+<p>This means that the <strong>object</strong> you assigned your data is now in your <strong>“workspace.”</strong> The workspace is what I call the working memory of R.</p>
+<p>We can learn about the med98 data using command like dim(), names() and summary(). Its good to use these commands whenever you load a dataset the first time to make sure its conforms to you expectations. If you get a weird answer, like 0 rows, 0 columns, bizarre summary statistics, then something must have happened to the data and you need to circle back to figure out what’s up.</p>
+<p>Let’s check out this diatom data. First, how big is the dataset overall?. dim() tells you the rows first, then the columns.</p>
+<pre class="r"><code>dim(med98)</code></pre>
+<p>How about just how many columns are there?</p>
+<pre class="r"><code>ncol(med98)</code></pre>
+<p>And the column names?</p>
+<pre class="r"><code>names(med98)</code></pre>
+<p>What are the <strong>summary statistics</strong> (mean, median, etc) for the numeric data? Are any of the variables categorical?</p>
+<pre class="r"><code>summary(med98)</code></pre>
+</div>
+</div>
+<div id="aside-plot-the-mendley-1998-data" class="section level2">
+<h2>ASIDE: Plot the Mendley 1998 data</h2>
+<p>As we’ll discuss in depth in a later section on plotting , one reason why the <strong>ggplot</strong> and <strong>ggpubr</strong> packages are so powerful is because they can easily plot things in good color schemes. We can make a basic scatter plot like this to show the positive correlation between Diatom species richness (the raw number of species identified in a given sample) on the x axis and species diversity on the y axis.</p>
+<p>First, load the ggpubr package using the library() command. Note that you might get some output in red text telling you about the packages; it looks scary but its not.</p>
+<pre class="r"><code>library(ggpubr)</code></pre>
+<p>Now plot the scatter plot. Note that the syntax for ggpubr requires that variables be contained within quotes.</p>
+<pre class="r"><code>ggscatter(data = med98, y = &quot;spp.div&quot;,x = &quot;spp.rich&quot;)</code></pre>
+<p>We can color-code the points by their pH</p>
+<pre class="r"><code>ggscatter(data = med98, y = &quot;spp.div&quot;,x = &quot;spp.rich&quot;, color = &quot;pH&quot;)</code></pre>
+</div>
+<div id="loading-.csv-files-using-rstudio" class="section level2">
+<h2>Loading .csv files using RStudio</h2>
+<p>Frequently in code I will have things written up to load data using the <strong>read.csv()</strong> command. However, there is a point-and-click way of loading spreadsheet data into RStudio too.</p>
+<p>There’s on pane in RStudio that doesn’t get used much by basic R users, the “Environment, History, Connections, Build, Git” pane (I think it might not have “Git” on it if you don’t have certain packages loaded).</p>
+<p>INSERT IMAGE</p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;images/Environment_tab_import_dataset_1.PNG&quot;))</code></pre>
+<p>If you click on the spreadsheet-looking icon “Import Dataset” and select “From text (base)” you can navigate to where your .csv file is located and select it. A preview window will then pop up which will show you the raw (which should look like what you originally down loaded) and a preview of how RStudio will format the data. (If the preview doesn’t look right you can change some of the option in the drop down menus to see if things line up.)</p>
+<p>INSERT IMAGE</p>
+<pre class="r"><code>knitr::include_graphics(here::here(&quot;images/Environment_tab_import_dataset_2.PNG&quot;))</code></pre>
+<p>When you click “Import” RStudio will execute some code in the console (e.g. “Medley1998 &lt;- read.csv(”~/Medley1998.csv“)”) to load the data and then call the command <strong>View()</strong> to generate preview of the data in a new tab in the script view. (Note that this View panel only lets you look at the data; you can’t edit it.)</p>
+</div>
+<div id="challenge" class="section level2">
+<h2>Challenge</h2>
+<p>.csv files are the most common format for sharing data in R. “csv” stands for “comma separated volume”, and you will note that each value on a line is separated by a comma (some things with computers do make sense on the first try!).</p>
+<p>Sometimes you will encounter .txt files which separate data other ways, such as spaces, tabs, or by lining up everything explicitly in rows. On the wildlifeR GitHub directory we used before (<a href="https://github.com/brouwern/wildlifeR/tree/master/inst/extdata" class="uri">https://github.com/brouwern/wildlifeR/tree/master/inst/extdata</a>) these is a file “Medley1998.txt”. Download this file and load it using RStudio’s Import Dataset function. See if RStudio recognizes that its not .csv.</p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Medley &amp; Clements. 1998. Responses of diatom communities to heavy metals in streams: The influence of longitudinal variation. [Ecological Applications 8:631-644.] (<a href="https://www.jstor.org/stable/2641255" class="uri">https://www.jstor.org/stable/2641255</a>)</p>
+<p>Quinn &amp; Keough. 2002. <a href="http://www.cambridge.org/us/academic/subjects/life-sciences/ecology-and-conservation/experimental-design-and-data-analysis-biologists?format=PB&amp;isbn=9780521009768#1HKJ7hG4zeY15ipR.97">Experimental design and data analysis for biologists.</a>. A pdf version of the book is available online for free.</p>
+</div>
