@@ -1,0 +1,254 @@
+---
+title: 'poweR Tool: Extracting Data Tables from Word Documents'
+author: Nathan Brouwer
+date: '2021-02-01'
+slug: power-tool-extracting-data-tables-from-word-documents
+categories:
+  - R
+tags:
+  - data
+math: no
+meta: yes
+toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<!--more-->
+
+## tl;dr
+
+Use the package docxtractr to liberate tables from word files with a few lines of code.
+
+## Intoduction
+
+While there has been exciting growth in adoption of open science practices over the last decade there is not much standardization between or even within journals about how code, data, and other materials get posted.  Its not uncommon therefore to get data - which is happiest in a .csv file or at least a spreadsheet - in a Microsoft Word document or even PDF.
+
+Data in a Word Document isn't hard to liberate by hand through copy-paste and a bit of proofreading.
+
+Not a big deal, but there are a few minor drawbacks.  The most minor issues are that you have to do your copying accurately and any reformatting carefully.  This isn't a big deal as long as you don't have tons of tables to work up.  
+
+A somewhat more relevant issue is that you've introduced a step in your workflow that 
+
+1. isn't executed and documented in a script, and 
+1. results in a profusion in files; 
+
+A best practice would be to keep the original Word file, an unaltered spreadsheet version, and a final hand-edited .csv.  There are greater sins against data science and reproducible research than this, but R provides you a way to absolve yourself regardless.
+
+## Case study
+
+[Meillere et al. (2015)](https://doi.org/10.1098/rsbl.2015.0559) studied how stress impacts birds and provide a nice, compact dataset for demonstrating things to my classes.  The paper was published in The Proceedings of the Royal Society B,  which has been a leader in publishing raw data alongside their papers.  They now require [completely open data](https://royalsociety.org/journals/ethics-policies/data-sharing-mining/) and are a great place to look for datasets.
+
+## Raw data
+
+The raw data is available via the [publisher's website](https://royalsocietypublishing.org/doi/suppl/10.1098/rsbl.2015.0559) at
+https://royalsocietypublishing.org/doi/suppl/10.1098/rsbl.2015.0559 .
+
+The author's posted the data in a table within a word document called "rsbl20150559supp1.docx".
+
+# This file is saved in the package folder /inst/extdata
+# or just /extdata/sparrowtelomeres.
+
+## Packages
+
+Data tables can be extracted directly from Word documents using functions from the [docxtractr](https://cran.r-project.org/web/packages/docxtractr/index.html) by Rudis et al.  [Bob Rudis](https://rud.is/b/) works at the interface between information security and data science; follow him on Twitter @hrbrmstr
+
+First we need the package
+```{r}
+# install.packages("docxtractr")
+library(docxtractr)
+```
+
+
+Normally I'll any source data file and save to some form of /data folder, then access it using the [here](https://cran.r-project.org/web/packages/here/index.html) package.  For example, in my biodata package the data are stored in 
+inst/extdata/sparrowtelomeres.  
+
+For now, I'm going to download the Word file directly from the publisher's website.  Note, however, that downloading things like this directly to R make security folks like Bob Rudis [angry](https://rud.is/b/2017/02/23/on-watering-holes-trust-defensible-systems-and-data-science-community-security/).  **Definitely don't source random scripts off of websites!**
+
+I'll also need to do some data re-coding using tools from the tidyverse
+```{r}
+library(dplyr)
+```
+
+
+## Downloading the file
+
+I get the URL for the file itself by right-clicking on the file name on the website and selecting "Copy link address."  I'll assign that to an object:
+```{r}
+file.url <-  "https://royalsocietypublishing.org/action/downloadSupplement?doi=10.1098%2Frsbl.2015.0559&file=rsbl20150559supp1.docx"
+```
+
+
+
+## Extract docx
+
+There are three steps to using [docxtractr](https://cran.r-project.org/web/packages/docxtractr/index.html):
+
+1. Read the file into R using read_docx()
+1. Pull the files out of the document using docx_extract_all_tbls()
+1. If there are multiple files in the document docx_extract_all_tbls returns a list; select the appropriate table from the list and assign it to an object.
+
+
+The file is accessed and read into R with docxtractr::read_docx().  This is a small word document and only takes a second.
+```{r}
+file.docx <- docxtractr::read_docx(file.url)
+```
+
+This produces a docx object:
+```{r}
+class(file.docx)
+```
+
+docxtractr::docx_extract_all_tbls() then pulls out the tables.
+```{r}
+docx.table.list <- docxtractr::docx_extract_all_tbls(docx = file.docx)
+```
+
+This produces a list
+
+```{r}
+class(docx.table.list)
+```
+
+There are two tables in this Word file
+```{r}
+length(docx.table.list)
+```
+
+I can get a peek at them with the str() command
+```{r}
+str(docx.table.list)
+```
+
+
+## Calling each table from list
+
+If you're new to R lists aren't always intuitive.  I'll use double bracket notation to pull out the first list and second tables
+
+Table 1:
+```{r}
+parus_telos_nest <- docx.table.list[[1]] # note double brackets [[1]] 
+
+```
+
+Table 2:
+```{r}
+parus_telos_adult  <- docx.table.list[[2]] # note double brackets [[2]] 
+
+```
+
+It there was a third table it would be accessed as docx.table.list[[3]].
+
+
+## Hello Tibbles!
+
+Each table is stored as a [tibble](https://tibble.tidyverse.org/) (tbl_df), the preferred data structure of the tidyverse.
+
+```{r}
+class(parus_telos_nest)
+```
+
+tibbles are "lazy" and in this case everything is loaded in as character data:
+
+```{r}
+summary(parus_telos_adult)
+```
+
+
+
+
+## Setting up numeric data and factors
+
+I need to change the numeric measurements from character data into the numeric data class, and categorical data in factors.  There are many ways to do this.  If you're new to R you might be used to this:
+
+```{r}
+# what is the "brood.size" column?
+class(parus_telos_nest$brood.size)
+
+# change "brood.size" to numeric
+parus_telos_nest$brood.size <- as.numeric(parus_telos_nest$brood.size)
+
+# confirm
+summary(parus_telos_nest$brood.size)
+```
+
+
+I can do this with dplyr::mutate
+```{r}
+parus_telos_nest <- parus_telos_nest %>% mutate(size = as.numeric(size))
+```
+
+I can feed multiple columns to be concise.  (Note that is throws a warning because its converting the literal "NA" (the letters N and A together) to an actual NA to indicate missing data).
+```{r}
+parus_telos_nest <- parus_telos_nest %>% mutate(condition = as.numeric(condition),
+                        cort = as.numeric(cort),
+                        telomere.length = as.numeric(telomere.length))
+```
+
+I'll check to make sure things are ok
+```{r}
+summary(parus_telos_nest)
+```
+
+
+
+I'll do this with the categorical variables next and as.factor().
+```{r, warning = F, message=F}
+parus_telos_nest <- parus_telos_nest %>% mutate(nest = as.factor(nest),
+                        treatment = as.factor(treatment),
+                        sex = as.factor(sex),
+                        fledging = as.factor(fledging))
+```
+
+
+The other dataframe also needs to be set up.  In this case, I'll put each column within the same mutate() command and use convert them to a factor or numeric as needed.  Note that as.factor() is the same as factor(), just shorter.  
+
+```{r}
+parus_telos_adult <- parus_telos_adult %>% mutate(nest = factor(nest),
+                        treatment = factor(treatment),
+                        sex = factor(sex),
+                        size = as.numeric(size),
+                        condition = as.numeric(condition))
+```
+
+
+
+That's it!  The longest part is setting up the data as numeric or factors.  All I'd have left to do is save the dataframes to .csv or as .RData.
+
+
+
+## Appendix 
+
+docxtractr has some other cool features. First, it can work PowerPoint files (.pptx) and older .doc files, though this requires LibreOffice (https://www.libreoffice.org/).  
+
+Second, docxtractr also has a number of functions useful for interacting with Word documents, including the ability to extract comments. The function mcga ("Make Column Names Great Again") will automatically clean up column names to be R friendly.
+
+* docx_describe_tbls: Returns a description of all the tables in the Word document
+* docx_describe_cmnts: Returns a description of all the comments in the Word document
+* docx_extract_all_cmnts: Extract comments from a Word document
+* docx_tbl_count: Get number of tables in a Word document
+* docx_cmnt_count: Get number of comments in a Word document
+* mcga : Make column names great again
+
+
+```{r, echo = F, eval = F}
+home <- here::here()
+list.dirs(home)
+data.dir <- here::here()
+list.files(data.dir)
+list.files(data.dir,  full.names = T)
+dir.exists(data.dir)
+
+file.name <- "rsbl20150559supp1.docx"
+file.full <- here::here("inst/extdata/sparrowtelomeres",
+                        file.name)
+file.exists(file.full)
+
+file.docx <- docxtractr::read_docx(file.full)
+
+
+docx.table.list <- docxtractr::docx_extract_all_tbls(docx = file.docx)
+
+```
+

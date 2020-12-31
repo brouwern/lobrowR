@@ -1,0 +1,220 @@
+---
+title: 'poweR Tool: Extracting Data Tables from Word Documents'
+author: Nathan Brouwer
+date: '2021-02-01'
+slug: power-tool-extracting-data-tables-from-word-documents
+categories:
+  - R
+tags:
+  - data
+math: no
+meta: yes
+toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<div id="tldr" class="section level2">
+<h2>tl;dr</h2>
+<p>Use the package docxtractr to liberate tables from word files with a few lines of code.</p>
+</div>
+<div id="intoduction" class="section level2">
+<h2>Intoduction</h2>
+<p>While there has been exciting growth in adoption of open science practices over the last decade there is not much standardization between or even within journals about how code, data, and other materials get posted. Its not uncommon therefore to get data - which is happiest in a .csv file or at least a spreadsheet - in a Microsoft Word document or even PDF.</p>
+<p>Data in a Word Document isn’t hard to liberate by hand through copy-paste and a bit of proofreading.</p>
+<p>Not a big deal, but there are a few minor drawbacks. The most minor issues are that you have to do your copying accurately and any reformatting carefully. This isn’t a big deal as long as you don’t have tons of tables to work up.</p>
+<p>A somewhat more relevant issue is that you’ve introduced a step in your workflow that</p>
+<ol style="list-style-type: decimal">
+<li>isn’t executed and documented in a script, and</li>
+<li>results in a profusion in files;</li>
+</ol>
+<p>A best practice would be to keep the original Word file, an unaltered spreadsheet version, and a final hand-edited .csv. There are greater sins against data science and reproducible research than this, but R provides you a way to absolve yourself regardless.</p>
+</div>
+<div id="case-study" class="section level2">
+<h2>Case study</h2>
+<p><a href="https://doi.org/10.1098/rsbl.2015.0559">Meillere et al. (2015)</a> studied how stress impacts birds and provide a nice, compact dataset for demonstrating things to my classes. The paper was published in The Proceedings of the Royal Society B, which has been a leader in publishing raw data alongside their papers. They now require <a href="https://royalsociety.org/journals/ethics-policies/data-sharing-mining/">completely open data</a> and are a great place to look for datasets.</p>
+</div>
+<div id="raw-data" class="section level2">
+<h2>Raw data</h2>
+<p>The raw data is available via the <a href="https://royalsocietypublishing.org/doi/suppl/10.1098/rsbl.2015.0559">publisher’s website</a> at
+<a href="https://royalsocietypublishing.org/doi/suppl/10.1098/rsbl.2015.0559" class="uri">https://royalsocietypublishing.org/doi/suppl/10.1098/rsbl.2015.0559</a> .</p>
+<p>The author’s posted the data in a table within a word document called “rsbl20150559supp1.docx”.</p>
+</div>
+<div id="this-file-is-saved-in-the-package-folder-instextdata" class="section level1">
+<h1>This file is saved in the package folder /inst/extdata</h1>
+</div>
+<div id="or-just-extdatasparrowtelomeres." class="section level1">
+<h1>or just /extdata/sparrowtelomeres.</h1>
+<div id="packages" class="section level2">
+<h2>Packages</h2>
+<p>Data tables can be extracted directly from Word documents using functions from the <a href="https://cran.r-project.org/web/packages/docxtractr/index.html">docxtractr</a> by Rudis et al. <a href="https://rud.is/b/">Bob Rudis</a> works at the interface between information security and data science; follow him on Twitter <span class="citation">@hrbrmstr</span></p>
+<p>First we need the package</p>
+<pre class="r"><code># install.packages(&quot;docxtractr&quot;)
+library(docxtractr)</code></pre>
+<p>Normally I’ll any source data file and save to some form of /data folder, then access it using the <a href="https://cran.r-project.org/web/packages/here/index.html">here</a> package. For example, in my biodata package the data are stored in
+inst/extdata/sparrowtelomeres.</p>
+<p>For now, I’m going to download the Word file directly from the publisher’s website. Note, however, that downloading things like this directly to R make security folks like Bob Rudis <a href="https://rud.is/b/2017/02/23/on-watering-holes-trust-defensible-systems-and-data-science-community-security/">angry</a>. <strong>Definitely don’t source random scripts off of websites!</strong></p>
+<p>I’ll also need to do some data re-coding using tools from the tidyverse</p>
+<pre class="r"><code>library(dplyr)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+</div>
+<div id="downloading-the-file" class="section level2">
+<h2>Downloading the file</h2>
+<p>I get the URL for the file itself by right-clicking on the file name on the website and selecting “Copy link address.” I’ll assign that to an object:</p>
+<pre class="r"><code>file.url &lt;-  &quot;https://royalsocietypublishing.org/action/downloadSupplement?doi=10.1098%2Frsbl.2015.0559&amp;file=rsbl20150559supp1.docx&quot;</code></pre>
+</div>
+<div id="extract-docx" class="section level2">
+<h2>Extract docx</h2>
+<p>There are three steps to using <a href="https://cran.r-project.org/web/packages/docxtractr/index.html">docxtractr</a>:</p>
+<ol style="list-style-type: decimal">
+<li>Read the file into R using read_docx()</li>
+<li>Pull the files out of the document using docx_extract_all_tbls()</li>
+<li>If there are multiple files in the document docx_extract_all_tbls returns a list; select the appropriate table from the list and assign it to an object.</li>
+</ol>
+<p>The file is accessed and read into R with docxtractr::read_docx(). This is a small word document and only takes a second.</p>
+<pre class="r"><code>file.docx &lt;- docxtractr::read_docx(file.url)</code></pre>
+<p>This produces a docx object:</p>
+<pre class="r"><code>class(file.docx)</code></pre>
+<pre><code>## [1] &quot;docx&quot;</code></pre>
+<p>docxtractr::docx_extract_all_tbls() then pulls out the tables.</p>
+<pre class="r"><code>docx.table.list &lt;- docxtractr::docx_extract_all_tbls(docx = file.docx)</code></pre>
+<p>This produces a list</p>
+<pre class="r"><code>class(docx.table.list)</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<p>There are two tables in this Word file</p>
+<pre class="r"><code>length(docx.table.list)</code></pre>
+<pre><code>## [1] 2</code></pre>
+<p>I can get a peek at them with the str() command</p>
+<pre class="r"><code>str(docx.table.list)</code></pre>
+<pre><code>## List of 2
+##  $ : tibble [37 × 9] (S3: tbl_df/tbl/data.frame)
+##   ..$ nest           : chr [1:37] &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;B&quot; ...
+##   ..$ treatment      : chr [1:37] &quot;disturbed&quot; &quot;disturbed&quot; &quot;disturbed&quot; &quot;disturbed&quot; ...
+##   ..$ sex            : chr [1:37] &quot;M&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; ...
+##   ..$ brood.size     : chr [1:37] &quot;4&quot; &quot;4&quot; &quot;4&quot; &quot;5&quot; ...
+##   ..$ size           : chr [1:37] &quot;-3.550&quot; &quot;-1.721&quot; &quot;-1.158&quot; &quot;-1.263&quot; ...
+##   ..$ condition      : chr [1:37] &quot;-1.486&quot; &quot;0.520&quot; &quot;0.568&quot; &quot;1.246&quot; ...
+##   ..$ cort           : chr [1:37] &quot;7.38&quot; &quot;0.95&quot; &quot;1.72&quot; &quot;0.85&quot; ...
+##   ..$ telomere.length: chr [1:37] &quot;0.829&quot; &quot;1.155&quot; &quot;0.986&quot; &quot;1.121&quot; ...
+##   ..$ fledging       : chr [1:37] &quot;no&quot; &quot;no&quot; &quot;no&quot; &quot;no&quot; ...
+##  $ : tibble [13 × 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ nest     : chr [1:13] &quot;A&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot; ...
+##   ..$ treatment: chr [1:13] &quot;disturbed&quot; &quot;control&quot; &quot;disturbed&quot; &quot;control&quot; ...
+##   ..$ sex      : chr [1:13] &quot;F&quot; &quot;M&quot; &quot;F&quot; &quot;F&quot; ...
+##   ..$ size     : chr [1:13] &quot;0.900&quot; &quot;2.423&quot; &quot;-0.110&quot; &quot;-1.152&quot; ...
+##   ..$ condition: chr [1:13] &quot;1.370&quot; &quot;0.890&quot; &quot;-0.116&quot; &quot;0.128&quot; ...</code></pre>
+</div>
+<div id="calling-each-table-from-list" class="section level2">
+<h2>Calling each table from list</h2>
+<p>If you’re new to R lists aren’t always intuitive. I’ll use double bracket notation to pull out the first list and second tables</p>
+<p>Table 1:</p>
+<pre class="r"><code>parus_telos_nest &lt;- docx.table.list[[1]] # note double brackets [[1]] </code></pre>
+<p>Table 2:</p>
+<pre class="r"><code>parus_telos_adult  &lt;- docx.table.list[[2]] # note double brackets [[2]] </code></pre>
+<p>It there was a third table it would be accessed as docx.table.list[[3]].</p>
+</div>
+<div id="hello-tibbles" class="section level2">
+<h2>Hello Tibbles!</h2>
+<p>Each table is stored as a <a href="https://tibble.tidyverse.org/">tibble</a> (tbl_df), the preferred data structure of the tidyverse.</p>
+<pre class="r"><code>class(parus_telos_nest)</code></pre>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<p>tibbles are “lazy” and in this case everything is loaded in as character data:</p>
+<pre class="r"><code>summary(parus_telos_adult)</code></pre>
+<pre><code>##      nest            treatment             sex                size          
+##  Length:13          Length:13          Length:13          Length:13         
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##   condition        
+##  Length:13         
+##  Class :character  
+##  Mode  :character</code></pre>
+</div>
+<div id="setting-up-numeric-data-and-factors" class="section level2">
+<h2>Setting up numeric data and factors</h2>
+<p>I need to change the numeric measurements from character data into the numeric data class, and categorical data in factors. There are many ways to do this. If you’re new to R you might be used to this:</p>
+<pre class="r"><code># what is the &quot;brood.size&quot; column?
+class(parus_telos_nest$brood.size)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="r"><code># change &quot;brood.size&quot; to numeric
+parus_telos_nest$brood.size &lt;- as.numeric(parus_telos_nest$brood.size)
+
+# confirm
+summary(parus_telos_nest$brood.size)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   2.000   4.000   5.000   4.486   5.000   6.000</code></pre>
+<p>I can do this with dplyr::mutate</p>
+<pre class="r"><code>parus_telos_nest &lt;- parus_telos_nest %&gt;% mutate(size = as.numeric(size))</code></pre>
+<p>I can feed multiple columns to be concise. (Note that is throws a warning because its converting the literal “NA” (the letters N and A together) to an actual NA to indicate missing data).</p>
+<pre class="r"><code>parus_telos_nest &lt;- parus_telos_nest %&gt;% mutate(condition = as.numeric(condition),
+                        cort = as.numeric(cort),
+                        telomere.length = as.numeric(telomere.length))</code></pre>
+<pre><code>## Warning: Problem with `mutate()` input `cort`.
+## ℹ NAs introduced by coercion
+## ℹ Input `cort` is `as.numeric(cort)`.</code></pre>
+<pre><code>## Warning in mask$eval_all_mutate(dots[[i]]): NAs introduced by coercion</code></pre>
+<p>I’ll check to make sure things are ok</p>
+<pre class="r"><code>summary(parus_telos_nest)</code></pre>
+<pre><code>##      nest            treatment             sex              brood.size   
+##  Length:37          Length:37          Length:37          Min.   :2.000  
+##  Class :character   Class :character   Class :character   1st Qu.:4.000  
+##  Mode  :character   Mode  :character   Mode  :character   Median :5.000  
+##                                                           Mean   :4.486  
+##                                                           3rd Qu.:5.000  
+##                                                           Max.   :6.000  
+##                                                                          
+##       size             condition              cort        telomere.length
+##  Min.   :-3.550000   Min.   :-2.451000   Min.   : 0.850   Min.   :0.829  
+##  1st Qu.:-1.263000   1st Qu.:-0.893000   1st Qu.: 1.780   1st Qu.:1.002  
+##  Median : 0.154000   Median : 0.145000   Median : 4.310   Median :1.086  
+##  Mean   : 0.000081   Mean   :-0.000081   Mean   : 4.837   Mean   :1.106  
+##  3rd Qu.: 1.290000   3rd Qu.: 0.918000   3rd Qu.: 6.620   3rd Qu.:1.179  
+##  Max.   : 2.780000   Max.   : 3.211000   Max.   :18.350   Max.   :1.549  
+##                                          NA&#39;s   :2                       
+##    fledging        
+##  Length:37         
+##  Class :character  
+##  Mode  :character  
+##                    
+##                    
+##                    
+## </code></pre>
+<p>I’ll do this with the categorical variables next and as.factor().</p>
+<pre class="r"><code>parus_telos_nest &lt;- parus_telos_nest %&gt;% mutate(nest = as.factor(nest),
+                        treatment = as.factor(treatment),
+                        sex = as.factor(sex),
+                        fledging = as.factor(fledging))</code></pre>
+<p>The other dataframe also needs to be set up. In this case, I’ll put each column within the same mutate() command and use convert them to a factor or numeric as needed. Note that as.factor() is the same as factor(), just shorter.</p>
+<pre class="r"><code>parus_telos_adult &lt;- parus_telos_adult %&gt;% mutate(nest = factor(nest),
+                        treatment = factor(treatment),
+                        sex = factor(sex),
+                        size = as.numeric(size),
+                        condition = as.numeric(condition))</code></pre>
+<p>That’s it! The longest part is setting up the data as numeric or factors. All I’d have left to do is save the dataframes to .csv or as .RData.</p>
+</div>
+<div id="appendix" class="section level2">
+<h2>Appendix</h2>
+<p>docxtractr has some other cool features. First, it can work PowerPoint files (.pptx) and older .doc files, though this requires LibreOffice (<a href="https://www.libreoffice.org/" class="uri">https://www.libreoffice.org/</a>).</p>
+<p>Second, docxtractr also has a number of functions useful for interacting with Word documents, including the ability to extract comments. The function mcga (“Make Column Names Great Again”) will automatically clean up column names to be R friendly.</p>
+<ul>
+<li>docx_describe_tbls: Returns a description of all the tables in the Word document</li>
+<li>docx_describe_cmnts: Returns a description of all the comments in the Word document</li>
+<li>docx_extract_all_cmnts: Extract comments from a Word document</li>
+<li>docx_tbl_count: Get number of tables in a Word document</li>
+<li>docx_cmnt_count: Get number of comments in a Word document</li>
+<li>mcga : Make column names great again</li>
+</ul>
+</div>
+</div>

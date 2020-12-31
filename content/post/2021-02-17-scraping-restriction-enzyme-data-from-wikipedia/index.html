@@ -1,0 +1,100 @@
+---
+title: Scraping Restriction Enzyme Data from Wikipedia
+author: Nathan Brouwer
+date: '2021-02-17'
+slug: scraping-restriction-enzyme-data-from-wikipedia
+categories: 
+  - R
+tags:
+  - bioinformatics
+math: no
+meta: yes
+toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<div id="TOC">
+yes
+</div>
+
+<!--more-->
+<p>Challenge: Get this table and extract biological information from it
+(show table)</p>
+<div id="tasks" class="section level2">
+<h2>Tasks</h2>
+<ol style="list-style-type: decimal">
+<li>Scrape table from Wikipedia; very easy - poweR tool.</li>
+<li>Scrape related tables from multiple Wiki pages; easy, once you know for() loops</li>
+<li>(split recognition sequence)</li>
+<li>(split cut and overhang)</li>
+<li>(deal with Isoschizomers)</li>
+<li>Extract length of recognition sequence</li>
+<li>Extract Neoschizomers (same recog, different cut - this is shown with green font - doh!)</li>
+</ol>
+<p>what does this mean: “Isoschizomers indicated in white font and grey background correspond to enzymes not listed in the current lists, as in this not listed enzyme” (example..)</p>
+<p><a href="https://rlang.io/scraping-tables-from-wikipedia-for-visualizing-climate-data/" class="uri">https://rlang.io/scraping-tables-from-wikipedia-for-visualizing-climate-data/</a></p>
+<p>Packages</p>
+<pre class="r"><code># install.packages(&quot;rvest&quot;)
+#install.packages(&quot;data.table&quot;)
+# install.packages(&quot;magrittr&quot;)
+# install.packages(&quot;ggthemes&quot;)
+
+library(&quot;rvest&quot;) # Scraping</code></pre>
+<pre><code>## Loading required package: xml2</code></pre>
+<pre class="r"><code>library(&quot;data.table&quot;) # Melting
+library(&quot;dplyr&quot;) # Manipulating</code></pre>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:data.table&#39;:
+## 
+##     between, first, last</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<pre class="r"><code>library(&quot;ggplot2&quot;) # Plotting</code></pre>
+<p>Assign the URL for the Wiki page to an object</p>
+<pre class="r"><code>url &lt;- &quot;https://en.wikipedia.org/wiki/List_of_restriction_enzyme_cutting_sites:_A#Whole_list_navigation&quot;</code></pre>
+<p>Read the URL with read_html() and extract the table with html_nodes(…, “table”)</p>
+<pre class="r"><code>wiki &lt;- read_html(url)
+tables &lt;- html_nodes(wiki, &quot;table&quot;)</code></pre>
+<p>This produces an “xml_nodeset” object containing each table</p>
+<pre class="r"><code>class(tables)</code></pre>
+<pre><code>## [1] &quot;xml_nodeset&quot;</code></pre>
+<p>There happen to be 3 tables in on this Wikipedia page</p>
+<pre class="r"><code>length(tables)</code></pre>
+<pre><code>## [1] 3</code></pre>
+<p>Each table is indicated within the object by a rather cryptic string</p>
+<pre class="r"><code>tables</code></pre>
+<pre><code>## {xml_nodeset (3)}
+## [1] &lt;table class=&quot;wikitable collapsible sortable&quot; width=&quot;230px&quot; style=&quot;text-a ...
+## [2] &lt;table class=&quot;wikitable sortable&quot; style=&quot;border:1px solid #aaa;&quot;&gt;&lt;tbody&gt;\ ...
+## [3] &lt;table class=&quot;nowraplinks mw-collapsible autocollapse navbox-inner&quot; style ...</code></pre>
+<p>Each table is accessed via bracket notation</p>
+<pre class="r"><code>tables[1]</code></pre>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;table class=&quot;wikitable collapsible sortable&quot; width=&quot;230px&quot; style=&quot;text-a ...</code></pre>
+<p>and is extracted using html_table(). fill = TRUE fills in NAs as needed.</p>
+<pre class="r"><code>table1.list &lt;- html_table(tables[1], fill = TRUE)</code></pre>
+<p>The output of html_table() is a list</p>
+<pre class="r"><code>class(table1.list)</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<p>To extract the dataframe within the list use double-bracket notation to call up the first (and in this case only) item of the list:</p>
+<pre class="r"><code>table1 &lt;- table1.list[[1]]</code></pre>
+<p>This can be done in one step by appending the [[1]] just outside the call to html_table()</p>
+<pre class="r"><code>table2 &lt;- rvest::html_table(tables[2], fill = TRUE)[[1]]
+table3 &lt;- rvest::html_table(tables[3], fill = TRUE)[[1]]</code></pre>
+<pre class="r"><code>table2 &lt;- data.frame(table2)
+
+table3 &lt;- data.frame(table3)
+
+dim(table2)</code></pre>
+<pre><code>## [1] 150   7</code></pre>
+<pre class="r"><code>dim(table3)</code></pre>
+<pre><code>## [1] 7 2</code></pre>
+<p>A Ba-Bc Bd-Bp Bsa-Bso Bsp Bsr-Bss Bst Bsu-Bv –CDEFGHIKLMNOPRSTUVXYZ– External links See also</p>
+</div>

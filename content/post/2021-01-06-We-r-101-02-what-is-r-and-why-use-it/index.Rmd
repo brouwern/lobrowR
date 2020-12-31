@@ -1,11 +1,13 @@
 ---
 title: 'R-101: What is R and Why Use It?'
 author: Nathan Brouwer
-date: '2021-01-06'
+date: '2020-12-31'
 slug: r-101-what-is-r-and-why-use-it
 categories:
   - R
-tags: []
+tags: 
+  - data science
+  - ecology
 math: no
 meta: yes
 toc: yes
@@ -13,3 +15,37 @@ toc: yes
 
 
 <!--more-->
+
+R is a powerful piece of software used for data science and data analysis. In this post I will briefly introduce the advantages of using R, why you might want to learn it, and also indicate some alternatives and adjuncts you could consider.
+
+## How do we typically use software in science?
+
+Most scientists rely on both general and specialized pieces of software for various parts of their work. For data entry they likely use spreadsheet software such as Excel or Google Sheets. For data analysis they might use one of many options, such as GraphPad Prism, Minitab, SAS, SPSS, or STATA. For making plots, many people will export their results back to Excel, while others use specialized software like SigmaPlot. 
+
+Many scientists also use specialized programs; in ecology many researchers do GIS (Geophgraphic Information Systems) in [ArcGIS](https://en.wikipedia.org/wiki/ArcGIS) or QGIS, mark-recapture analysis in Program MARK or Distance, use RAMAS or Vortex for population viability analysis, or build custom mathematical programs in MatLab or Python. If they do multivariate statistics like [ordination](https://en.wikipedia.org/wiki/Ordination_(statistics) the may use a specialized stats program like [PC-ORD](https://www.wildblueberrymedia.net/pcord).  If they need to construct phylogenetic trees they may use of many options to build the tree ( [MacClade](http://macclade.org/macclade.html), [BEAST](https://beast.community/), [MEGA](https://en.wikipedia.org/wiki/Molecular_Evolutionary_Genetics_Analysis), [PAUP](https://en.wikipedia.org/wiki/PAUP*), [PHYLIP](https://en.wikipedia.org/wiki/PHYLIP)) and perhaps even another program such as [Dendroscope](https://en.wikipedia.org/wiki/Dendroscope) to plot the tree.  Some of these programs are free, while other require licenses.
+
+Since software can be expensive, some scientists will rely on Excel for all of their work. Excel can do many things , but it can’t do everything all the specialized types of software can do. Moreover, its very limited in the range of statistics it can do and graphs it can make.  
+
+## What does R do?
+
+R is amazing because it has been explicitly developed to do several things very well, particularly statistics, math, making great-looking figures, and writing computer programs to automate these tasks. Additionally, R has been extended by developers to be able to be a powerful tool for data cleaning and organization, to be used as a GIS, and has an integrated word processor and website maker for publishing work.
+
+## Why use R
+In addition to is many capabilities, R has the advantage this it is
+
+1. Free to anyone, always
+1. Is used by many statisticians to develop new statistical techniques, so new techniques often come out first in R
+1. Used by almost all ecological statisticians to develop new techniques (mark recapture, distance sampling)
+1. Can interface with other programs (e.g. Excel, Google Sheets, [PHYLIP](http://www.phytools.org/Rphylip/))
+
+## Who uses it?
+
+R continues to increase in popularity. Among data scientists it is second only to Python. Among academics it has eclipsed SAS in many fields. It is also used by analysts in many large companies, such Facebook, and by journalists looking for stories in or reporting on large volumes of data.  See ["Companies using R in 2014"](http://blog.revolutionanalytics.com/2014/05/companies-using-r-in-2014.html for further discussion).
+
+## Alternatives to R
+
+R has many advantages, but it has one critical disadvantage: the learning curve. R is a command-line driven analysis tool, which means you type out specific commands for almost everything single thing R does.  Load data: use a command.  Look at the data: use a command.  Make a plot: use a command.   Excel is pretty user friendly, and several stats programs similarly use point-and-click interfaces, such as SPSS, JMP, and Stata.  SAS also requires a lot of command writing, but is generally considered more user friendly than R.
+
+Recently, two free point-and-click statistical analysis programs have been released that are built on R but require no programming. [JASP](https://jasp-stats.org/) (“Just another statistics program”) has an emphasis on Bayesian statistics, particularly Bayesian hypothesis testing using Bayes factors (an approach increasing in popularity, especially in psychology, but which some Bayesians, like Andrew Gelman, disavow). While JASP is based on R, it does not currently allow access to the underlying R code.  [Jamovi](https://www.jamovi.org/) has a similar spirit as JASP (indeed, it was founded by developers who had worked on JASP) but is more transparent about the underlying R code being used to run the analysis.
+
+Among most biologists R is favored, but Python can be set up to do many of the things R can do.  While there is a long history of using R for bioinformatics, many tasks in genomics and computational biology require the computational muscle of Pyton.

@@ -5,7 +5,41 @@
     <link>/</link>
     <description>Recent content on Another data science blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Thu, 31 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>R-101: What is R and Why Use It?</title>
+      <link>/2020/12/31/r-101-what-is-r-and-why-use-it/</link>
+      <pubDate>Thu, 31 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/12/31/r-101-what-is-r-and-why-use-it/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+yes
+&lt;/div&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>Hello lobrowR !</title>
+      <link>/2020/12/30/hello-biodata-blog/</link>
+      <pubDate>Wed, 30 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/12/30/hello-biodata-blog/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+no
+&lt;/div&gt;
+
+&lt;p&gt;Welcome to the &lt;strong&gt;lobrowR blog&lt;/strong&gt;. I’ve been teaching R, statistics for biologists, and computational biology for several years now, accumulating a mound of erratically organized handouts, datasets and exercises. &lt;strong&gt;lobrowR&lt;/strong&gt; is an attempt to compile and make these teaching materials accessible in a single place. Alongside the blog I am building up a set of example datasets in a package on GitHub called &lt;a href=&#34;https://github.com/brouwern/biodata&#34;&gt;biodata&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I’m starting off the blog by taking chapters from an “R for biologists” lab manual I’ve worked on and releasing the lessons. Most material in the blog is oriented towards those just beginning their journeys with R, data science, and statistics, but I’ll include more advanced topics on bioinformatics,computational biology, the analysis of complex datasets.&lt;/p&gt;
+&lt;p&gt;If you have any comments or questions please leave a message in the threads, or contact me at &lt;a href=&#34;mailto:brouwern@gmail.com&#34; class=&#34;email&#34;&gt;brouwern@gmail.com&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
     <item>
       <title>About</title>
       <link>/about/</link>

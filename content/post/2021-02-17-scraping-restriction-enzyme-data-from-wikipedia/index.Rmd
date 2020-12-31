@@ -1,0 +1,126 @@
+---
+title: Scraping Restriction Enzyme Data from Wikipedia
+author: Nathan Brouwer
+date: '2021-02-17'
+slug: scraping-restriction-enzyme-data-from-wikipedia
+categories: 
+  - R
+tags:
+  - bioinformatics
+math: no
+meta: yes
+toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+
+<!--more-->
+
+Challenge: Get this table and extract biological information from it
+(show table)
+
+## Tasks
+
+1. Scrape table from Wikipedia; very easy - poweR tool.
+1. Scrape related tables from multiple Wiki pages; easy, once you know for() loops
+1. (split recognition sequence)
+1. (split cut and overhang)
+1. (deal with Isoschizomers)
+1. Extract length of recognition sequence
+1. Extract Neoschizomers (same recog, different cut - this is shown with green font - doh!)
+
+what does this mean: "Isoschizomers indicated in white font and grey background correspond to enzymes not listed in the current lists, as in this not listed enzyme" (example..)
+
+https://rlang.io/scraping-tables-from-wikipedia-for-visualizing-climate-data/
+
+
+Packages 
+
+```{r, eval = T}
+# install.packages("rvest")
+#install.packages("data.table")
+# install.packages("magrittr")
+# install.packages("ggthemes")
+
+library("rvest") # Scraping
+library("data.table") # Melting
+library("dplyr") # Manipulating
+library("ggplot2") # Plotting
+```
+
+Assign the URL for the Wiki page to an object
+```{r}
+url <- "https://en.wikipedia.org/wiki/List_of_restriction_enzyme_cutting_sites:_A#Whole_list_navigation"
+```
+
+Read the URL with read_html() and extract the table with  html_nodes(..., "table")
+
+```{r}
+wiki <- read_html(url)
+tables <- html_nodes(wiki, "table")
+```
+
+This produces an "xml_nodeset" object containing each table
+```{r}
+class(tables)
+```
+
+There happen to be 3 tables in on this Wikipedia page
+```{r}
+length(tables)
+```
+
+
+Each table is indicated within the object by a rather cryptic string 
+```{r}
+tables
+```
+
+Each table is accessed via bracket notation
+```{r}
+tables[1]
+```
+
+and is extracted using html_table().  fill = TRUE fills in NAs as needed.
+```{r}
+table1.list <- html_table(tables[1], fill = TRUE)
+```
+
+The output of html_table() is a list
+```{r}
+class(table1.list)
+```
+
+To extract the dataframe within the list use double-bracket notation to call up the first (and in this case only) item of the list:
+
+```{r}
+table1 <- table1.list[[1]]
+```
+
+This can be done in one step by appending the [[1]] just outside the call to html_table()
+
+```{r}
+table2 <- rvest::html_table(tables[2], fill = TRUE)[[1]]
+table3 <- rvest::html_table(tables[3], fill = TRUE)[[1]]
+```
+
+
+```{r}
+table2 <- data.frame(table2)
+
+table3 <- data.frame(table3)
+
+dim(table2)
+dim(table3)
+
+```
+
+
+
+A Ba-Bc Bd-Bp Bsa-Bso Bsp Bsr-Bss Bst Bsu-Bv –CDEFGHIKLMNOPRSTUVXYZ– External links See also
+
+```{r}
+
+```
+
